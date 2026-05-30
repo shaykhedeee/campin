@@ -6,7 +6,7 @@ Draft version: 2026-05-21
 
 General support:
 
-hello@campin.co.in
+support@campin.co.in
 
 ## Support Categories
 

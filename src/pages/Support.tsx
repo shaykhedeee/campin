@@ -95,7 +95,7 @@ export default function Support() {
               </button>
             ) : (
               <a
-                href="mailto:hello@campin.co.in?subject=Support%20CampIn%20-%20Monthly%20backer"
+                href="mailto:support@campin.co.in?subject=Support%20CampIn%20-%20Monthly%20backer"
                 className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-forest px-4 py-3 font-bold text-white transition-colors hover:bg-forest-light"
               >
                 {method.action}
@@ -153,7 +153,7 @@ export default function Support() {
           </div>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:mt-0">
             <a
-              href="mailto:hello@campin.co.in"
+              href="mailto:support@campin.co.in"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-forest px-5 py-3 font-bold text-white transition-colors hover:bg-forest-light"
             >
               <Mail size={18} />

@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import BrandMark from "./BrandMark";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 80) {
+        setHasScrolled(true);
+      } else {
+        setHasScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
     { to: "/camping-guides", label: "Guides" },
@@ -19,11 +32,19 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed inset-x-0 top-0 z-50 transition-colors ${
-        isHome ? "border-b border-transparent bg-transparent text-white" : "border-b border-forest/10 bg-offwhite/95 text-forest backdrop-blur-xl"
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        isHome
+          ? hasScrolled
+            ? "border-b border-white/10 bg-[#0a1e14]/95 text-white backdrop-blur-md shadow-lg"
+            : "border-b border-transparent bg-transparent text-white"
+          : "border-b border-forest/10 bg-offwhite/95 text-forest backdrop-blur-xl"
       }`}
     >
-      <div className="mx-auto flex h-16 w-full max-w-[1440px] items-center justify-between gap-3 px-4 sm:h-24 sm:px-8 lg:px-10">
+      <div
+        className={`mx-auto flex w-full max-w-[1440px] items-center justify-between gap-3 px-4 transition-all duration-300 sm:px-8 lg:px-10 ${
+          isHome && hasScrolled ? "h-14 sm:h-20" : "h-16 sm:h-24"
+        }`}
+      >
         <Link to="/" aria-label="CampIn home" onClick={() => setIsOpen(false)} className="min-w-0">
           <BrandMark compact inverted={isHome} className="sm:hidden" />
           <BrandMark inverted={isHome} className="hidden sm:flex" />

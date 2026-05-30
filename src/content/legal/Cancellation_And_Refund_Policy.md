@@ -58,5 +58,5 @@ Refunds should be processed through the original payment method where possible. 
 
 ## 10. Contact
 
-hello@campin.co.in
+support@campin.co.in
 

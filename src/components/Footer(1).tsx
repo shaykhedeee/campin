@@ -60,7 +60,7 @@ export default function Footer() {
           <div>
             <h4 className="font-black text-[10px] uppercase tracking-[0.4em] mb-8 text-orange italic">Echo</h4>
             <div className="space-y-4">
-              <span className="block text-xs font-bold uppercase tracking-widest text-white/40">hello@campin.co.in</span>
+              <span className="block text-xs font-bold uppercase tracking-widest text-white/40">support@campin.co.in</span>
               <span className="block text-xs font-bold uppercase tracking-widest text-white/20 italic">Voice coming soon</span>
               <span className="block text-xs font-bold uppercase tracking-widest text-white/40 italic underline underline-offset-4 decoration-orange/20">campin.co.in</span>
             </div>

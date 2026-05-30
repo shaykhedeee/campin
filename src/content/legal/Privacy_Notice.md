@@ -123,5 +123,5 @@ Users may contact CampIn to request:
 
 Contact:
 
-hello@campin.co.in
+support@campin.co.in
 

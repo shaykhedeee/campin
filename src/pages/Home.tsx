@@ -359,9 +359,9 @@ export default function Home() {
             <div className="mx-auto mt-4 h-0.5 w-12 bg-orange" />
           </div>
 
-          <div className="mt-12 relative">
+          <div className="mt-16 relative">
             {/* Connecting line on desktop */}
-            <div className="absolute top-1/2 left-[10%] right-[10%] h-0.5 bg-[#2f6548]/15 -translate-y-1/2 hidden lg:block" />
+            <div className="absolute top-[52%] left-[10%] right-[10%] h-0.5 bg-dashed bg-gradient-to-r from-forest/5 via-forest/20 to-forest/5 -translate-y-1/2 hidden lg:block" />
 
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 relative z-10">
               {[
@@ -369,38 +369,44 @@ export default function Home() {
                   step: "01",
                   title: "Scout & Research",
                   desc: "We parse community lists, geographic databases, and caravan routes to surface remote farm and lake stays.",
-                  icon: "route"
+                  icon: "route",
+                  glow: "group-hover:border-emerald-500/30 group-hover:shadow-[0_20px_50px_rgba(46,125,50,0.12)]"
                 },
                 {
                   step: "02",
                   title: "On-Ground Audit",
                   desc: "Our verification team visits the site to record photos, check amenities, inspect washrooms, and test cellular reception.",
-                  icon: "reviewed"
+                  icon: "reviewed",
+                  glow: "group-hover:border-orange/30 group-hover:shadow-[0_20px_50px_rgba(230,126,34,0.12)]"
                 },
                 {
                   step: "03",
                   title: "Trust Ledger Entry",
                   desc: "Every verified data point is logged with a human reviewer name, timestamp, and unedited proof photos.",
-                  icon: "permission"
+                  icon: "permission",
+                  glow: "group-hover:border-[#2f6548]/30 group-hover:shadow-[0_20px_50px_rgba(47,101,72,0.12)]"
                 },
                 {
                   step: "04",
                   title: "Gated Booking",
                   desc: "Camper coordinates and contact info remain protected behind a respectful request-to-book relay mechanism.",
-                  icon: "campervan"
+                  icon: "campervan",
+                  glow: "group-hover:border-orange-dark/30 group-hover:shadow-[0_20px_50px_rgba(201,106,16,0.12)]"
                 }
               ].map((item) => (
-                <div key={item.step} className="group rounded-2xl bg-white p-6 border border-[#173525]/10 shadow-sm transition duration-300 hover:shadow-lg">
-                  <div className="flex items-center justify-between">
-                    <span className="font-serif text-3xl font-black text-orange/30 group-hover:text-orange transition-colors">
-                      {item.step}
-                    </span>
-                    <div className="h-10 w-10 rounded-lg bg-[#2f6548]/5 text-[#2f6548] flex items-center justify-center">
-                      <CampInIcon name={item.icon as any} className="h-5 w-5" />
+                <div key={item.step} className={`group relative rounded-2xl bg-white p-6 sm:p-8 border border-[#173525]/10 shadow-sm transition-all duration-500 hover:-translate-y-2 ${item.glow}`}>
+                  <div className="absolute -top-4 left-6 flex h-8 w-14 items-center justify-center rounded-full bg-forest text-[11px] font-black uppercase tracking-widest text-[#fbf3e5] shadow-md transition-colors group-hover:bg-orange">
+                    Step {item.step}
+                  </div>
+                  
+                  <div className="flex items-center justify-between mt-2">
+                    <h3 className="text-lg font-black text-[#173525] group-hover:text-forest transition-colors">{item.title}</h3>
+                    <div className="h-12 w-12 shrink-0 rounded-xl bg-forest/5 text-forest flex items-center justify-center shadow-inner transition-all duration-300 group-hover:scale-110 group-hover:bg-orange/15 group-hover:text-orange">
+                      <CampInIcon name={item.icon as any} className="h-6 w-6" />
                     </div>
                   </div>
-                  <h3 className="mt-5 text-base font-black text-[#173525]">{item.title}</h3>
-                  <p className="mt-2 text-sm font-medium leading-6 text-[#313831]">{item.desc}</p>
+                  
+                  <p className="mt-4 text-sm font-medium leading-6 text-[#313831]/80 transition-colors group-hover:text-[#313831]">{item.desc}</p>
                 </div>
               ))}
             </div>

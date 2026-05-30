@@ -17,16 +17,21 @@ export default function Footer() {
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
-                href="mailto:hello@campin.co.in"
+                href="mailto:support@campin.co.in"
                 className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/15"
               >
                 <Mail size={16} />
-                hello@campin.co.in
+                support@campin.co.in
               </a>
-              <span className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-sm font-semibold text-white/70">
+              <a
+                href="https://www.instagram.com/campin.co.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/15"
+              >
                 <Camera size={16} />
-                Instagram coming soon
-              </span>
+                @campin.co.in
+              </a>
             </div>
           </div>
 

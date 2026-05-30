@@ -84,5 +84,5 @@ CampIn may update these Terms as the product evolves from validation to pilot bo
 
 For questions, contact:
 
-hello@campin.co.in
+support@campin.co.in
 
