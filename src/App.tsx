@@ -53,9 +53,10 @@ function AppContent() {
           <Route path="/guides/:slug" element={<GuideDetail />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/host-your-land" element={<HostYourLand />} />
-          <Route path="/validation" element={<ValidationMachine />} />
-          <Route path="/ops" element={<OpsCenter />} />
-          <Route path="/strategy" element={<StrategyLab />} />
+          {/* Administrative developer routes commented out for public production */}
+          {/* <Route path="/validation" element={<ValidationMachine />} /> */}
+          {/* <Route path="/ops" element={<OpsCenter />} /> */}
+          {/* <Route path="/strategy" element={<StrategyLab />} /> */}
           <Route path="/support" element={<Support />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
