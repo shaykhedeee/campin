@@ -1,0 +1,79 @@
+{
+  "version": "2026-05-20",
+  "workspace": "C:\\Users\\USER\\Documents\\CampIN",
+  "rules": [
+    "Use approved APIs, official/public sources, and robots/API-compliant collection.",
+    "Do not scrape personal data, private communities, usernames, phone numbers, or emails.",
+    "Do not send outreach automatically; generate drafts for founder approval.",
+    "Always cite sources for factual claims.",
+    "Mark unknown permission and safety claims as unverified."
+  ],
+  "workflows": [
+    {
+      "name": "CampIn Airbnb Intelligence Sweep",
+      "cadence": "Weekly Monday 09:00 IST",
+      "purpose": "Track Airbnb strategy, product, design, trust, host, and marketplace changes and translate them into CampIn-original actions.",
+      "outputs": ["Dated intelligence report", "CampIn action list", "Risks", "Sources"]
+    },
+    {
+      "name": "CampIn Validation Metrics Review",
+      "cadence": "Weekly Wednesday 10:00 IST",
+      "purpose": "Review progress against the 90-day validation targets and identify founder actions.",
+      "outputs": ["Target progress", "Bottlenecks", "Next 5 actions", "Experiment recommendations"]
+    },
+    {
+      "name": "CampIn Campfire Newsletter Draft",
+      "cadence": "Weekly Friday 09:00 IST",
+      "purpose": "Draft a practical issue of The Campfire from research and validation insights.",
+      "outputs": ["Subject lines", "Newsletter draft", "CTA", "Source notes"]
+    },
+    {
+      "name": "CampIn UX QA And Icon Review",
+      "cadence": "Weekly Saturday 11:00 IST",
+      "purpose": "Check app build, validation flows, strategy lab, mobile layout, and icon inventory.",
+      "outputs": ["Build result", "UX risks", "Icon issues", "Fixes applied or queued"]
+    },
+    {
+      "name": "CampIn Host Lead Enrichment",
+      "cadence": "Weekly Tuesday 11:00 IST",
+      "purpose": "Enrich host and road-stop leads into founder-call candidates without collecting private data.",
+      "outputs": ["Lead quality score", "Missing fields", "Call script", "Verification checklist"]
+    },
+    {
+      "name": "CampIn SEO AEO GEO Brief Factory",
+      "cadence": "Weekly Thursday 14:00 IST",
+      "purpose": "Create or improve one answer-first page brief for CampIn's pre-website content engine.",
+      "outputs": ["Target query", "Direct answer", "FAQs", "Schema plan", "Original insight"]
+    },
+    {
+      "name": "CampIn Community Pulse Review",
+      "cadence": "Weekly Sunday 18:00 IST",
+      "purpose": "Review WhatsApp, Instagram, newsletter, referral, and UGC signals to decide the next community action.",
+      "outputs": ["Community metrics", "Segment insights", "Safety concerns", "Next ritual", "Founder action list"]
+    },
+    {
+      "name": "CampIn Legal And Domain Readiness Review",
+      "cadence": "Monthly first Monday 15:00 IST",
+      "purpose": "Check whether campin.co.in, legal pages, consent copy, analytics, grievance, and paid-pilot policies are ready.",
+      "outputs": ["Readiness status", "Policy gaps", "Consent gaps", "Domain launch gaps", "Payment/pilot blockers"]
+    },
+    {
+      "name": "CampIn Daily Outreach Drafts",
+      "cadence": "Daily 09:30 IST",
+      "purpose": "Research public host, road-stop, and community candidates; score them; and draft personalized outreach for founder approval without sending messages automatically.",
+      "outputs": ["10 candidates", "5 personalized drafts", "Lead scores", "Compliance notes", "Next founder actions"]
+    },
+    {
+      "name": "CampIn Blog Morning Publish-Ready Draft",
+      "cadence": "Daily 09:00 IST",
+      "purpose": "Create one source-backed, answer-first CampIn Journal draft for a practical search query.",
+      "outputs": ["Blog draft", "Source notes", "CTA", "Schema notes", "Publish or hold recommendation"]
+    },
+    {
+      "name": "CampIn Blog Evening Publish-Ready Draft",
+      "cadence": "Daily 17:00 IST",
+      "purpose": "Create one source-backed comparison, seasonal, host, community, or trend article for CampIn Journal.",
+      "outputs": ["Blog draft", "Source notes", "CTA", "Schema notes", "Publish or hold recommendation"]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "version": "2026-05-22",
+  "cadence": [
+    {
+      "name": "CampIn Blog Morning Publish-Ready Draft",
+      "time_ist": "09:00",
+      "purpose": "Create one search-led practical guide for CampIn Journal."
+    },
+    {
+      "name": "CampIn Blog Evening Publish-Ready Draft",
+      "time_ist": "17:00",
+      "purpose": "Create one comparison, seasonal, community, host, or viral-trend article."
+    }
+  ],
+  "output_path": "data/blog/drafts/YYYY-MM-DD-slot-slug.md",
+  "quality_gate": [
+    "Direct answer in first 70 words",
+    "Permission and safety cautions visible",
+    "CampIn-specific insight or CTA included",
+    "At least 3 source links",
+    "No copied competitor text",
+    "No claim that public/forest/beach camping is legal without verification",
+    "Schema recommendation included",
+    "Publish or hold recommendation included"
+  ],
+  "public_publishing_note": "Until campin.co.in hosting/CMS credentials are connected, automations create publish-ready drafts in the repo. Public auto-posting can be enabled after deployment workflow exists."
+}

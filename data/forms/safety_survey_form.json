@@ -1,0 +1,19 @@
+{
+  "form_name": "CampIn Safety Survey",
+  "recommended_tool": "Tally or Typeform",
+  "headline": "What would make camping in India feel safe enough?",
+  "subheadline": "Your answers help CampIn decide what to verify first.",
+  "fields": [
+    {"id": "email", "label": "Email", "type": "email", "required": false},
+    {"id": "city", "label": "City", "type": "short_text", "required": true},
+    {"id": "would_camp_if_verified", "label": "Would you camp if the place was permissioned and CampIn-reviewed?", "type": "single_choice", "required": true, "options": ["Yes", "Maybe", "No"]},
+    {"id": "safe_site_requirements", "label": "What makes a campsite feel safe?", "type": "multiple_choice", "required": true, "options": ["Host nearby", "Clean washroom", "Water", "Women/family reviews", "Clear permission", "Lighting", "Phone signal", "Other campers nearby", "Privacy"]},
+    {"id": "booking_blocker", "label": "What would stop you from booking?", "type": "long_text", "required": true},
+    {"id": "non_negotiable_amenities", "label": "Non-negotiable amenities", "type": "multiple_choice", "required": true, "options": ["Washroom", "Water", "Parking", "Power", "Food", "Phone signal", "Host contact", "First aid"]},
+    {"id": "host_presence", "label": "Would you prefer a host nearby or more privacy?", "type": "single_choice", "required": true, "options": ["Host nearby", "Privacy", "Depends on group", "Not sure"]},
+    {"id": "whatsapp_group", "label": "Would you join a WhatsApp group for route/camping help?", "type": "single_choice", "required": true, "options": ["Yes", "Maybe", "No"]}
+  ],
+  "success_message": "Thank you. This helps CampIn build the trust layer before the marketplace.",
+  "airtable_table": "Camper Waitlist",
+  "email_tags": ["safety_survey"]
+}

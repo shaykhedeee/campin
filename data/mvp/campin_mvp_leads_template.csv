@@ -1,0 +1,4 @@
+id,lead_type,source_page,name,email,phone,city,status,score,consent,payload_json,created_at,sync_status
+CW-EXAMPLE,camper_waitlist,/,Example Camper,camper@example.com,+919999999999,Bangalore,founding_community_waitlist,4,true,"{""source"":""homepage_founding_community_card""}",2026-05-28T00:00:00.000Z,local_only
+GU-EXAMPLE,guide_unlock,/camping-guides/byot-near-bangalore,Example Reader,reader@example.com,+919888888888,Bangalore,guide_unlocked,3,true,"{""guideSlug"":""byot-near-bangalore""}",2026-05-28T00:00:00.000Z,local_only
+LI-EXAMPLE,listing_inquiry,/listing/example,Example Camper,guest@example.com,+919777777777,Coorg,awaiting_campin_review,5,true,"{""listingTitle"":""Example reviewed lead"",""arrive"":""2026-06-15""}",2026-05-28T00:00:00.000Z,local_only

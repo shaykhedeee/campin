@@ -1,0 +1,14 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">CampIn social avatar</title>
+  <desc id="desc">CampIn social avatar with the map pin tent icon and wordmark.</desc>
+  <rect width="1024" height="1024" rx="224" fill="#1F3D2B"/>
+  <circle cx="512" cy="420" r="292" fill="#F7F5F2"/>
+  <path d="M512 168C416.455 168 339 245.455 339 341C339 484.351 512 678 512 678C512 678 685 484.351 685 341C685 245.455 607.545 168 512 168Z" fill="#1F3D2B"/>
+  <path d="M380 514C421 480 466 480 507 514C548 548 594 548 648 500" stroke="#E67E22" stroke-width="34" stroke-linecap="round"/>
+  <path d="M512 266L394 488H630L512 266Z" fill="#F7F5F2"/>
+  <path d="M512 338V488" stroke="#1F3D2B" stroke-width="24" stroke-linecap="round"/>
+  <path d="M468 488C481 455 496 438 512 438C528 438 543 455 556 488H468Z" fill="#1F3D2B"/>
+  <text x="512" y="820" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="118" font-weight="800" fill="#F7F5F2">CampIn</text>
+  <text x="512" y="884" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="4" fill="#E67E22">INDIA'S OUTDOORS, VERIFIED</text>
+</svg>
+

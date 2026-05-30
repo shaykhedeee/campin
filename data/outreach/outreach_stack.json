@@ -1,0 +1,70 @@
+{
+  "version": "2026-05-21",
+  "policy": "Draft-only outreach. Founder approves and sends. No scraped personal data, no mass DMs, no private group scraping.",
+  "daily_targets": {
+    "candidates_researched": 10,
+    "personalized_drafts": 5,
+    "founder_approved_sends": 3,
+    "community_insights_logged": 1,
+    "objections_logged": 1
+  },
+  "tools": [
+    {
+      "name": "Airtable",
+      "role": "Outreach CRM and stage tracking",
+      "status": "account_needed"
+    },
+    {
+      "name": "Gmail",
+      "role": "Manual founder email outreach",
+      "status": "account_needed"
+    },
+    {
+      "name": "Instagram",
+      "role": "Manual business-page DMs and creator/community relationship building",
+      "status": "account_needed"
+    },
+    {
+      "name": "WhatsApp Business",
+      "role": "Opt-in founder calls, host coordination, and community groups",
+      "status": "account_needed"
+    },
+    {
+      "name": "Brevo",
+      "role": "Consented newsletter and nurture",
+      "status": "account_needed"
+    },
+    {
+      "name": "Codex Automations",
+      "role": "Daily lead research, scoring, and draft preparation",
+      "status": "active"
+    }
+  ],
+  "segments": [
+    "coffee_estate",
+    "farmstay",
+    "homestay",
+    "orchard",
+    "dhaba_road_stop",
+    "resort_with_land",
+    "outdoor_club",
+    "gear_shop"
+  ],
+  "lead_fields": [
+    "lead_id",
+    "date_added",
+    "source",
+    "source_url",
+    "business_name",
+    "segment",
+    "location",
+    "public_contact_source",
+    "known_amenities",
+    "missing_proof",
+    "score",
+    "draft_message",
+    "stage",
+    "next_action",
+    "compliance_note"
+  ]
+}

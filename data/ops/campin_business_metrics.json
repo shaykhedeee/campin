@@ -1,0 +1,69 @@
+{
+  "version": "2026-05-21",
+  "north_star": {
+    "metric": "Verified camping nights requested",
+    "definition": "Manual or automated stay requests where camper intent, host/site, region, and trust requirements are known.",
+    "why": "It captures demand and marketplace intent before revenue scale."
+  },
+  "ninety_day_targets": [
+    { "metric": "email_subscribers", "target": 500 },
+    { "metric": "high_intent_camper_leads", "target": 100 },
+    { "metric": "host_applications", "target": 30 },
+    { "metric": "verified_candidate_sites", "target": 10 },
+    { "metric": "manual_booking_attempts", "target": 3 },
+    { "metric": "paid_pilot_stays", "target": 1 }
+  ],
+  "added_metrics": {
+    "community": [
+      "whatsapp_members",
+      "weekly_active_members",
+      "intro_completion_rate",
+      "whatsapp_opt_in_rate",
+      "ugc_submissions",
+      "referral_signups",
+      "community_to_waitlist_conversion",
+      "moderator_response_sla_hours"
+    ],
+    "supply_quality": [
+      "host_response_rate",
+      "host_response_time_hours",
+      "permission_documented_rate",
+      "washroom_verified_rate",
+      "water_verified_rate",
+      "exact_pin_collected_rate",
+      "candidate_to_pilot_ready_rate"
+    ],
+    "trust_safety": [
+      "incident_count",
+      "near_miss_count",
+      "amenity_mismatch_rate",
+      "refund_dispute_count",
+      "unsafe_location_rejection_rate",
+      "verified_vs_host_declared_ratio"
+    ],
+    "seo_aeo_geo": [
+      "answer_pages_ready",
+      "pages_with_faq_schema",
+      "pages_with_original_campin_data",
+      "google_search_console_clicks",
+      "ai_answer_mentions_manual_log"
+    ],
+    "marketplace_liquidity": [
+      "search_to_lead_conversion",
+      "lead_to_founder_call_conversion",
+      "founder_call_to_booking_attempt_conversion",
+      "booking_attempt_to_paid_pilot_conversion",
+      "repeat_interest_rate"
+    ]
+  },
+  "dashboard_order": [
+    "Founder Cockpit",
+    "Validation Dashboard",
+    "Community Pulse",
+    "Supply Desk",
+    "Trust And Safety Matrix",
+    "Content Desk",
+    "Route Intelligence",
+    "Legal Readiness"
+  ]
+}

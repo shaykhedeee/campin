@@ -1,0 +1,215 @@
+{
+  "generatedAt": "2026-05-28T13:07:37.613Z",
+  "score": {
+    "present": 37,
+    "total": 37,
+    "percent": 100
+  },
+  "groups": [
+    {
+      "group": "Core business docs",
+      "present": 7,
+      "total": 7,
+      "percent": 100,
+      "items": [
+        {
+          "path": "Docs/Business/CampIn_Research_OS.md",
+          "exists": true
+        },
+        {
+          "path": "Docs/Business/CampIn_Validation_Machine.md",
+          "exists": true
+        },
+        {
+          "path": "Docs/Business/CampIn_SEO_AEO_GEO_Briefs.md",
+          "exists": true
+        },
+        {
+          "path": "Docs/Business/CampIn_Newsletter_System.md",
+          "exists": true
+        },
+        {
+          "path": "Docs/Business/CampIn_Airbnb_Strategy_Teardown.md",
+          "exists": true
+        },
+        {
+          "path": "Docs/Business/CampIn_Free_Tool_Stack_And_Dashboards.md",
+          "exists": true
+        },
+        {
+          "path": "Docs/Business/CampIn_Agentic_Workflows.md",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "group": "Design and dashboard docs",
+      "present": 3,
+      "total": 3,
+      "percent": 100,
+      "items": [
+        {
+          "path": "Docs/Design/CampIn_Airbnb_Learning_UX_System.md",
+          "exists": true
+        },
+        {
+          "path": "Docs/Design/CampIn_Iconography_System.md",
+          "exists": true
+        },
+        {
+          "path": "Docs/Design/CampIn_Dashboard_UX_System.md",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "group": "Form and CRM templates",
+      "present": 8,
+      "total": 8,
+      "percent": 100,
+      "items": [
+        {
+          "path": "data/forms/camper_waitlist_form.json",
+          "exists": true
+        },
+        {
+          "path": "data/forms/host_interest_form.json",
+          "exists": true
+        },
+        {
+          "path": "data/forms/road_stop_lead_form.json",
+          "exists": true
+        },
+        {
+          "path": "data/forms/safety_survey_form.json",
+          "exists": true
+        },
+        {
+          "path": "data/research/schemas/research_os_fields.csv",
+          "exists": true
+        },
+        {
+          "path": "data/research/templates/host_leads_template.csv",
+          "exists": true
+        },
+        {
+          "path": "data/research/templates/road_stop_leads_template.csv",
+          "exists": true
+        },
+        {
+          "path": "data/research/templates/content_brief_tracker.csv",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "group": "Ops stack data",
+      "present": 4,
+      "total": 4,
+      "percent": 100,
+      "items": [
+        {
+          "path": "data/ops/free_tool_stack.json",
+          "exists": true
+        },
+        {
+          "path": "data/ops/dashboard_blueprint.json",
+          "exists": true
+        },
+        {
+          "path": "data/ops/setup_checklist.csv",
+          "exists": true
+        },
+        {
+          "path": "data/workflows/agentic_workflows.json",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "group": "App surfaces",
+      "present": 6,
+      "total": 6,
+      "percent": 100,
+      "items": [
+        {
+          "path": "src/pages/ValidationMachine.tsx",
+          "exists": true
+        },
+        {
+          "path": "src/pages/StrategyLab.tsx",
+          "exists": true
+        },
+        {
+          "path": "src/pages/OpsCenter.tsx",
+          "exists": true
+        },
+        {
+          "path": "src/lib/validationMachine.ts",
+          "exists": true
+        },
+        {
+          "path": "src/data/campinOps.ts",
+          "exists": true
+        },
+        {
+          "path": "src/data/airbnbCampinPlaybook.ts",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "group": "Brand assets",
+      "present": 5,
+      "total": 5,
+      "percent": 100,
+      "items": [
+        {
+          "path": "brand/campin-logo.svg",
+          "exists": true
+        },
+        {
+          "path": "brand/campin-reviewed-badge.svg",
+          "exists": true
+        },
+        {
+          "path": "brand/founding-host-badge.svg",
+          "exists": true
+        },
+        {
+          "path": "brand/road-stop-standard-badge.svg",
+          "exists": true
+        },
+        {
+          "path": "brand/icons/campin-outdoor-icons.svg",
+          "exists": true
+        }
+      ]
+    },
+    {
+      "group": "Local tools",
+      "present": 4,
+      "total": 4,
+      "percent": 100,
+      "items": [
+        {
+          "path": "tools/research-collector/collector.mjs",
+          "exists": true
+        },
+        {
+          "path": "tools/research-collector/queries.json",
+          "exists": true
+        },
+        {
+          "path": "tools/pdf-extract/extract_pdf_text.py",
+          "exists": true
+        },
+        {
+          "path": "tools/ops-check/ops_check.mjs",
+          "exists": true
+        }
+      ]
+    }
+  ],
+  "nextActions": []
+}

@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Build outputs
+dist/
+.next/
+out/
+
+# Local tooling and logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Generated browser profiles and large QA artifacts
+artifacts/chrome-*/
+artifacts/*profile*/

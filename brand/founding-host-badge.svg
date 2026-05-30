@@ -1,0 +1,9 @@
+<svg width="640" height="220" viewBox="0 0 640 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">CampIn Founding Host badge</title>
+  <desc id="desc">A CampIn badge for founding host partners.</desc>
+  <rect x="10" y="10" width="620" height="200" rx="34" fill="#1F3D2B" stroke="#E67E22" stroke-width="20"/>
+  <path d="M112 52L130 91L173 96L142 126L150 168L112 148L74 168L82 126L51 96L94 91L112 52Z" fill="#E67E22"/>
+  <text x="202" y="94" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800" fill="#F7F5F2">Founding Host</text>
+  <text x="202" y="140" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600" fill="#DCE9E1">Helping build India's camping trust network</text>
+</svg>
+

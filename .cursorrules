@@ -1,0 +1,44 @@
+# CampIn Project Rules for Cursor AI
+
+## Project Overview
+CampIn is India's community-first camping platform — "Airbnb for Camping in India."
+Built with React 19 + Vite 7 + TypeScript + Tailwind CSS 4.
+Read CLAUDE.md for full project context before starting any task.
+Read docs/ folder for all strategic documentation.
+
+## Mandatory Design Rules
+- Colors: Forest Green #1F3D2B (primary), Orange #E67E22 (accent ONLY), Off White #F7F5F2 (page bg)
+- Font: Inter only. Never use any other font family.
+- Body text: #5F5F5F (never pure black #000)
+- Border radius: 16px cards, 12px buttons
+- No dark mode. No gradients. No 3D effects.
+- Mobile-first responsive design
+- Tailwind utility classes only
+
+## Code Style
+- Functional components with TypeScript
+- Export default for all components
+- Import order: React hooks → Router → External → Internal data → Internal components
+- Use design token classes: text-forest, bg-offwhite, text-orange, text-textgrey
+- Mobile-first: base = mobile, sm: = tablet, lg: = desktop
+
+## File Naming
+- Pages: PascalCase in src/pages/
+- Components: PascalCase in src/components/
+- Data: camelCase in src/data/
+- Types: PascalCase in src/types/
+
+## Common Patterns
+- Page wrapper: `<div className="min-h-screen bg-offwhite pt-20 sm:pt-24">`
+- Content wrapper: `<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">`
+- Section spacing: `py-20 sm:py-28`
+- Card: `bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1`
+
+## DO NOT
+- Never use #000000 for text
+- Never use pure white (#FFFFFF) as page background
+- Never add booking functionality (Phase 2 only)
+- Never add dark mode
+- Never change the color palette
+- Never use non-Indian place references
+- Never add features not in docs/CampIn_Product_Specification.md without asking

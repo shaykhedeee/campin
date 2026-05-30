@@ -1,0 +1,61 @@
+{
+  "version": "2026-05-20",
+  "dashboards": [
+    {
+      "name": "Founder Cockpit",
+      "surface": "Local /ops now, Airtable later",
+      "owner": "Founder",
+      "metrics": ["Email subscribers", "High-intent camper leads", "Host applications", "Verified candidate sites", "Manual booking attempts", "Paid pilot stays", "Open setup tasks"],
+      "decisions": ["What should be done this week?", "Is CampIn ready to proceed to booking-engine planning?", "Which tool connection is blocking operations?"]
+    },
+    {
+      "name": "Validation Dashboard",
+      "surface": "Local /validation",
+      "owner": "Founder / research operator",
+      "metrics": ["90-day target progress", "Lead score", "Lead type mix", "High-intent rate", "Manual proof counters"],
+      "decisions": ["Which camper segment is real?", "Which region has demand?", "Which proof target is weak?"]
+    },
+    {
+      "name": "Supply Desk",
+      "surface": "Airtable first, app later",
+      "owner": "Host ops",
+      "metrics": ["New host leads", "Permission reviewed", "Amenity-ready sites", "Founder calls completed", "Pilot-ready sites"],
+      "decisions": ["Which hosts deserve a call?", "Which site can be verified next?", "Which site must be paused?"]
+    },
+    {
+      "name": "Content Desk",
+      "surface": "Airtable/Notion first, app later",
+      "owner": "Content operator",
+      "metrics": ["Briefs planned", "Briefs ready", "FAQs sourced", "Original insights", "Newsletter drafts"],
+      "decisions": ["Which page should be created next?", "Which query deserves original research?", "Which newsletter issue is ready?"]
+    },
+    {
+      "name": "Community Pulse",
+      "surface": "WhatsApp, Instagram, Brevo, Airtable",
+      "owner": "Community operator",
+      "metrics": ["WhatsApp members", "Weekly active members", "WhatsApp opt-in rate", "UGC submissions", "Referral signups", "Community-to-waitlist conversion"],
+      "decisions": ["Which community group is most alive?", "Which safety concern should become content?", "Which member story should be featured?"]
+    },
+    {
+      "name": "Outreach Desk",
+      "surface": "Airtable, Gmail, Instagram, WhatsApp Business",
+      "owner": "Founder",
+      "metrics": ["Candidates researched", "Drafts prepared", "Founder-approved sends", "Replies", "Calls scheduled", "Do-not-contact records"],
+      "decisions": ["Which public business leads deserve founder outreach?", "Which host segment is replying?", "Which draft should be sent today?"]
+    },
+    {
+      "name": "Legal Readiness",
+      "surface": "Docs/Legal now, public pages later",
+      "owner": "Founder / counsel",
+      "metrics": ["Terms ready", "Privacy ready", "Refund policy ready", "Host agreement ready", "Verification standard ready", "Grievance workflow ready"],
+      "decisions": ["Can CampIn collect leads?", "Can CampIn run a paid pilot?", "Can CampIn publish marketplace-style pages?"]
+    },
+    {
+      "name": "Trust And Safety Matrix",
+      "surface": "Airtable first, app later",
+      "owner": "Trust operator",
+      "metrics": ["Permission status", "Washroom proof", "Water proof", "Exact pin", "Emergency contact", "Incidents"],
+      "decisions": ["Is a site safe to publish?", "Which claim is host-declared only?", "What needs manual verification?"]
+    }
+  ]
+}

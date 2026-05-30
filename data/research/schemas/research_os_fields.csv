@@ -1,0 +1,70 @@
+table,field,type,required,options,notes
+Source Insights,Insight ID,text,yes,,Use INS-0001 format or Airtable autonumber
+Source Insights,Date Added,date,yes,,Date CampIn logged the insight
+Source Insights,Source Type,single_select,yes,"Reddit|Forum|Google/Search API|Competitor|Blog|Interview|Social|Official",Where the insight came from
+Source Insights,Source Name,text,yes,,Example r/bangalore or CampMonk
+Source Insights,URL,url,yes,,Original public URL
+Source Insights,Query,text,no,,Search query or interview prompt
+Source Insights,Location,multi_select,no,"Bangalore|Coorg|Wayanad|Chikmagalur|Ramanagara|Kanakapura|Mumbai|Pune|Delhi|Himachal|Uttarakhand|Goa|India",Relevant geography
+Source Insights,Persona,single_select,yes,"First-time Camper|Own-Gear Camper|Family Camper|Solo Woman Traveler|Road Traveler|Biker/Overlander|Trekker|Private-Land Host|Road-Stop Host|Partner",Primary persona
+Source Insights,Pain Point,multi_select,yes,"Safety|Permission|Washroom|Water|Local Interference|Crowd|Spammy Organizers|Gear|Weather|Wildlife/Protected Land|Price Transparency|Road Access|Mobile Signal",Problem expressed
+Source Insights,Demand Signal,single_select,yes,"Weak|Medium|Strong",Strength of intent
+Source Insights,Evidence Summary,long_text,yes,,Paraphrase; avoid copying long comments
+Source Insights,Safety/Legal Concern,long_text,no,,Permission/protected land/local context
+Source Insights,Competitor Mention,text,no,,CampMonk/HireACamp/Exoticamp/etc.
+Source Insights,Lead Type,single_select,yes,"Camper Demand|Host Lead|Road Stop Lead|Content Idea|Policy Note|Competitor Note|Partnership Lead",Output category
+Source Insights,Confidence,single_select,yes,"Low|Medium|High",Confidence in usefulness
+Source Insights,Next Action,single_select,yes,"Add to Brief|Contact Host|Add to FAQ|Validate in Survey|Add to Newsletter|Ignore|Watch",Action required
+Source Insights,Owner,text,no,,Founder by default
+Source Insights,Status,single_select,yes,"New|Reviewed|Converted|Archived",Workflow status
+Camper Waitlist,Lead ID,text,yes,,Use CAMP-0001 or Airtable autonumber
+Camper Waitlist,Submitted At,date,yes,,Submission timestamp
+Camper Waitlist,Full Name,text,yes,,Submitted by user
+Camper Waitlist,Email,email,yes,,Required for newsletter
+Camper Waitlist,Phone/WhatsApp,phone,no,,Optional explicit opt-in only
+Camper Waitlist,City,text,yes,,Home city
+Camper Waitlist,Camping Type,multi_select,yes,"Own Tent|Hosted Tent|Car Camping|Campervan|Family|Trekking Add-on|Unsure",Segment
+Camper Waitlist,Own Gear,single_select,yes,"Yes|No|Building Kit",High-intent indicator
+Camper Waitlist,Preferred Region,multi_select,yes,"Bangalore|Coorg|Wayanad|Chikmagalur|Ramanagara|Kanakapura|Other",First region priority
+Camper Waitlist,Biggest Concern,multi_select,yes,"Safety|Permission|Washroom|Price|Crowd|Gear|Family Approval|Road Access",Main objections
+Camper Waitlist,Willing To Pay,single_select,yes,"Yes|Maybe|No",Pilot signal
+Camper Waitlist,WhatsApp Opt In,checkbox,no,,Must be explicit
+Camper Waitlist,Lead Score,number,no,,Calculated 1-10
+Camper Waitlist,Stage,single_select,yes,"New Waitlist|High Intent|Survey Sent|WhatsApp Invited|Pilot Candidate|Pilot Completed|Archived",CRM stage
+Host Leads,Host ID,text,yes,,Use HOST-0001
+Host Leads,Host/Property Name,text,yes,,Business or property
+Host Leads,Region,text,yes,,Region/city
+Host Leads,Property Type,single_select,yes,"Farm|Coffee Estate|Homestay|Orchard|Terrace|Forest-edge|Lake/River Side|Dhaba/Road Stop|Other",Supply type
+Host Leads,Public URL,url,no,,Instagram/website/maps
+Host Leads,Contact Channel,single_select,no,"Instagram|Email|Phone|WhatsApp|Website|Referral|Google Maps",Public channel
+Host Leads,Public Contact,text,no,,Business contact only
+Host Leads,Exact Pin Available,checkbox,no,,Required before approval
+Host Leads,Washroom,single_select,no,"Guest|Shared|Private|Unknown|None",Amenity
+Host Leads,Water,single_select,no,"Drinking|Basic|Unknown|None",Amenity
+Host Leads,Electricity,single_select,no,"Yes|Limited|Unknown|No",Amenity
+Host Leads,Parking,single_select,no,"Bike|Car|SUV|Campervan|Unknown|None",Amenity
+Host Leads,Photos Found,checkbox,no,,Actual site photos
+Host Leads,Permission Confidence,single_select,no,"High|Medium|Low|Unknown",Private/permitted/unclear
+Host Leads,Fit Score,number,no,,1-10
+Host Leads,Outreach Stage,single_select,yes,"New Lead|Contacted|Replied|Call Scheduled|Call Completed|Verification Pending|Candidate Approved|Founding Host|Rejected",Pipeline
+Road Stop Leads,Stop ID,text,yes,,Use STOP-0001
+Road Stop Leads,Route,single_select,yes,"Bangalore-Coorg-Wayanad|Bangalore-Chikmagalur|Mumbai-Goa|Delhi-Manali-Leh|Jaipur-Jaisalmer|Other",Priority route
+Road Stop Leads,Stop Name,text,yes,,Business/place name
+Road Stop Leads,Stop Type,single_select,yes,"Dhaba|Farm|Homestay|Petrol Pump|Cafe|Campground|Estate|Other",Type
+Road Stop Leads,Location,text,yes,,Town/area
+Road Stop Leads,Overnight Parking,single_select,yes,"Confirmed|Possible|Unknown|No",Core road-stop requirement
+Road Stop Leads,Washroom,single_select,yes,"Clean|Basic|Unknown|None",Amenity
+Road Stop Leads,Water,single_select,yes,"Drinking|Basic|Unknown|None",Amenity
+Road Stop Leads,Power,single_select,no,"Yes|Limited|Unknown|No",Amenity
+Road Stop Leads,Food,single_select,no,"On-site|Nearby|Unknown|None",Amenity
+Road Stop Leads,Safety Confidence,single_select,no,"High|Medium|Low|Unknown",Night safety
+Road Stop Leads,Road Stop Tier,single_select,no,"Candidate|Basic|Standard|Premium|Rejected",Tier
+Content Briefs,Brief ID,text,yes,,Use BRIEF-0001
+Content Briefs,Target Query,text,yes,,Primary query
+Content Briefs,Search Intent,single_select,yes,"Informational|Commercial Investigation|Local|Host Acquisition|Road-Trip Utility",Intent
+Content Briefs,Primary Persona,single_select,yes,"First-time Camper|Own-Gear Camper|Family Camper|Solo Woman Traveler|Road Traveler|Host",Audience
+Content Briefs,Direct Answer,long_text,yes,,40-60 word answer
+Content Briefs,FAQs,long_text,yes,,Question list
+Content Briefs,Original Data Needed,long_text,yes,,CampIn evidence required
+Content Briefs,Schema Plan,multi_select,no,"Article|FAQPage|BreadcrumbList|Place|LocalBusiness|Campground|Service|Organization",Structured data
+Content Briefs,Status,single_select,yes,"Briefed|Needs Research|Ready To Draft|Drafted|Reviewed|Published",Workflow

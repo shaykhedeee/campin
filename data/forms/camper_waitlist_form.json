@@ -1,0 +1,21 @@
+{
+  "form_name": "CampIn Camper Waitlist",
+  "recommended_tool": "Tally or Typeform",
+  "headline": "Find safe, permissioned camping in India.",
+  "subheadline": "CampIn is mapping verified camping spots and road stops, starting around Bangalore, Coorg, Wayanad, and Chikmagalur.",
+  "fields": [
+    {"id": "full_name", "label": "Full name", "type": "short_text", "required": true},
+    {"id": "email", "label": "Email", "type": "email", "required": true},
+    {"id": "phone_whatsapp", "label": "Phone / WhatsApp", "type": "phone", "required": false},
+    {"id": "city", "label": "City", "type": "short_text", "required": true},
+    {"id": "camping_type", "label": "What kind of camping are you looking for?", "type": "multiple_choice", "required": true, "options": ["Own tent", "Hosted tent", "Car camping", "Campervan", "Family camping", "Trekking add-on", "Not sure yet"]},
+    {"id": "own_gear", "label": "Do you already own camping gear?", "type": "single_choice", "required": true, "options": ["Yes", "No", "Building my kit"]},
+    {"id": "preferred_region", "label": "Where do you want CampIn to verify spots first?", "type": "multiple_choice", "required": true, "options": ["Bangalore", "Coorg", "Wayanad", "Chikmagalur", "Ramanagara", "Kanakapura", "Other"]},
+    {"id": "biggest_concern", "label": "What is your biggest camping concern?", "type": "multiple_choice", "required": true, "options": ["Safety", "Permission", "Washroom", "Price", "Crowds/noise", "Gear", "Family approval", "Road access"]},
+    {"id": "willing_to_pay", "label": "Would you pay for a safe, permissioned own-tent spot with basic amenities?", "type": "single_choice", "required": true, "options": ["Yes", "Maybe", "No"]},
+    {"id": "whatsapp_opt_in", "label": "Send me optional WhatsApp updates for pilot trips and route notes.", "type": "checkbox", "required": false}
+  ],
+  "success_message": "You are in. CampIn is mapping safe, permissioned camping around Bangalore and South India first. Watch for the next Campfire email.",
+  "airtable_table": "Camper Waitlist",
+  "email_tags": ["camper_waitlist", "south_validation"]
+}

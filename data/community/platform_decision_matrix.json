@@ -1,0 +1,78 @@
+{
+  "version": "2026-05-21",
+  "primary_recommendation": "Launch with WhatsApp Community as the trust layer, Instagram as discovery, Brevo email as owned retention, and Reddit/Google/Quora as listening and answer distribution.",
+  "platforms": [
+    {
+      "platform": "WhatsApp Community",
+      "role": "Trust, activation, regional coordination",
+      "phase": "now",
+      "fit_score": 10,
+      "why": "High Indian adoption, low friction, strong fit for safety-sensitive camping coordination.",
+      "risks": ["spam", "overcrowding", "moderation burden"],
+      "guardrails": ["join through form", "explicit rules", "one relevant group per user", "moderator review"]
+    },
+    {
+      "platform": "Instagram",
+      "role": "Discovery, proof, UGC, host storytelling",
+      "phase": "now",
+      "fit_score": 9,
+      "why": "Camping is visual and aspirational; Reels can make safety and verification fun.",
+      "risks": ["vanity metrics", "low intent"],
+      "guardrails": ["every post has waitlist, host, or newsletter CTA", "track source quality"]
+    },
+    {
+      "platform": "Brevo Email",
+      "role": "Owned retention through The Campfire",
+      "phase": "now",
+      "fit_score": 8,
+      "why": "Owns the audience outside social algorithms and supports weekly trust building.",
+      "risks": ["inconsistent publishing", "low deliverability"],
+      "guardrails": ["double opt-in where possible", "weekly template", "unsubscribe visible"]
+    },
+    {
+      "platform": "Reddit",
+      "role": "Listening, validation, transparent answers",
+      "phase": "now",
+      "fit_score": 7,
+      "why": "Demand signals around safety, permission, own-tent camping, and legal camping are visible.",
+      "risks": ["spam backlash", "platform terms"],
+      "guardrails": ["no scraping personal data", "no mass DMs", "cite sources", "help before promotion"]
+    },
+    {
+      "platform": "Facebook Groups",
+      "role": "Local outdoor and overlanding discovery",
+      "phase": "month_2",
+      "fit_score": 7,
+      "why": "Many Indian hobby and travel communities still coordinate through Facebook.",
+      "risks": ["spam perception", "low trust"],
+      "guardrails": ["admin permission before posting", "manual observation first"]
+    },
+    {
+      "platform": "YouTube Shorts",
+      "role": "Evergreen proof and educational clips",
+      "phase": "month_2",
+      "fit_score": 7,
+      "why": "Works for campsite walkthroughs, safety checks, and route explainers.",
+      "risks": ["production burden"],
+      "guardrails": ["phone-shot, repeatable formats only"]
+    },
+    {
+      "platform": "Discord",
+      "role": "Hardcore outdoor club",
+      "phase": "later",
+      "fit_score": 4,
+      "why": "Useful for gear-heavy subculture but too high-friction for mainstream Indian campers.",
+      "risks": ["empty channels", "moderation overhead"],
+      "guardrails": ["launch only after 500 engaged community members"]
+    }
+  ],
+  "launch_groups": [
+    "CampIn Announcements",
+    "CampIn Bangalore Core",
+    "CampIn South India Routes",
+    "CampIn Own-Tent Campers",
+    "CampIn First-Time Campers",
+    "CampIn Founding Hosts",
+    "CampIn Road Stops"
+  ]
+}

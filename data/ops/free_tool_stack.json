@@ -1,0 +1,62 @@
+{
+  "version": "2026-05-20",
+  "principle": "Stay free or near-free until validation gates prove demand.",
+  "tools": [
+    {
+      "name": "Tally",
+      "category": "forms",
+      "freeUse": "Camper waitlist, host interest, road-stop lead, safety survey",
+      "campinStatus": "Ready to connect",
+      "localAssets": ["data/forms/camper_waitlist_form.json", "data/forms/host_interest_form.json", "data/forms/road_stop_lead_form.json", "data/forms/safety_survey_form.json"],
+      "upgradeTrigger": "Need custom domain, team collaboration, data retention controls, or email verification."
+    },
+    {
+      "name": "Airtable Free",
+      "category": "database",
+      "freeUse": "Research OS, host leads, road-stop leads, validation pipeline, content tracker",
+      "campinStatus": "Ready to connect",
+      "localAssets": ["data/research/schemas/research_os_fields.csv", "data/research/templates"],
+      "upgradeTrigger": "Record limits, automations, interfaces, or team workflow complexity."
+    },
+    {
+      "name": "Brevo Free",
+      "category": "newsletter",
+      "freeUse": "The Campfire newsletter, welcome sequence, consented list management",
+      "campinStatus": "Ready to connect",
+      "localAssets": ["data/newsletter/welcome_sequence.md", "data/newsletter/the_campfire_issue_template.md"],
+      "upgradeTrigger": "Daily send cap, Brevo branding, advanced automation, deliverability controls."
+    },
+    {
+      "name": "Notion Free",
+      "category": "docs",
+      "freeUse": "Operating docs, founder notes, meeting notes, publishing calendar",
+      "campinStatus": "Optional",
+      "localAssets": ["Docs/Business", "Docs/Design"],
+      "upgradeTrigger": "Team permissions, guests, advanced collaboration, larger file workflows."
+    },
+    {
+      "name": "Google Drive",
+      "category": "files",
+      "freeUse": "Host photos, route proof, permission notes, outreach assets",
+      "campinStatus": "Needs account",
+      "localAssets": ["brand", "Docs", "data"],
+      "upgradeTrigger": "Need app-integrated uploads or signed storage URLs."
+    },
+    {
+      "name": "Google Search Console",
+      "category": "seo",
+      "freeUse": "Search indexing and query monitoring after launch",
+      "campinStatus": "Paused until website launch",
+      "localAssets": ["Docs/Business/CampIn_SEO_AEO_GEO_Briefs.md"],
+      "upgradeTrigger": "No paid upgrade required; add specialist SEO tools only after traffic exists."
+    },
+    {
+      "name": "Codex Automations",
+      "category": "automation",
+      "freeUse": "Weekly intelligence, validation review, host enrichment, SEO briefs, newsletter draft, UX QA",
+      "campinStatus": "Live",
+      "localAssets": ["Docs/Business/CampIn_Agentic_Workflows.md", "data/workflows/agentic_workflows.json"],
+      "upgradeTrigger": "Need external API integrations or CI/CD scheduling."
+    }
+  ]
+}

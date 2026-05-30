@@ -1,0 +1,67 @@
+[
+  {
+    "slug": "byot-camping-near-bangalore",
+    "title": "BYOT camping near Bangalore",
+    "status": "community_suggested",
+    "candidateIds": [
+      "chukkimane-eco-resort-karnataka",
+      "chayagruha-homestay-karnataka",
+      "campers-creek-kabbal-forest-karnataka",
+      "sea-shore-beach-stay-karnataka",
+      "backyard-camp-karnataka",
+      "wilderness-jungle-camp-karnataka"
+    ],
+    "candidateCount": 6,
+    "safetyNotes": [
+      "Do not publish wild pins",
+      "Verify host-controlled boundary",
+      "Require washroom and water proof"
+    ],
+    "nextAction": "Review matched candidates and select founder-call targets."
+  },
+  {
+    "slug": "kerala-maharashtra-caravan-corridor",
+    "title": "Kerala and Maharashtra caravan corridors",
+    "status": "research_lead",
+    "candidateIds": [
+      "kava-eco-camp-and-caravan-park-kerala",
+      "caravan-meadows-kerala",
+      "caravaanlife-a-mountain-lake-escapade-maharashtra",
+      "caravaanlife-the-chronicles-of-wakan-maharashtra",
+      "caravaanlife-an-exquisite-backwater-getaway-maharashtra",
+      "caravaanlife-enjoy-a-riverside-escapade-maharashtra",
+      "caravaanlife-of-valleys-and-lakes-maharashtra",
+      "mtdc-resort-parking-network-maharashtra"
+    ],
+    "candidateCount": 8,
+    "safetyNotes": [
+      "Confirm plug type",
+      "Confirm grey-water or waste rules",
+      "Do not imply live availability"
+    ],
+    "nextAction": "Review matched candidates and select founder-call targets."
+  },
+  {
+    "slug": "northeast-overlanding-stops",
+    "title": "Northeast overlanding stops",
+    "status": "research_lead",
+    "candidateIds": [
+      "white-water-village-meghalaya",
+      "sohra-view-lodge-meghalaya",
+      "black-bridge-resort-meghalaya",
+      "high-winds-meghalaya",
+      "lalimou-camp-assam",
+      "sapoi-tea-estate-assam",
+      "3-guys-adventure-arunachal-pradesh",
+      "letro-homestay-arunachal-pradesh",
+      "wild-himalaya-glamping-camp-himachal-pradesh"
+    ],
+    "candidateCount": 9,
+    "safetyNotes": [
+      "Check permit requirements",
+      "Confirm direct host acceptance",
+      "Avoid fragile exact pins before consent"
+    ],
+    "nextAction": "Review matched candidates and select founder-call targets."
+  }
+]

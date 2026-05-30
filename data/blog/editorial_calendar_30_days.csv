@@ -1,0 +1,31 @@
+day,slot,cluster,target_query,angle,cta,status
+1,morning,own_tent_bangalore,own tent camping near Bangalore,BYOT safety and permission guide,/coming-soon,published
+1,evening,safe_legal_camping,is camping legal in India,Permission-first camping explainer,/community,published
+2,morning,bangalore_region,camping near Bangalore comparison,Ramanagara vs Kanakapura vs Coorg vs Chikmagalur,/coming-soon,published
+2,evening,monsoon,monsoon camping Coorg Wayanad Chikmagalur,Seasonal rain-readiness checklist,/coming-soon,published
+3,morning,road_stops,campervan road stops India,Overnight parking and road-stop standard,/coming-soon,published
+3,evening,comparison,CampMonk vs HireACamp vs Exoticamp,Fair competitor comparison and CampIn positioning,/coming-soon,published
+4,morning,family_safety,family camping safety India,First-time family safety filters,/coming-soon,published
+4,evening,camping_styles,own tent vs glamping India,Camping style decision guide,/coming-soon,published
+5,morning,solo_safety,solo women camping safety India,Solo-aware and women-aware filters,/coming-soon,published
+5,evening,host_education,host your land for camping India,Landowner guide and founding host CTA,/host-your-land,published
+6,morning,bangalore_region,camping near Ramanagara,Permissioned private land vs random wild camping,/coming-soon,planned
+6,evening,road_stops,Bangalore Coorg Wayanad road stops,Route-stop checklist and lead collection,/coming-soon,planned
+7,morning,host_education,coffee estate camping Coorg hosts,How estates can host responsible campers,/host-your-land,planned
+7,evening,monsoon,Wayanad camping in monsoon,Rain road and leech checklist,/coming-soon,planned
+8,morning,comparison,best camping app India,How to evaluate trust and facilities,/coming-soon,planned
+8,evening,own_tent_bangalore,BYOT camping India,What hosts must allow and campers must bring,/coming-soon,planned
+9,morning,family_safety,camping with kids near Bangalore,Family-ready site requirements,/coming-soon,planned
+9,evening,host_education,farm camping near Bangalore hosts,What a small farm needs before listing,/host-your-land,planned
+10,morning,safe_legal_camping,can you camp on beaches in India,Beach camping permission and safety,/community,planned
+10,evening,road_stops,overnight parking India road trip,Safe parking vs informal stopping,/coming-soon,planned
+11,morning,bangalore_region,camping near Kanakapura,Private farms and forest-belt caution,/coming-soon,planned
+11,evening,camping_styles,hosted tent camping India,Beginner-friendly hosted tent guide,/coming-soon,planned
+12,morning,comparison,CampIn vs Airbnb camping India,Why camping needs different trust fields,/coming-soon,planned
+12,evening,solo_safety,safe campsites for solo travellers India,What to verify before staying,/community,planned
+13,morning,monsoon,Chikmagalur camping in rain,Coffee estate rain readiness,/coming-soon,planned
+13,evening,host_education,dhaba road stop camping India,How roadside businesses can host vehicles,/host-your-land,planned
+14,morning,own_tent_bangalore,camping gear checklist India,BYOT essentials for South India,/coming-soon,planned
+14,evening,safe_legal_camping,responsible camping pledge India,How CampIn protects access and hosts,/community,planned
+15,morning,bangalore_region,camping near Coorg from Bangalore,Two-night estate camping decision guide,/coming-soon,planned
+15,evening,comparison,glamping vs camping India,When comfort helps and when it dilutes camping,/coming-soon,planned

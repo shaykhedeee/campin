@@ -1,0 +1,10 @@
+<svg width="640" height="220" viewBox="0 0 640 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">CampIn Reviewed badge</title>
+  <desc id="desc">A CampIn trust badge for reviewed sites.</desc>
+  <rect x="10" y="10" width="620" height="200" rx="34" fill="#F7F5F2" stroke="#1F3D2B" stroke-width="20"/>
+  <circle cx="112" cy="110" r="58" fill="#1F3D2B"/>
+  <path d="M82 112L103 133L145 87" stroke="#F7F5F2" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="202" y="94" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800" fill="#1F3D2B">CampIn Reviewed</text>
+  <text x="202" y="140" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600" fill="#5F5F5F">Location, host contact, photos, and core amenities checked</text>
+</svg>
+

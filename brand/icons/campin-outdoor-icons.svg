@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <symbol id="campin-icon-tent" viewBox="0 0 24 24">
+      <path d="M3 19h18L12 5 3 19Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M12 5v14M9 19l3-6 3 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-own-tent" viewBox="0 0 24 24">
+      <path d="M4 19h16L12 7 4 19Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M8 7h8M12 7v12M7 19l5-7 5 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="campin-icon-farm-camp" viewBox="0 0 24 24">
+      <path d="M4 18h16M6 18V9l6-4 6 4v9M9 18v-5h6v5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5 14c2-2 4-2 6 0s4 2 8 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="campin-icon-forest-edge" viewBox="0 0 24 24">
+      <path d="M7 19V9M4 12l3-7 3 7H4ZM16 19V7M12 11l4-7 4 7h-8ZM3 19h18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-lake-nearby" viewBox="0 0 24 24">
+      <path d="M5 8c2-2 4-2 7 0s5 2 7 0M4 14c2-2 5-2 8 0s6 2 8 0M5 19c2-1.5 4-1.5 7 0s5 1.5 7 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="campin-icon-hill-view" viewBox="0 0 24 24">
+      <path d="M3 18 9 9l4 5 2-3 6 7H3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M17 6h.01" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="campin-icon-road-stop" viewBox="0 0 24 24">
+      <path d="M6 20 9 4h6l3 16M12 4v16M8 14h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M17 6h3v6h-3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-parking" viewBox="0 0 24 24">
+      <path d="M8 20V4h5.5a4.5 4.5 0 0 1 0 9H8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-bike" viewBox="0 0 24 24">
+      <path d="M6 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM18 18a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM8.5 15h4L10 9h3l2 6M14 9h3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-campervan" viewBox="0 0 24 24">
+      <path d="M3 17V8c0-1.1.9-2 2-2h9l4 4h1c1.1 0 2 .9 2 2v5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M7 18a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM17 18a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM6 10h5M14 10h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="campin-icon-route" viewBox="0 0 24 24">
+      <path d="M6 6h.01M18 18h.01M6 6c7 0 12 1 12 5s-12 1-12 7h12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-signal" viewBox="0 0 24 24">
+      <path d="M5 17h.01M9 17a4 4 0 0 1 6 0M6 12a8 8 0 0 1 12 0M3 8a12 12 0 0 1 18 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="campin-icon-washroom" viewBox="0 0 24 24">
+      <path d="M7 4h10v7a5 5 0 0 1-10 0V4ZM8 20h8M9 8h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-shower" viewBox="0 0 24 24">
+      <path d="M5 11a7 7 0 0 1 14 0H5ZM7 15h.01M11 15h.01M15 15h.01M9 19h.01M13 19h.01M17 19h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-water" viewBox="0 0 24 24">
+      <path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M9 15a3 3 0 0 0 3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="campin-icon-power" viewBox="0 0 24 24">
+      <path d="m13 3-7 11h6l-1 7 7-11h-6l1-7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-food" viewBox="0 0 24 24">
+      <path d="M6 4v16M4 4v5a2 2 0 0 0 4 0V4M15 4v16M15 4c3 1 5 4 5 8h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-fire-safe" viewBox="0 0 24 24">
+      <path d="M12 21a6 6 0 0 0 6-6c0-3-2-5-4-7 .2 2-.7 3.3-2 4-1-2-1.2-5-1-8-3 2-5 6-5 10a6 6 0 0 0 6 7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M5 5 19 19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="campin-icon-first-aid" viewBox="0 0 24 24">
+      <path d="M8 6V4h8v2h3v14H5V6h3ZM12 10v6M9 13h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-reviewed" viewBox="0 0 24 24">
+      <path d="M12 3 19 6v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="m8.5 12 2.2 2.2L15.8 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-permission" viewBox="0 0 24 24">
+      <path d="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v9H6v-9Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="m9 16 2 2 4-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-exact-pin" viewBox="0 0 24 24">
+      <path d="M12 21s6-5.2 6-11a6 6 0 0 0-12 0c0 5.8 6 11 6 11Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    </symbol>
+    <symbol id="campin-icon-host-present" viewBox="0 0 24 24">
+      <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21a8 8 0 0 1 16 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="m17 8 2 2 3-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="campin-icon-women-aware" viewBox="0 0 24 24">
+      <path d="M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10ZM12 13v8M9 18h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M17.5 4.5 20 2M20 2h-3M20 2v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="campin-icon-family-safe" viewBox="0 0 24 24">
+      <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3 20a5 5 0 0 1 10 0M11 20a5 5 0 0 1 10 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="campin-icon-quiet-zone" viewBox="0 0 24 24">
+      <path d="M4 14h4l5 4V6L8 10H4v4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M17 9l4 4M21 9l-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="campin-icon-emergency-contact" viewBox="0 0 24 24">
+      <path d="M8 4h8l2 3v13H6V7l2-3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M12 9v6M9 12h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="campin-icon-newsletter" viewBox="0 0 24 24">
+      <path d="M4 6h16v12H4V6Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="m4 7 8 7 8-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>

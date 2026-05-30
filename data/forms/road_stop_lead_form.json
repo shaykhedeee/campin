@@ -1,0 +1,23 @@
+{
+  "form_name": "CampIn Road Stop Lead",
+  "recommended_tool": "Tally or Typeform",
+  "headline": "Suggest a safe road stop for Indian campers.",
+  "subheadline": "Help CampIn map places with overnight parking, washrooms, water, and local support.",
+  "fields": [
+    {"id": "stop_name", "label": "Stop name", "type": "short_text", "required": true},
+    {"id": "route", "label": "Route", "type": "single_choice", "required": true, "options": ["Bangalore-Coorg-Wayanad", "Bangalore-Chikmagalur", "Mumbai-Goa", "Delhi-Manali-Leh", "Jaipur-Jaisalmer", "Other"]},
+    {"id": "location_pin", "label": "Location / Google Maps pin", "type": "url", "required": true},
+    {"id": "stop_type", "label": "Stop type", "type": "single_choice", "required": true, "options": ["Dhaba", "Farm", "Homestay", "Petrol pump", "Cafe", "Campground", "Estate", "Other"]},
+    {"id": "overnight_parking", "label": "Is overnight parking possible?", "type": "single_choice", "required": true, "options": ["Yes", "Maybe", "No", "Unknown"]},
+    {"id": "washroom", "label": "Washroom", "type": "single_choice", "required": true, "options": ["Clean", "Basic", "Unknown", "None"]},
+    {"id": "water", "label": "Water", "type": "single_choice", "required": true, "options": ["Drinking", "Basic", "Unknown", "None"]},
+    {"id": "power", "label": "Power / charging", "type": "single_choice", "required": true, "options": ["Yes", "Limited", "Unknown", "No"]},
+    {"id": "food", "label": "Food nearby", "type": "single_choice", "required": true, "options": ["On-site", "Nearby", "Unknown", "None"]},
+    {"id": "night_safety", "label": "Night safety notes", "type": "long_text", "required": true},
+    {"id": "vehicle_suitability", "label": "Suitable for", "type": "multiple_choice", "required": true, "options": ["Bike", "Car", "SUV", "Campervan"]},
+    {"id": "public_contact", "label": "Public business contact, if available", "type": "short_text", "required": false}
+  ],
+  "success_message": "Thank you. CampIn will review this as a road-stop candidate before making any trust claims.",
+  "airtable_table": "Road Stop Leads",
+  "email_tags": ["road_stop_lead"]
+}

@@ -1,0 +1,27 @@
+{
+  "form_name": "CampIn Host Interest",
+  "recommended_tool": "Tally or Typeform",
+  "headline": "Turn your land into a verified outdoor stay.",
+  "subheadline": "Founding hosts get listing setup help, founder support, and no commission during the validation phase.",
+  "fields": [
+    {"id": "property_name", "label": "Host / property name", "type": "short_text", "required": true},
+    {"id": "contact_person", "label": "Contact person", "type": "short_text", "required": true},
+    {"id": "phone_whatsapp", "label": "Phone / WhatsApp", "type": "phone", "required": true},
+    {"id": "email", "label": "Email", "type": "email", "required": false},
+    {"id": "property_type", "label": "What kind of place is this?", "type": "multiple_choice", "required": true, "options": ["Farm", "Coffee estate", "Homestay", "Orchard", "Terrace", "Forest-edge", "Lake/river side", "Dhaba / road stop", "Other"]},
+    {"id": "google_maps_pin", "label": "Exact Google Maps pin", "type": "url", "required": true},
+    {"id": "region", "label": "Region / nearest town", "type": "short_text", "required": true},
+    {"id": "washroom", "label": "Washroom access", "type": "single_choice", "required": true, "options": ["Private guest washroom", "Shared washroom", "Basic washroom", "Not available"]},
+    {"id": "water", "label": "Water access", "type": "single_choice", "required": true, "options": ["Drinking water", "Basic water", "Limited water", "Not available"]},
+    {"id": "electricity", "label": "Electricity / charging", "type": "single_choice", "required": true, "options": ["Yes", "Limited", "No"]},
+    {"id": "parking", "label": "Parking possible for", "type": "multiple_choice", "required": true, "options": ["Bike", "Car", "SUV", "Campervan", "No parking"]},
+    {"id": "night_safety", "label": "What makes this place safe at night?", "type": "long_text", "required": true},
+    {"id": "photos", "label": "Actual photos of the camping/parking area", "type": "file_or_link", "required": true},
+    {"id": "permission_status", "label": "Permission status", "type": "single_choice", "required": true, "options": ["I own this land", "I lease/control this land", "Community/family land", "Unsure"]},
+    {"id": "expected_price", "label": "Expected price per night, if any", "type": "number", "required": false},
+    {"id": "host_rules", "label": "Any house rules for campers?", "type": "long_text", "required": false}
+  ],
+  "success_message": "Thank you. CampIn reviews every host application manually and will contact strong founding host candidates.",
+  "airtable_table": "Host Leads",
+  "email_tags": ["host_application", "founding_host_candidate"]
+}

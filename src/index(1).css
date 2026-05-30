@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #1F3D2B;
+  --color-forest-light: #2A5239;
+  --color-forest-dark: #152A1D;
+  --color-orange: #E67E22;
+  --color-orange-light: #F0A04B;
+  --color-orange-dark: #C96A10;
+  --color-offwhite: #F7F5F2;
+  --color-textgrey: #5F5F5F;
+  --color-textdark: #2D2D2D;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-textdark);
+  background-color: var(--color-offwhite);
+}
+
+::selection {
+  background-color: #1F3D2B;
+  color: white;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out both;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }

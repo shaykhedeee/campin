@@ -1,0 +1,11 @@
+id,workstream,task,status,owner,notes
+ops-001,Forms,Create Tally camper waitlist from data/forms/camper_waitlist_form.json,ready_to_connect,Founder,Use consent language and WhatsApp opt-in
+ops-002,Forms,Create Tally host interest form from data/forms/host_interest_form.json,ready_to_connect,Founder,Require location pin and permission status
+ops-003,Forms,Create Tally road-stop lead form from data/forms/road_stop_lead_form.json,ready_to_connect,Founder,Keep road stops separate from campsite listings
+ops-004,Database,Create Airtable Research OS base from research_os_fields.csv,ready_to_connect,Founder,Import seed CSV after field setup
+ops-005,Newsletter,Create Brevo list named The Campfire by CampIn,ready_to_connect,Founder,Import only consented emails
+ops-006,Files,Create Google Drive folders for host proof and route proof,needs_account,Founder,Use one folder per candidate site
+ops-007,SEO,Prepare first five local page briefs from SEO/AEO/GEO plan,live_locally,Content,Start with Bangalore/South India cluster
+ops-008,Automation,Review created Codex automations,live,Founder,Weekly cadence already created
+ops-009,Trust,Create host verification matrix in Airtable,ready_to_connect,Founder,Permission/washroom/water/exact pin/emergency contact
+ops-010,Validation,Run 5 camper and 5 host user tests,needs_proof,Founder,Do before booking-engine planning

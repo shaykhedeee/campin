@@ -1,0 +1,11 @@
+<svg width="640" height="220" viewBox="0 0 640 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">CampIn Road Stop Standard badge</title>
+  <desc id="desc">A CampIn badge for road stops with checked basic amenities.</desc>
+  <rect x="10" y="10" width="620" height="200" rx="34" fill="#F7F5F2" stroke="#E67E22" stroke-width="20"/>
+  <path d="M69 147C92 120 116 120 139 147C161 173 187 173 212 143" stroke="#1F3D2B" stroke-width="18" stroke-linecap="round"/>
+  <path d="M140 52C109.624 52 85 76.624 85 107C85 152.576 140 198 140 198C140 198 195 152.576 195 107C195 76.624 170.376 52 140 52Z" fill="#1F3D2B"/>
+  <path d="M140 83L115 132H165L140 83Z" fill="#F7F5F2"/>
+  <text x="248" y="94" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800" fill="#1F3D2B">Road Stop Standard</text>
+  <text x="248" y="140" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600" fill="#5F5F5F">Parking, washroom, water, and local support checked</text>
+</svg>
+

@@ -1,0 +1,53 @@
+{
+  "totalRows": 24,
+  "bySourceType": {
+    "Public business lead": 24
+  },
+  "byLeadType": {
+    "Road Stop Lead": 17,
+    "Host Lead": 7
+  },
+  "byLocation": {
+    "Manthuruthy, Malampuzha, Palakkad": 1,
+    "Nallathanni, Vagamon-Elappara Road, Idukki": 1,
+    "Murshet, Nashik region": 1,
+    "Wakan, Konkan region": 1,
+    "Panshet Backwaters, Pune region": 1,
+    "Satara, Pune region": 1,
+    "Lonavala, Pune region": 1,
+    "Multiple": 1,
+    "Shillong / Umtrew side": 1,
+    "Cherrapunji": 1,
+    "Kyrdemkhla": 1,
+    "Jowai": 1,
+    "Nameri": 1,
+    "Dhekiajuli": 1,
+    "Bhalukpong": 1,
+    "Sangti": 1,
+    "Narkanda": 1,
+    "Near Bangalore": 2,
+    "Chikkamagaluru": 1,
+    "Kanchanahalli / Kabbal Forest": 1,
+    "Hosabettu Beach, Mangaluru": 1,
+    "Malavalli / Mandya": 1,
+    "Near Kuldhara, Jaisalmer": 1
+  },
+  "byPainPoint": {
+    "Water": 24,
+    "Road Access": 11,
+    "Safety": 7,
+    "Mobile Signal": 7,
+    "Weather": 1,
+    "Washroom": 15,
+    "Spammy Organizers": 1,
+    "Gear": 4,
+    "Permission": 3,
+    "Local Interference": 2,
+    "Wildlife/Protected Land": 1
+  },
+  "highConfidence": 17,
+  "candidateLeads": 24,
+  "publishableDrafts": 24,
+  "guideOpportunities": 3,
+  "missingProofBlockers": 85
+}

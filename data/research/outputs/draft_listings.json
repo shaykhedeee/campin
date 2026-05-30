@@ -1,0 +1,831 @@
+[
+  {
+    "id": "kava-eco-camp-and-caravan-park-kerala",
+    "title": "KAVA Eco Camp and Caravan Park",
+    "region": "Manthuruthy, Malampuzha, Palakkad",
+    "state": "Kerala",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "official",
+    "sourceUrls": [
+      "https://www.keralatourism.org/newsletter/news/2025/kava-eco-camp-and-caravan-park-a-new-benchmark/2292"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Washroom proof",
+      "Public business contact",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "unknown",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Verify bay dimensions, tariffs, plug type, waste policy"
+  },
+  {
+    "id": "caravan-meadows-kerala",
+    "title": "Caravan Meadows",
+    "region": "Nallathanni, Vagamon-Elappara Road, Idukki",
+    "state": "Kerala",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "official",
+    "sourceUrls": [
+      "https://www.keralatourism.org/newsletter/news/2022/wagamon-caravan-park/2058"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Washroom proof",
+      "Current tariff"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "unknown",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "medium",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Verify current operations and booking contact"
+  },
+  {
+    "id": "caravaanlife-a-mountain-lake-escapade-maharashtra",
+    "title": "CaravaanLife - A Mountain Lake Escapade",
+    "region": "Murshet, Nashik region",
+    "state": "Maharashtra",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "host_direct",
+    "sourceUrls": [
+      "https://caravaanlife.com/"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Washroom proof",
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "unknown",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Confirm exact host and non-network camper acceptance"
+  },
+  {
+    "id": "caravaanlife-the-chronicles-of-wakan-maharashtra",
+    "title": "CaravaanLife - The Chronicles of Wakan",
+    "region": "Wakan, Konkan region",
+    "state": "Maharashtra",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "host_direct",
+    "sourceUrls": [
+      "https://caravaanlife.com/"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Washroom proof",
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "unknown",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Confirm exact host and GPS"
+  },
+  {
+    "id": "caravaanlife-an-exquisite-backwater-getaway-maharashtra",
+    "title": "CaravaanLife - An Exquisite Backwater Getaway",
+    "region": "Panshet Backwaters, Pune region",
+    "state": "Maharashtra",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "host_direct",
+    "sourceUrls": [
+      "https://caravaanlife.com/"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Washroom proof",
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "unknown",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Confirm exact host and monsoon access"
+  },
+  {
+    "id": "caravaanlife-enjoy-a-riverside-escapade-maharashtra",
+    "title": "CaravaanLife - Enjoy a Riverside Escapade",
+    "region": "Satara, Pune region",
+    "state": "Maharashtra",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "host_direct",
+    "sourceUrls": [
+      "https://caravaanlife.com/"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Washroom proof",
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "unknown",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Confirm road width and river safety"
+  },
+  {
+    "id": "caravaanlife-of-valleys-and-lakes-maharashtra",
+    "title": "CaravaanLife - Of Valleys and Lakes",
+    "region": "Lonavala, Pune region",
+    "state": "Maharashtra",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "host_direct",
+    "sourceUrls": [
+      "https://caravaanlife.com/"
+    ],
+    "unknowns": [
+      "Washroom proof",
+      "Public business contact",
+      "Current tariff"
+    ],
+    "confidence": {
+      "byotAllowed": "high",
+      "overnightParking": "high",
+      "washroom": "unknown",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Confirm current operator and BYOT rules"
+  },
+  {
+    "id": "mtdc-resort-parking-network-maharashtra",
+    "title": "MTDC resort parking network",
+    "region": "Multiple",
+    "state": "Maharashtra",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "host_direct",
+    "sourceUrls": [
+      "https://www.overdrive.in/news-cars-auto/features/counter-to-covid-mtdc-flags-off-its-motorhome-and-campervan"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Public business contact",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Ask MTDC for participating resorts and tariffs"
+  },
+  {
+    "id": "white-water-village-meghalaya",
+    "title": "White Water Village",
+    "region": "Shillong / Umtrew side",
+    "state": "Meghalaya",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "aggregator",
+    "sourceUrls": [
+      "https://www.camping-co.com/destination/White-Water-Village/"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Verify direct booking and campervan size limits"
+  },
+  {
+    "id": "sohra-view-lodge-meghalaya",
+    "title": "Sohra View Lodge",
+    "region": "Cherrapunji",
+    "state": "Meghalaya",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "aggregator",
+    "sourceUrls": [
+      "https://www.camping-co.com/destination/Sohra-View-Lodge/"
+    ],
+    "unknowns": [
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "high",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Verify direct host acceptance outside Camping Co package"
+  },
+  {
+    "id": "black-bridge-resort-meghalaya",
+    "title": "Black Bridge Resort",
+    "region": "Kyrdemkhla",
+    "state": "Meghalaya",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "aggregator",
+    "sourceUrls": [
+      "https://www.camping-co.com/destination/Black-Bridge-Resort/"
+    ],
+    "unknowns": [
+      "Public business contact",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "high",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Confirm road access and nightly parking tariff"
+  },
+  {
+    "id": "high-winds-meghalaya",
+    "title": "High Winds",
+    "region": "Jowai",
+    "state": "Meghalaya",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "aggregator",
+    "sourceUrls": [
+      "https://www.camping-co.com/destination/High-Winds/"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Confirm source page and current operations"
+  },
+  {
+    "id": "lalimou-camp-assam",
+    "title": "Lalimou Camp",
+    "region": "Nameri",
+    "state": "Assam",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "aggregator",
+    "sourceUrls": [
+      "https://www.camping-co.com/destination/Lalimou-Camp/"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Verify park-side permits and night parking"
+  },
+  {
+    "id": "sapoi-tea-estate-assam",
+    "title": "Sapoi Tea Estate",
+    "region": "Dhekiajuli",
+    "state": "Assam",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "aggregator",
+    "sourceUrls": [
+      "https://www.camping-co.com/destination/Sapoi-Tea-Estate/"
+    ],
+    "unknowns": [
+      "Public business contact",
+      "Current tariff"
+    ],
+    "confidence": {
+      "byotAllowed": "high",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Confirm BYOT/private campervan acceptance"
+  },
+  {
+    "id": "3-guys-adventure-arunachal-pradesh",
+    "title": "3 Guys Adventure",
+    "region": "Bhalukpong",
+    "state": "Arunachal Pradesh",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "aggregator",
+    "sourceUrls": [
+      "https://www.camping-co.com/destination/3-Guys-Adventure/"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Confirm permits and local night stay rules"
+  },
+  {
+    "id": "letro-homestay-arunachal-pradesh",
+    "title": "Letro Homestay",
+    "region": "Sangti",
+    "state": "Arunachal Pradesh",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "aggregator",
+    "sourceUrls": [
+      "https://www.camping-co.com/destination/Letro-Homestay/"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Confirm vehicle size and local permits"
+  },
+  {
+    "id": "wild-himalaya-glamping-camp-himachal-pradesh",
+    "title": "Wild Himalaya Glamping Camp",
+    "region": "Narkanda",
+    "state": "Himachal Pradesh",
+    "verificationStage": "reviewed",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "aggregator",
+    "sourceUrls": [
+      "https://www.camping-co.com/destination/Wild-Himalaya-Glamping-Camp/"
+    ],
+    "unknowns": [
+      "BYOT or tent rules",
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "unknown",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Verify page and host directly"
+  },
+  {
+    "id": "chukkimane-eco-resort-karnataka",
+    "title": "ChukkiMane Eco Resort",
+    "region": "Near Bangalore",
+    "state": "Karnataka",
+    "verificationStage": "lead",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "host_direct",
+    "sourceUrls": [
+      "https://www.chukkimane.com/byot-camping/"
+    ],
+    "unknowns": [
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "high",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Verify campervan parking and charging"
+  },
+  {
+    "id": "chayagruha-homestay-karnataka",
+    "title": "Chayagruha Homestay",
+    "region": "Chikkamagaluru",
+    "state": "Karnataka",
+    "verificationStage": "lead",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "host_direct",
+    "sourceUrls": [
+      "https://chayagruhahomestay.in/"
+    ],
+    "unknowns": [
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "high",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Ask if campervans can park overnight near tenting space"
+  },
+  {
+    "id": "campers-creek-kabbal-forest-karnataka",
+    "title": "Campers Creek - Kabbal Forest",
+    "region": "Kanchanahalli / Kabbal Forest",
+    "state": "Karnataka",
+    "verificationStage": "lead",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "aggregator",
+    "sourceUrls": [
+      "https://campershub.in/camps/campers-creek-kabbal-forest/"
+    ],
+    "unknowns": [
+      "Overnight parking permission",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "high",
+      "overnightParking": "unknown",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "medium",
+      "campervanSuitability": "unknown"
+    },
+    "nextAction": "Verify source freshness and host contact"
+  },
+  {
+    "id": "sea-shore-beach-stay-karnataka",
+    "title": "Sea Shore Beach Stay",
+    "region": "Hosabettu Beach, Mangaluru",
+    "state": "Karnataka",
+    "verificationStage": "lead",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "aggregator",
+    "sourceUrls": [
+      "https://campershub.in/camps/sea-shore-beach-stay-hosabettu-beach-mangalore/"
+    ],
+    "unknowns": [
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "high",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "unknown"
+    },
+    "nextAction": "Verify tide-safe parking and beach rules"
+  },
+  {
+    "id": "backyard-camp-karnataka",
+    "title": "Backyard Camp",
+    "region": "Near Bangalore",
+    "state": "Karnataka",
+    "verificationStage": "community_suggested",
+    "availability": {
+      "mode": "unknown",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "host_direct",
+    "sourceUrls": [
+      "https://thebackyardcamp.in/"
+    ],
+    "unknowns": [
+      "Washroom proof",
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "high",
+      "overnightParking": "high",
+      "washroom": "unknown",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Verify water, night parking, electricity, campervan acceptance"
+  },
+  {
+    "id": "wilderness-jungle-camp-karnataka",
+    "title": "Wilderness Jungle Camp",
+    "region": "Malavalli / Mandya",
+    "state": "Karnataka",
+    "verificationStage": "community_suggested",
+    "availability": {
+      "mode": "unknown",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "host_direct",
+    "sourceUrls": [
+      "https://www.wildernessjunglecamp.com/tariff.php"
+    ],
+    "unknowns": [
+      "Public business contact",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "high",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "unknown"
+    },
+    "nextAction": "Verify parking, toilets, drinking water and electricity"
+  },
+  {
+    "id": "dreamtime-bungalows-rajasthan",
+    "title": "Dreamtime Bungalows",
+    "region": "Near Kuldhara, Jaisalmer",
+    "state": "Rajasthan",
+    "verificationStage": "lead",
+    "availability": {
+      "mode": "call_to_confirm",
+      "lastCheckedAt": "2026-05-25",
+      "hostResponseTargetHours": 24
+    },
+    "permissionStatus": "not_verified",
+    "contactPolicy": "gated_relay",
+    "contactVerificationStatus": "public_business_contact_found",
+    "sourceType": "host_direct",
+    "sourceUrls": [
+      "https://dreamtimebungalows.com/"
+    ],
+    "unknowns": [
+      "Public business contact",
+      "Current tariff",
+      "Host or permission authority"
+    ],
+    "confidence": {
+      "byotAllowed": "high",
+      "overnightParking": "high",
+      "washroom": "high",
+      "water": "high",
+      "electricity": "high",
+      "directBusinessContact": "unknown",
+      "campervanSuitability": "high"
+    },
+    "nextAction": "Verify campervan parking, water refill, charging and dune compliance"
+  }
+]

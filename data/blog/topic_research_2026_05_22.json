@@ -1,0 +1,80 @@
+{
+  "version": "2026-05-22",
+  "editorial_position": "CampIn should own permission-first, safety-first, own-tent, road-stop, and Bangalore/South India camping answers before launching a booking marketplace.",
+  "sources": [
+    {
+      "type": "reddit",
+      "url": "https://www.reddit.com/r/BangaloreTrekkers/comments/1s7mi8o/camping_sites_suggestions/",
+      "insight": "Recent Bangalore users ask specifically for safe BYOT camping where they can pitch their own tent and avoid crowded commercial camps."
+    },
+    {
+      "type": "reddit",
+      "url": "https://www.reddit.com/r/BangaloreSocial/comments/1sj9dfd/is_there_any_camping_place_within_150200km_in/",
+      "insight": "Solo campers ask for safe camping within 150-200 km of Bangalore with no local interference."
+    },
+    {
+      "type": "news",
+      "url": "https://timesofindia.indiatimes.com/city/bengaluru/tents-solo-travellers-a-safety-check-in-focus/articleshow/130476853.cms",
+      "insight": "Safety around tents and solo travelers is a current Bangalore news topic, including regulatory ambiguity."
+    },
+    {
+      "type": "official",
+      "url": "https://goatourism.gov.in/caravan-tourism-policy/",
+      "insight": "Goa caravan policy shows official interest in caravan parks with power, wastewater, freshwater, convenience facilities, and designated overnight parking."
+    },
+    {
+      "type": "official",
+      "url": "https://tourism.gov.in/sites/default/files/2020-01/Guideline_8.pdf",
+      "insight": "Ministry caravan/campervan guidance supports the road-stop and caravan park content cluster."
+    },
+    {
+      "type": "competitor",
+      "url": "https://campmonk.com/",
+      "insight": "CampMonk already has BYOT, caravan stays, safe camps, nature stays, events, and landowner partnership messaging."
+    },
+    {
+      "type": "competitor",
+      "url": "https://www.hireacamp.com/",
+      "insight": "HireACamp proves demand for discoverable camping inventory and common amenities such as meals and washrooms."
+    },
+    {
+      "type": "competitor",
+      "url": "https://www.exoticamp.com/blogs/camping-sites-near-bangalore",
+      "insight": "Exoticamp and similar sites target region-listicle search demand around Bangalore and South India."
+    },
+    {
+      "type": "seo",
+      "url": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+      "insight": "Google emphasizes helpful, reliable, people-first content rather than search-engine-first content."
+    },
+    {
+      "type": "schema",
+      "url": "https://schema.org/BlogPosting",
+      "insight": "BlogPosting schema should describe article metadata for blog posts."
+    }
+  ],
+  "topic_clusters": [
+    "own_tent_bangalore",
+    "safe_legal_camping_india",
+    "bangalore_region_comparison",
+    "monsoon_south_india",
+    "campervan_road_stops",
+    "competitor_comparisons",
+    "family_beginner_safety",
+    "solo_women_safety",
+    "host_land_camping",
+    "camping_styles"
+  ],
+  "first_posts": [
+    "own-tent-camping-near-bangalore",
+    "is-camping-legal-in-india",
+    "camping-near-bangalore-region-comparison",
+    "monsoon-camping-coorg-wayanad-chikmagalur",
+    "campervan-road-stops-india",
+    "campmonk-vs-hireacamp-vs-exoticamp-vs-campin",
+    "family-camping-safety-india",
+    "own-tent-vs-hosted-tent-vs-glamping",
+    "solo-women-camping-safety-india",
+    "host-your-land-for-camping-india"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "version": "2026-05-21",
+  "domain": "campin.co.in",
+  "phase": "pre_booking_marketplace",
+  "navigation": {
+    "primary": ["Explore", "Camping Near Bangalore", "Road Stops", "Host Your Land", "Community", "Safety", "The Campfire"],
+    "secondary": ["About", "Support", "Terms", "Privacy", "Cancellation", "Community Guidelines"],
+    "internal": ["Validation", "Ops", "Strategy"]
+  },
+  "pages": [
+    {
+      "title": "Home",
+      "path": "/",
+      "intent": "Explain CampIn and route campers/hosts",
+      "primary_cta": "Join waitlist",
+      "secondary_cta": "Host your land",
+      "must_include": ["trust chips", "first regions", "verification badges", "newsletter signup"]
+    },
+    {
+      "title": "Camping Near Bangalore",
+      "path": "/camping-near-bangalore",
+      "intent": "Capture Bangalore/South India local camping demand",
+      "primary_cta": "Get Bangalore camping list",
+      "schema": ["WebPage", "FAQPage", "BreadcrumbList"],
+      "must_include": ["direct answer", "permission notes", "own-tent guidance", "washroom/water filter", "nearby regions"]
+    },
+    {
+      "title": "Own-Tent Camping India",
+      "path": "/own-tent-camping-india",
+      "intent": "Answer the biggest unsolved camper question",
+      "primary_cta": "Join own-gear camper group",
+      "schema": ["WebPage", "FAQPage"],
+      "must_include": ["legal caution", "private land angle", "gear checklist", "safety notes"]
+    },
+    {
+      "title": "Road Stops",
+      "path": "/road-stops",
+      "intent": "Explain and validate overnight vehicle stops",
+      "primary_cta": "Suggest a road stop",
+      "schema": ["WebPage", "FAQPage"],
+      "must_include": ["route cards", "vehicle access", "night safety", "toilet/water/power"]
+    },
+    {
+      "title": "Community",
+      "path": "/community",
+      "intent": "Convert visitors into WhatsApp/newsletter community",
+      "primary_cta": "Join CampIn community",
+      "schema": ["WebPage"],
+      "must_include": ["groups", "pledge", "rules", "weekly rituals", "waitlist form"]
+    },
+    {
+      "title": "Safety And Trust",
+      "path": "/safety",
+      "intent": "Explain verification and trust labels",
+      "primary_cta": "Read verification standard",
+      "schema": ["WebPage", "FAQPage"],
+      "must_include": ["verification labels", "incident reporting", "responsible pledge", "known unknowns"]
+    }
+  ],
+  "content_models": {
+    "listing": ["id", "name", "slug", "region_cluster", "type", "own_tent_allowed", "toilets", "water", "parking", "permission_status", "verification_status", "risk_notes"],
+    "host": ["host_id", "property_type", "location_pin", "permission_status", "amenities", "expected_price", "founder_call_status", "verification_stage"],
+    "road_stop": ["stop_id", "route", "parking_capacity", "vehicle_types", "washroom", "water", "power", "night_safety", "local_contact", "score"],
+    "content_brief": ["page_slug", "target_query", "search_intent", "direct_answer", "faqs", "schema_type", "source_links", "original_campin_data"]
+  }
+}

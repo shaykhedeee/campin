@@ -1,0 +1,67 @@
+{
+  "validationRegion": "Bangalore/South India",
+  "searchQueries": [
+    {
+      "id": "Q001",
+      "text": "camping near Bangalore safe own tent washroom permission",
+      "purpose": "Camper demand and own-tent pain"
+    },
+    {
+      "id": "Q002",
+      "text": "camping Coorg own tent coffee estate washroom",
+      "purpose": "Coorg host and demand discovery"
+    },
+    {
+      "id": "Q003",
+      "text": "camping Wayanad own tent safe private land",
+      "purpose": "Wayanad demand and safety"
+    },
+    {
+      "id": "Q004",
+      "text": "camping Chikmagalur coffee estate private land",
+      "purpose": "Chikmagalur host supply"
+    },
+    {
+      "id": "Q005",
+      "text": "where can I pitch a tent in India legal safe",
+      "purpose": "Permission and legality content"
+    },
+    {
+      "id": "Q006",
+      "text": "campervan stops India overnight parking washroom water",
+      "purpose": "Road-stop validation"
+    },
+    {
+      "id": "Q007",
+      "text": "Bangalore Coorg road trip overnight parking camping",
+      "purpose": "Priority route mapping"
+    },
+    {
+      "id": "Q008",
+      "text": "safe camping for women India washroom host",
+      "purpose": "Safety persona validation"
+    },
+    {
+      "id": "Q009",
+      "text": "farm camping Karnataka private land host campers",
+      "purpose": "Host lead discovery"
+    },
+    {
+      "id": "Q010",
+      "text": "overlanding camping India road stop forum",
+      "purpose": "Forum and overlanding research"
+    }
+  ],
+  "reddit": {
+    "subreddits": ["bangalore", "BangaloreSocial", "IndiaTravel", "indianbikes", "CarsIndia", "mumbai", "pune"],
+    "queries": [
+      "camping near Bangalore safe own tent",
+      "camping Coorg own tent",
+      "camping Wayanad safe",
+      "where can I pitch tent India",
+      "campervan India overnight parking",
+      "road trip camping India washroom"
+    ]
+  }
+}
+
