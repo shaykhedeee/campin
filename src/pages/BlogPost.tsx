@@ -61,34 +61,30 @@ export default function BlogPost() {
               <Clock size={16} />
               {post.readTime}
             </span>
-            <span className="inline-flex items-center gap-2">
-              <Search size={16} />
-              {post.primaryKeyword}
-            </span>
           </div>
         </div>
         <div className="mx-auto max-w-5xl px-4 pb-10 sm:px-6 lg:px-8">
-          <img src={post.heroImage} alt={post.title} className="aspect-[16/8] w-full rounded-lg object-cover" />
+          <img src={post.heroImage} alt={post.title} className="aspect-[16/8] w-full rounded-2xl object-cover shadow-lg border border-forest/5" />
         </div>
       </header>
 
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-8">
         <div className="min-w-0">
-          <section className="rounded-lg border border-orange/20 bg-orange/10 p-5">
-            <p className="flex items-center gap-2 font-black text-forest">
-              <Shield size={19} className="text-orange" />
-              Direct answer
+          <section className="rounded-2xl border border-orange/20 bg-orange/5 p-6 sm:p-8 backdrop-blur-sm">
+            <p className="flex items-center gap-2.5 font-black text-forest">
+              <Shield size={20} className="text-orange" />
+              Quick Takeaway
             </p>
-            <p className="mt-3 text-base leading-7 text-forest">{post.directAnswer}</p>
+            <p className="mt-3 text-sm sm:text-base leading-relaxed text-forest/90">{post.directAnswer}</p>
           </section>
 
-          <section className="mt-6 rounded-lg border border-forest/10 bg-white p-5">
-            <h2 className="text-2xl font-black text-forest">Key Takeaways</h2>
+          <section className="mt-6 rounded-2xl border border-forest/10 bg-white p-6 sm:p-8 shadow-sm">
+            <h2 className="text-2xl font-black text-forest tracking-tight">Key Takeaways</h2>
             <div className="mt-4 space-y-3">
               {post.takeaways.map((takeaway) => (
                 <div key={takeaway} className="flex gap-3">
                   <CheckCircle size={19} className="mt-1 shrink-0 text-orange" />
-                  <p className="text-sm font-semibold leading-6 text-forest">{takeaway}</p>
+                  <p className="text-sm font-semibold leading-relaxed text-forest">{takeaway}</p>
                 </div>
               ))}
             </div>
@@ -96,11 +92,11 @@ export default function BlogPost() {
 
           <div className="mt-8 space-y-8">
             {post.sections.map((section) => (
-              <section key={section.heading}>
-                <h2 className="text-3xl font-black leading-tight text-forest">{section.heading}</h2>
+              <section key={section.heading} className="scroll-mt-28">
+                <h2 className="text-2xl sm:text-3xl font-black leading-tight text-forest tracking-tight">{section.heading}</h2>
                 <div className="mt-4 space-y-4">
                   {section.body.map((paragraph) => (
-                    <p key={paragraph} className="text-base leading-8 text-textgrey">
+                    <p key={paragraph} className="text-sm sm:text-base leading-relaxed text-textgrey">
                       {paragraph}
                     </p>
                   ))}
@@ -109,33 +105,38 @@ export default function BlogPost() {
             ))}
           </div>
 
-          <section className="mt-8 rounded-lg bg-forest p-6 text-white">
-            <p className="font-black text-orange">CampIn take</p>
-            <p className="mt-3 text-base leading-7 text-white/75">{post.campinAngle}</p>
-            <Link
-              to={post.cta.href}
-              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-orange px-5 py-3 font-black text-white transition-colors hover:bg-orange-dark"
-            >
-              {post.cta.label}
-              <ArrowRight size={17} />
-            </Link>
-            <p className="mt-3 text-sm leading-6 text-white/62">{post.cta.text}</p>
+          <section className="mt-10 rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c2419] to-[#0a1e14] p-6 sm:p-8 text-white relative overflow-hidden shadow-xl">
+            <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-orange/5 blur-2xl pointer-events-none" />
+            <p className="text-xs font-black uppercase tracking-wider text-orange">CampIn Trust Policy</p>
+            <h3 className="mt-2 text-xl font-black tracking-tight">CampIn Insights</h3>
+            <p className="mt-3 text-sm leading-relaxed text-white/80">{post.campinAngle}</p>
+            
+            <div className="mt-6 border-t border-white/10 pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <p className="text-xs leading-relaxed text-white/60 max-w-md">{post.cta.text}</p>
+              <Link
+                to={post.cta.href}
+                className="shrink-0 inline-flex items-center justify-center gap-2 rounded-xl bg-orange hover:bg-orange-dark px-5 py-3 text-sm font-black text-white transition-all shadow-[0_10px_20px_rgba(230,126,34,0.15)]"
+              >
+                {post.cta.label}
+                <ArrowRight size={16} />
+              </Link>
+            </div>
           </section>
 
-          <section className="mt-8">
-            <h2 className="text-3xl font-black text-forest">FAQs</h2>
-            <div className="mt-4 space-y-3">
+          <section className="mt-10">
+            <h2 className="text-2xl sm:text-3xl font-black text-forest tracking-tight">Frequently Asked Questions</h2>
+            <div className="mt-6 space-y-4">
               {post.faqs.map((faq) => (
-                <div key={faq.question} className="rounded-lg border border-forest/10 bg-white p-5">
-                  <h3 className="font-black text-forest">{faq.question}</h3>
-                  <p className="mt-2 text-sm leading-6 text-textgrey">{faq.answer}</p>
+                <div key={faq.question} className="rounded-2xl border border-forest/10 bg-white p-5 sm:p-6 shadow-sm">
+                  <h3 className="font-extrabold text-forest text-base sm:text-lg">{faq.question}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-textgrey">{faq.answer}</p>
                 </div>
               ))}
             </div>
           </section>
 
-          <section className="mt-8">
-            <h2 className="text-2xl font-black text-forest">Sources</h2>
+          <section className="mt-10">
+            <h2 className="text-2xl font-black text-forest tracking-tight">Verified References</h2>
             <div className="mt-4 grid gap-3">
               {post.sources.map((source) => (
                 <a
@@ -143,10 +144,10 @@ export default function BlogPost() {
                   href={source.url}
                   target={source.url.startsWith("http") ? "_blank" : undefined}
                   rel={source.url.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="flex items-center justify-between gap-3 rounded-lg border border-forest/10 bg-white p-4 text-sm font-bold text-forest hover:border-orange hover:text-orange"
+                  className="flex items-center justify-between gap-3 rounded-xl border border-forest/10 bg-white p-4 text-xs sm:text-sm font-bold text-forest hover:border-orange hover:text-orange transition-colors"
                 >
-                  <span>{source.label}</span>
-                  <ExternalLink size={16} className="shrink-0" />
+                  <span className="truncate">{source.label}</span>
+                  <ExternalLink size={15} className="shrink-0 text-orange" />
                 </a>
               ))}
             </div>
@@ -155,29 +156,41 @@ export default function BlogPost() {
 
         <aside className="min-w-0">
           <div className="sticky top-28 space-y-5">
-            <div className="rounded-lg border border-forest/10 bg-white p-5">
-              <h2 className="font-black text-forest">Article Brief</h2>
-              <div className="mt-4 space-y-3 text-sm leading-6 text-textgrey">
-                <p>
-                  <span className="font-black text-forest">Intent:</span> {post.searchIntent}
-                </p>
-                <p>
-                  <span className="font-black text-forest">Audience:</span> {post.audience}
-                </p>
-                <p>
-                  <span className="font-black text-forest">Schema:</span> {post.schema.join(", ")}
-                </p>
+            <div className="rounded-2xl border border-forest/10 bg-white p-5">
+              <h2 className="font-black text-forest tracking-tight">Verified Parameters</h2>
+              <div className="mt-4 space-y-3.5 text-xs text-textgrey">
+                <div className="flex gap-2">
+                  <span className="text-orange text-base">✓</span>
+                  <div>
+                    <strong className="text-forest">Explicit Host Permission</strong>
+                    <p className="mt-0.5">We check local landholder agreements before publication.</p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-orange text-base">✓</span>
+                  <div>
+                    <strong className="text-forest">Washroom & Water Checks</strong>
+                    <p className="mt-0.5">Physical confirmation of functional toilets and safe water.</p>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-orange text-base">✓</span>
+                  <div>
+                    <strong className="text-forest">Local Caretaker Support</strong>
+                    <p className="mt-0.5">24/7 on-ground assistance is mandatory for all camper corridors.</p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="rounded-lg border border-forest/10 bg-white p-5">
-              <h2 className="font-black text-forest">Related Guides</h2>
-              <div className="mt-4 space-y-3">
+            <div className="rounded-2xl border border-forest/10 bg-white p-5">
+              <h2 className="font-black text-forest tracking-tight">Related Articles</h2>
+              <div className="mt-4 space-y-2.5">
                 {related.map((item) => (
                   <Link
                     key={item.slug}
                     to={`/blog/${item.slug}`}
-                    className="block rounded-lg bg-offwhite p-3 text-sm font-bold leading-5 text-forest hover:text-orange"
+                    className="block rounded-xl bg-offwhite hover:bg-orange/5 p-3.5 text-xs font-extrabold leading-snug text-forest hover:text-orange transition-colors"
                   >
                     {item.title}
                   </Link>
