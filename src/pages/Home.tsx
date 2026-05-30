@@ -10,7 +10,7 @@ import {
   Phone,
   Sparkles,
 } from "lucide-react";
-import { HeroRoute, TopographicPattern } from "../components/vectors/CampInVectors";
+import { HeroRoute, TopographicPattern, TentConstellation } from "../components/vectors/CampInVectors";
 import { submitMvpLead } from "../lib/mvpLeadStore";
 import CampInIcon from "../components/icons/CampInIcon";
 import { blogPosts } from "../data/blogPosts";
@@ -403,6 +403,56 @@ export default function Home() {
                   <p className="mt-2 text-sm font-medium leading-6 text-[#313831]">{item.desc}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Story Section */}
+      <section id="our-story" className="relative overflow-hidden bg-[#0d281b] text-white py-16 sm:py-28 border-b border-white/10">
+        {/* Subtle glowing canvas */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_30%,rgba(230,126,34,0.08)_0%,transparent_35%),radial-gradient(circle_at_25%_70%,rgba(46,125,50,0.18)_0%,transparent_40%),linear-gradient(180deg,#0a1f15_0%,#0e2d1e_100%)]" />
+        <TopographicPattern className="absolute -inset-10 h-[120%] w-[120%] text-white/[0.03] pointer-events-none select-none" />
+
+        <div className="relative mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-10 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center">
+          <div className="animate-fade-up">
+            <span className="rounded-full bg-orange/10 border border-orange/20 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-orange-light">
+              The CampIn Narrative
+            </span>
+            <h2 className="mt-4 font-serif text-3xl font-black tracking-[-0.045em] text-[#fbf3e5] sm:text-5xl sm:leading-[1.1] lg:text-[4.2rem]">
+              Our Story: Waking Up to Sunrises, Not Hotel Bills.
+            </h2>
+            <div className="mt-5 h-0.5 w-14 bg-orange" />
+            
+            <p className="mt-6 text-sm font-medium leading-7 tracking-wide text-white/80 sm:text-base sm:leading-8">
+              Mist-covered tea terraces in Meghalaya, coffee-scented hills in Coorg, ancient cedar canopies in Himachal, silent desert dunes of Jaisalmer, apple orchards in Kashmir... India has some of the most incredibly beautiful landscapes on Earth.
+            </p>
+            <p className="mt-5 text-sm font-medium leading-7 tracking-wide text-white/80 sm:text-base sm:leading-8">
+              Yet, if you wanted to sleep under the stars legally, safely, and respectfully in any of these places, there was simply no way to do it. Your only options were either overpriced, artificial glamping resorts that cost more than a boutique hotel, or risking pitching a tent illegally hoping you wouldn't get asked to leave or harassed.
+            </p>
+            <p className="mt-5 text-sm font-extrabold leading-7 tracking-wide text-orange-light sm:text-base sm:leading-8">
+              We decided to build the solution. Inspired by the proven private landowner model of Hipcamp but custom-engineered for our highways, our private farms, our caravan corridors, and our unique geography.
+            </p>
+            <p className="mt-5 text-sm font-medium leading-7 tracking-wide text-white/80 sm:text-base sm:leading-8">
+              CampIn isn't just a booking platform—it is a community-first movement to unlock India's backyard. By connecting passionate private landowners with outdoor enthusiasts, we make nature accessible, support local farming economies, and build the country's first safe caravan corridor stop-network.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center justify-center bg-white/[0.02] border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-xl relative group">
+            <div className="absolute inset-0 bg-gradient-to-tr from-orange/5 to-emerald-500/5 opacity-50 rounded-3xl" />
+            <TentConstellation className="w-full max-w-[340px] text-orange-light drop-shadow-[0_8px_24px_rgba(230,126,34,0.15)] animate-float-soft" />
+            <div className="relative text-center mt-6 z-10 max-w-[320px]">
+              <h3 className="font-serif text-2xl font-bold text-[#fbf3e5]">Unlock India's Outdoors</h3>
+              <p className="mt-3 text-xs leading-5 text-white/70">
+                Be part of the founding community. Gain early, exclusive access to safe, legal, permission-first private stays and campervan stops.
+              </p>
+              <a
+                href="#founding-community"
+                className="premium-focus mt-6 inline-flex w-full items-center justify-center gap-3 rounded-lg bg-orange px-5 py-3 text-sm font-black text-white transition duration-300 hover:bg-orange-dark hover:shadow-[0_12px_28px_rgba(230,126,34,0.3)]"
+              >
+                Join the Founding List
+                <ArrowRight size={16} />
+              </a>
             </div>
           </div>
         </div>

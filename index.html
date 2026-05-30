@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CampIn - India's Verified Camping and Road Stop Platform</title>
+    <title>CampIn — India's Camping Platform | Terraces, Farms & Forest Stays</title>
     <meta
       name="description"
-      content="Discover verified camping stays and road stops across India. Farms, forests, terraces, orchards, lakesides, and safe overnight stops for road travelers."
+      content="Discover unique verified camping spots and road stops across India. Terrace camping, farm stays, forest hideouts, and safe campervan stops. Wake up to views, not hotel bills."
     />
-    <meta property="og:title" content="CampIn - India's outdoors, verified" />
+    <meta property="og:title" content="CampIn — India's outdoors, verified" />
     <meta
       property="og:description"
       content="Find trusted outdoor stays, hosts, and road stops across India. Stay. Explore. CampIn."
@@ -20,6 +20,66 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <!-- Structured Data (AEO/GEO/SEO Graph) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://campin.co.in/#organization",
+          "name": "CampIn",
+          "url": "https://campin.co.in",
+          "logo": "https://campin.co.in/campin-logo.svg",
+          "description": "India's first community-first, permission-first camping platform connecting private landowners with outdoor enthusiasts, campervans, and caravan travelers.",
+          "sameAs": [
+            "https://github.com/shaykhedeee/campin",
+            "https://www.instagram.com/campin.co.in"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://campin.co.in/#website",
+          "url": "https://campin.co.in",
+          "name": "CampIn",
+          "description": "India's Camping Platform | Terraces, Farms & Forest Stays",
+          "publisher": {
+            "@id": "https://campin.co.in/#organization"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://campin.co.in/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is camping legal in India?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Camping in public forest lands is highly restricted in India and requires prior permissions. CampIn solves this by partnering with private landowners (farms, tea orchards, estates, terraces) to provide legal, permission-first camping spots with verified amenities."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does CampIn verify campsites?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Every site undergoes a rigorous 4-pillar audit: Landowner permission check, clean washroom access check, safe drinking water check, and exact coordinate mapping to eliminate lost detours."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is BYOT camping?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "BYOT stands for 'Bring Your Own Tent'. It is the purest and most budget-friendly form of camping where you carry your own shelter, sleeping bags, and outdoor gear, allowing you to camp on private host lands verified by CampIn."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
