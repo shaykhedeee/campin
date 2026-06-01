@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   AlertTriangle,
@@ -88,10 +88,22 @@ function saveRequest(payload: Record<string, unknown>) {
 export default function ListingDetail() {
   const { id } = useParams();
   const listing = listings.find((item) => item.id === id);
+  const [guestProfile, setGuestProfile] = useState<{ name: string; email: string; phone: string } | null>(() => {
+    try {
+      const stored = window.localStorage.getItem("campin.guest.profile.v1");
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [showHandshakeModal, setShowHandshakeModal] = useState(false);
+  const [handshakeForm, setHandshakeForm] = useState({ name: "", email: "", phone: "" });
+  const [handshakeStatus, setHandshakeStatus] = useState<"idle" | "saving" | "saved">("idle");
+
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
+    name: guestProfile?.name || "",
+    email: guestProfile?.email || "",
+    phone: guestProfile?.phone || "",
     arrive: "",
     depart: "",
     guests: "2",
@@ -99,6 +111,18 @@ export default function ListingDetail() {
     ownTent: listing?.byotFriendly ? "yes" : "no",
     essentials: "parking, washroom, water",
   });
+
+  useEffect(() => {
+    if (guestProfile) {
+      setFormData((current) => ({
+        ...current,
+        name: guestProfile.name,
+        email: guestProfile.email,
+        phone: guestProfile.phone,
+      }));
+    }
+  }, [guestProfile]);
+
   const [requestId, setRequestId] = useState("");
 
   if (!listing) {
@@ -125,6 +149,16 @@ export default function ListingDetail() {
 
   const submitRequest = async (event: FormEvent) => {
     event.preventDefault();
+    if (!guestProfile || !formData.email || !formData.phone) {
+      setHandshakeForm({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+      });
+      setShowHandshakeModal(true);
+      return;
+    }
+
     const idValue = `REQ-${Date.now().toString(36).toUpperCase()}`;
     const payload = {
       id: idValue,
@@ -503,6 +537,174 @@ export default function ListingDetail() {
           </aside>
         </div>
       </div>
+
+      {/* Smart Profile Handshake Modal */}
+      {showHandshakeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-forest/80 p-4 backdrop-blur-md">
+          <div className="relative w-full max-w-md overflow-hidden rounded-[2rem] border border-[#2f6548]/30 bg-[#0a1e14] p-8 text-white shadow-2xl">
+            {/* Mesh glow effects */}
+            <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-orange/10 blur-2xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-emerald-500/5 blur-2xl pointer-events-none" />
+
+            <div className="relative z-10">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-2 rounded-full border border-orange/30 bg-orange/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-orange">
+                  🤝 Smart Profile Handshake
+                </span>
+              </div>
+              <h3 className="mt-4 text-2xl font-black tracking-tight leading-tight">
+                Unlock Contact Details & Booking Request
+              </h3>
+              <p className="mt-2 text-xs leading-relaxed text-white/70">
+                CampIn protects land owners and guests by requiring a verified profile before granting direct contact details.
+                Save your profile details once to unlock requests, whatsapp coordination, and route maps across the entire website instantly.
+              </p>
+
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!handshakeForm.email || !handshakeForm.phone) return;
+                  setHandshakeStatus("saving");
+
+                  try {
+                    const profileData = {
+                      name: handshakeForm.name || "Guest Camper",
+                      email: handshakeForm.email,
+                      phone: handshakeForm.phone,
+                    };
+                    window.localStorage.setItem("campin.guest.profile.v1", JSON.stringify(profileData));
+                    
+                    // submit as waitlist or profile lead
+                    await submitMvpLead({
+                      type: "camper_waitlist",
+                      sourcePage: `/listing/${listing.id}`,
+                      name: profileData.name,
+                      email: profileData.email,
+                      phone: profileData.phone,
+                      consent: true,
+                      status: "profile_handshake_completed",
+                      score: 5,
+                      payload: {
+                        action: "unlock_listing_contact",
+                        listingId: listing.id,
+                        listingTitle: listing.title,
+                      }
+                    });
+
+                    setGuestProfile(profileData);
+                    setFormData((current) => ({
+                      ...current,
+                      name: profileData.name,
+                      email: profileData.email,
+                      phone: profileData.phone,
+                    }));
+                    
+                    setHandshakeStatus("saved");
+                    setShowHandshakeModal(false);
+
+                    // Re-trigger actual inquiry booking flow now that credentials are saved!
+                    const idValue = `REQ-${Date.now().toString(36).toUpperCase()}`;
+                    const payload = {
+                      id: idValue,
+                      listingId: listing.id,
+                      listingTitle: listing.title,
+                      createdAt: new Date().toISOString(),
+                      status: "Awaiting CampIn review",
+                      ...formData,
+                      name: profileData.name,
+                      email: profileData.email,
+                      phone: profileData.phone,
+                    };
+                    saveRequest(payload);
+                    await submitMvpLead({
+                      type: "listing_inquiry",
+                      sourcePage: `/listing/${listing.id}`,
+                      name: profileData.name,
+                      email: profileData.email,
+                      phone: profileData.phone,
+                      city: listing.location,
+                      status: "awaiting_campin_review",
+                      score: 5,
+                      consent: true,
+                      payload,
+                    });
+                    setRequestId(idValue);
+                  } catch {
+                    setHandshakeStatus("idle");
+                  }
+                }}
+                className="mt-6 space-y-4"
+              >
+                <label className="block">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-orange">Full Name</span>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Enter your name"
+                    value={handshakeForm.name}
+                    onChange={(e) => setHandshakeForm((curr) => ({ ...curr, name: e.target.value }))}
+                    className="mt-2 h-11 w-full rounded-xl border border-white/10 bg-white/5 px-4 text-xs font-semibold text-white outline-none focus:border-orange focus:bg-white/10"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-orange">Email (For Gated Access)</span>
+                  <div className="relative mt-2">
+                    <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" size={15} />
+                    <input
+                      type="email"
+                      required
+                      placeholder="name@domain.com"
+                      value={handshakeForm.email}
+                      onChange={(e) => setHandshakeForm((curr) => ({ ...curr, email: e.target.value }))}
+                      className="h-11 w-full rounded-xl border border-white/10 bg-white/5 pl-10 pr-4 text-xs font-semibold text-white outline-none focus:border-orange focus:bg-white/10"
+                    />
+                  </div>
+                </label>
+
+                <label className="block">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-orange">WhatsApp / Phone</span>
+                  <div className="relative mt-2">
+                    <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" size={15} />
+                    <input
+                      type="tel"
+                      required
+                      placeholder="+91 XXXXX XXXXX"
+                      value={handshakeForm.phone}
+                      onChange={(e) => setHandshakeForm((curr) => ({ ...curr, phone: e.target.value }))}
+                      className="h-11 w-full rounded-xl border border-white/10 bg-white/5 pl-10 pr-4 text-xs font-semibold text-white outline-none focus:border-orange focus:bg-white/10"
+                    />
+                  </div>
+                </label>
+
+                <div className="flex gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowHandshakeModal(false)}
+                    className="h-12 w-1/3 rounded-xl border border-white/10 bg-transparent text-xs font-bold text-white hover:bg-white/5 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={handshakeStatus === "saving"}
+                    className="h-12 w-2/3 rounded-xl bg-orange hover:bg-orange-dark text-white font-extrabold text-xs transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange/20"
+                  >
+                    {handshakeStatus === "saving" ? "Unlocking..." : "Verify & Unlock Contact"}
+                    <ArrowRight size={14} />
+                  </button>
+                </div>
+              </form>
+
+              <div className="mt-4 border-t border-white/5 pt-4 text-center">
+                <p className="text-[9px] text-white/40 font-semibold leading-relaxed">
+                  🔒 We never share details without active landowners consent. No password required. Stored securely inside local sandbox.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

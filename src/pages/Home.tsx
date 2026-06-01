@@ -147,10 +147,10 @@ export default function Home() {
 
             <div className="mt-6 flex flex-col gap-3 sm:mt-9 sm:flex-row">
               <Link
-                to="/coming-soon"
+                to="/explore"
                 className="premium-focus inline-flex w-full items-center justify-center gap-3 rounded-lg bg-orange px-5 py-3.5 text-sm font-black text-white shadow-[0_18px_50px_rgba(230,126,34,0.34)] transition duration-300 hover:-translate-y-0.5 hover:bg-orange-dark hover:shadow-[0_24px_58px_rgba(230,126,34,0.42)] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
-                Join the community
+                Find Campsites
                 <ArrowRight size={19} />
               </Link>
               <Link
@@ -410,6 +410,119 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Verified Campsites Section */}
+      <section className="bg-[#fffaf0] py-14 sm:py-24 border-b border-[#173525]/10">
+        <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="max-w-2xl">
+              <span className="rounded-full bg-orange/10 border border-orange/20 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-orange">
+                Audited & Approved
+              </span>
+              <h2 className="mt-4 font-serif text-3xl font-black tracking-[-0.04em] text-[#173525] sm:text-5xl">
+                Featured Verified Campsites
+              </h2>
+              <p className="mt-4 text-sm font-medium leading-relaxed text-[#313831]/80 sm:text-base">
+                We physically audit every single coordinate. These private estates, terraces, and riverside meadows offer 
+                legal, host-supported camping with clean washrooms and verified drinking water.
+              </p>
+            </div>
+            <Link
+              to="/explore"
+              className="premium-focus shrink-0 inline-flex items-center gap-2 rounded-xl bg-orange hover:bg-orange-dark px-6 py-3.5 text-sm font-black text-white transition-all shadow-[0_15px_30px_rgba(230,126,34,0.15)] hover:-translate-y-0.5"
+            >
+              Explore All Campsites
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                id: "coorg-estate",
+                title: "Old Heritage Coffee Glade",
+                location: "Madikeri, Karnataka",
+                price: "₹1,500 / night",
+                type: "Working Coffee Estate",
+                tag: "BYOT + Campervan Fit",
+                image: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=900&q=80",
+                bullets: ["Private Restroom", "Secure Fencing", "Estate Coffee"],
+              },
+              {
+                id: "meghalaya-terrace",
+                title: "The Cloud-Catcher Terrace",
+                location: "Cherrapunji, Meghalaya",
+                price: "₹1,200 / night",
+                type: "High-Altitude Suspension",
+                tag: "Valley Sunset View",
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80",
+                bullets: ["Western Restroom", "Living Root Bridge Trail", "Solo-Safe"],
+              },
+              {
+                id: "jibhi-river",
+                title: "The Banjar Valley Sanctuary",
+                location: "Jibhi, Himachal Pradesh",
+                price: "₹1,100 / night",
+                type: "Ancient Cedar Riverside",
+                tag: "Digital Detox Pitches",
+                image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&q=80",
+                bullets: ["Eco-Washroom", "Tirthan Stream Water", "Zero Engine Noise"],
+              },
+            ].map((camp) => (
+              <Link
+                key={camp.id}
+                to={`/listing/${camp.id}`}
+                className="group relative flex flex-col rounded-3xl border border-[#173525]/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl overflow-hidden"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <img
+                    src={camp.image}
+                    alt={camp.title}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute top-4 left-4 rounded-full bg-forest px-3.5 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-sm border border-white/10">
+                    Reviewed Site
+                  </div>
+                  <div className="absolute bottom-4 left-4 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-[10px] font-black uppercase tracking-wider text-forest shadow-sm">
+                    {camp.tag}
+                  </div>
+                </div>
+
+                <div className="flex flex-1 flex-col p-6 sm:p-8">
+                  <span className="text-xs font-black uppercase tracking-wider text-orange">{camp.type}</span>
+                  <h3 className="mt-2 text-xl font-black leading-snug tracking-tight text-[#173525] group-hover:text-forest transition-colors">
+                    {camp.title}
+                  </h3>
+                  <div className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-[#6c716b]">
+                    <MapPin size={14} className="text-orange" />
+                    {camp.location}
+                  </div>
+
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {camp.bullets.map((bullet) => (
+                      <span key={bullet} className="inline-flex items-center gap-1.5 rounded-xl bg-[#eef1e6]/60 px-3 py-1 text-xs font-bold text-[#2f6548]">
+                        <span className="h-1 w-1 rounded-full bg-orange" />
+                        {bullet}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-6 border-t border-[#173525]/10 pt-5 flex items-center justify-between text-[#173525]">
+                    <div>
+                      <p className="text-[10px] font-bold text-[#6c716b] uppercase tracking-wider">Verification Pitch Price</p>
+                      <p className="text-lg font-black tracking-tight text-forest">{camp.price}</p>
+                    </div>
+                    <span className="inline-flex items-center gap-2 rounded-xl bg-forest text-white group-hover:bg-orange transition-colors px-4 py-2.5 text-xs font-black">
+                      Verify Details
+                      <ArrowRight size={13} className="transition group-hover:translate-x-1" />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

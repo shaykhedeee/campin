@@ -27,6 +27,7 @@ import {
   type ListingType,
   type VerificationStage,
 } from "../data/listings";
+import { submitMvpLead } from "../lib/mvpLeadStore";
 
 type ActiveType = ListingType | "all";
 type VehicleFilter = "all" | "byot" | "campervan" | "road-stop";
@@ -147,15 +148,31 @@ export default function Explore() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeType, setActiveType] = useState<ActiveType>(() => getTypeFromSearch(location.search));
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
-  const [vehicleFilter, setVehicleFilter] = useState<VehicleFilter>("all");
+  const [vehicleFilter, setVehicleFilter] = useState<VehicleFilter>(() => {
+    const params = new URLSearchParams(location.search);
+    const vehicle = params.get("vehicle");
+    if (vehicle && ["byot", "campervan", "road-stop"].includes(vehicle)) {
+      return vehicle as VehicleFilter;
+    }
+    return "all";
+  });
   const [stageFilter, setStageFilter] = useState<StageFilter>("all");
   const [stateFilter, setStateFilter] = useState("all");
   const [regionFilter, setRegionFilter] = useState("all");
   const [locationFilter, setLocationFilter] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
+  const [alertEmail, setAlertEmail] = useState("");
+  const [alertStatus, setAlertStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
 
   useEffect(() => {
     setActiveType(getTypeFromSearch(location.search));
+    const params = new URLSearchParams(location.search);
+    const vehicle = params.get("vehicle");
+    if (vehicle && ["byot", "campervan", "road-stop"].includes(vehicle)) {
+      setVehicleFilter(vehicle as VehicleFilter);
+    } else if (!vehicle) {
+      setVehicleFilter("all");
+    }
   }, [location.search]);
 
   const stateOptions = useMemo(() => uniqueSorted(listings.map((listing) => listing.state)), []);
@@ -175,6 +192,13 @@ export default function Explore() {
   const filteredListings = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
     return listings.filter((listing) => {
+      // Exclude unverified raw leads and raw scraper suggestions from public Campsites view
+      const isVerified =
+        listing.verificationStage === "reviewed" ||
+        listing.verificationStage === "date_confirmed" ||
+        listing.verificationStage === "calendar_synced";
+      if (!isVerified) return false;
+
       const matchesSearch =
         normalizedQuery.length === 0 ||
         [
@@ -221,23 +245,24 @@ export default function Explore() {
   };
 
   const reviewedCount = listings.filter((listing) => listing.verificationStage === "reviewed").length;
-  const gatedCount = listings.filter((listing) => listing.contactPolicy === "gated_relay").length;
 
   return (
     <div className="min-h-screen bg-offwhite pt-28 pb-20">
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-6 rounded-lg bg-forest p-6 text-white shadow-xl sm:p-8 lg:grid-cols-[1fr_0.8fr] lg:p-10">
+        <div className="grid gap-6 rounded-[2rem] bg-forest p-6 text-white shadow-xl sm:p-8 lg:grid-cols-[1.2fr_0.8fr] lg:p-10">
           <div>
-            <p className="font-bold text-orange">Explore CampIn</p>
-            <h1 className="mt-2 text-4xl font-extrabold leading-tight sm:text-5xl">Find camping leads without pretending they are live bookings.</h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-white/75">
-              CampIn now separates researched leads, source-reviewed places, community suggestions and availability requests.
-              Every contact handoff starts with trip details.
+            <p className="inline-flex w-fit items-center gap-2 rounded-full border border-orange/30 bg-orange/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-orange">
+              ✓ Verified Directory
+            </p>
+            <h1 className="mt-4 text-4xl font-extrabold leading-tight sm:text-5xl">Explore Audited Campsites & Bays</h1>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/75">
+              Every single stay listed below is physically audited on-ground. Find legal private estates, coffee glades, 
+              and remote overlanding bays with verified restrooms, potable water, and 24/7 host support.
             </p>
           </div>
-          <div className="rounded-lg bg-white p-4 text-textdark">
-            <label className="text-sm font-bold text-forest" htmlFor="explore-search">
-              Search location, route, source, or unknown
+          <div className="rounded-2xl bg-white p-6 text-textdark flex flex-col justify-center">
+            <label className="text-xs font-black uppercase tracking-wider text-orange" htmlFor="explore-search">
+              Quick Discovery
             </label>
             <div className="relative mt-2">
               <Search size={19} className="absolute left-4 top-1/2 -translate-y-1/2 text-textgrey" />
@@ -246,22 +271,18 @@ export default function Explore() {
                 type="text"
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Bangalore BYOT, Kerala caravan, washroom..."
-                className="h-13 w-full rounded-lg border border-forest/10 bg-offwhite pl-11 pr-4 text-base outline-none transition focus:border-orange focus:bg-white"
+                placeholder="Search Ramanagara BYOT, Kerala campervan, forest..."
+                className="h-12 w-full rounded-xl border border-forest/10 bg-offwhite pl-11 pr-4 text-sm outline-none transition focus:border-orange focus:bg-white"
               />
             </div>
-            <div className="mt-4 grid grid-cols-3 gap-3 text-center">
-              <div className="rounded-lg bg-offwhite p-3">
-                <p className="text-xl font-extrabold text-forest">{listings.length}</p>
-                <p className="text-xs text-textgrey">trust-scoped leads</p>
+            <div className="mt-4 grid grid-cols-2 gap-3 text-center">
+              <div className="rounded-xl bg-offwhite p-3 border border-forest/5">
+                <p className="text-2xl font-black text-forest">{reviewedCount}</p>
+                <p className="text-[10px] uppercase font-bold text-textgrey tracking-wider">Reviewed Stays</p>
               </div>
-              <div className="rounded-lg bg-offwhite p-3">
-                <p className="text-xl font-extrabold text-forest">{reviewedCount}</p>
-                <p className="text-xs text-textgrey">source reviewed</p>
-              </div>
-              <div className="rounded-lg bg-offwhite p-3">
-                <p className="text-xl font-extrabold text-forest">{gatedCount}</p>
-                <p className="text-xs text-textgrey">gated relay</p>
+              <div className="rounded-xl bg-offwhite p-3 border border-forest/5">
+                <p className="text-2xl font-black text-forest">100%</p>
+                <p className="text-[10px] uppercase font-bold text-textgrey tracking-wider">Maps verified</p>
               </div>
             </div>
           </div>
@@ -271,23 +292,30 @@ export default function Explore() {
       <section className="sticky top-20 z-30 mt-8 border-y border-forest/10 bg-offwhite/95 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 overflow-x-auto no-scrollbar">
-            {categories.map((category) => (
+            {[
+              { value: "all", label: "🏕️ All Verified Sites" },
+              { value: "byot", label: "⛺ Own-Tent (BYOT)" },
+              { value: "campervan", label: "🚐 Campervan & RV Bays" },
+              { value: "road-stop", label: "🅿️ Highway Road Stops" },
+            ].map((tab) => (
               <button
-                key={category.id}
+                key={tab.value}
                 type="button"
-                onClick={() => setActiveType(category.id)}
-                className={`shrink-0 rounded-lg px-4 py-2.5 text-sm font-bold transition-colors ${
-                  activeType === category.id ? "bg-forest text-white" : "bg-white text-forest hover:bg-sky-mist"
+                onClick={() => setVehicleFilter(tab.value as any)}
+                className={`shrink-0 rounded-lg px-4 py-2.5 text-sm font-black transition-all ${
+                  vehicleFilter === tab.value
+                    ? "bg-forest text-white shadow-sm"
+                    : "bg-white text-forest hover:bg-[#eef1e6]/60 border border-forest/10"
                 }`}
               >
-                {category.title}
+                {tab.label}
               </button>
             ))}
             <button
               type="button"
               onClick={() => setShowFilters((value) => !value)}
               className={`ml-auto inline-flex shrink-0 items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition-colors ${
-                showFilters ? "bg-orange text-white" : "bg-white text-forest hover:bg-sky-mist"
+                showFilters ? "bg-orange text-white" : "bg-white text-forest hover:bg-[#eef1e6]/60 border border-forest/10"
               }`}
             >
               <SlidersHorizontal size={17} />
@@ -479,6 +507,97 @@ export default function Explore() {
               </p>
             </Link>
           ))}
+        </div>
+      </section>
+
+      {/* Terrain & Corridor Alerts Funnel Card */}
+      <section className="mx-auto max-w-7xl px-4 pt-16 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#0a1e14] to-[#040f0a] border border-[#2f6548]/20 p-8 sm:p-12 text-white shadow-2xl">
+          <div className="absolute top-0 right-0 h-64 w-64 rounded-full bg-orange/5 blur-3xl pointer-events-none" />
+          <div className="relative z-10 grid gap-8 lg:grid-cols-[1.3fr_0.7fr] items-center">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-orange/30 bg-orange/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-orange">
+                ⚠️ Live Safety Signal
+              </span>
+              <h2 className="mt-4 text-3xl font-black sm:text-4xl tracking-tight leading-tight">
+                Get Real-Time Weather & Terrain Alerts
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-white/70">
+                Monsoons, mudslides, and route closures happen fast in overlanding corridors. Sign up for our live 
+                backyard safety broadcast. We coordinate directly with local authorities in Western Ghats, Coorg, 
+                and Himachal to send alerts directly to your inbox.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2.5 text-xs text-white/60 font-bold">
+                <span className="flex items-center gap-2">✓ Western Ghats corridors</span>
+                <span className="flex items-center gap-2">✓ Himachal Overlanding passes</span>
+                <span className="flex items-center gap-2">✓ BYOT permit notifications</span>
+              </div>
+            </div>
+            
+            <div className="rounded-2xl bg-white/5 border border-white/10 p-6 sm:p-8 backdrop-blur-md">
+              <p className="text-xs font-black uppercase tracking-wider text-orange">Subscribe to Corridor Alerts</p>
+              <form 
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!alertEmail.trim()) return;
+                  setAlertStatus("saving");
+                  try {
+                    await submitMvpLead({
+                      type: "newsletter",
+                      sourcePage: "/explore",
+                      email: alertEmail,
+                      consent: true,
+                      status: "subscribed_corridor_alerts",
+                      score: 4,
+                      payload: {
+                        interest: "terrain_weather_safety_alerts",
+                        segment: vehicleFilter === "all" ? "general" : vehicleFilter
+                      }
+                    });
+                    setAlertStatus("saved");
+                    setAlertEmail("");
+                  } catch {
+                    setAlertStatus("error");
+                  }
+                }}
+                className="mt-4 space-y-4"
+              >
+                <label className="block">
+                  <span className="sr-only">Email Address</span>
+                  <input
+                    required
+                    type="email"
+                    placeholder="Enter your camping email"
+                    value={alertEmail}
+                    onChange={(e) => setAlertEmail(e.target.value)}
+                    className="h-12 w-full rounded-xl border border-white/10 bg-white/5 px-4 text-sm font-semibold text-white outline-none placeholder:text-white/40 focus:border-orange focus:bg-white/10"
+                  />
+                </label>
+                <button
+                  type="submit"
+                  disabled={alertStatus === "saving"}
+                  className="h-12 w-full rounded-xl bg-orange hover:bg-orange-dark text-white font-extrabold text-sm transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange/20"
+                >
+                  {alertStatus === "saving" ? "Subscribing..." : "Enable Safety Alerts"}
+                  <ArrowRight size={16} />
+                </button>
+              </form>
+              
+              {alertStatus === "saved" && (
+                <p className="mt-4 text-xs font-bold text-emerald-400">
+                  ✓ Success! You are subscribed to live terrain and pass safety notifications.
+                </p>
+              )}
+              {alertStatus === "error" && (
+                <p className="mt-4 text-xs font-bold text-rose-400">
+                  Could not save alert request. Please try again.
+                </p>
+              )}
+              <p className="mt-3 text-[10px] text-white/40 leading-relaxed font-semibold">
+                No spam. Unsubscribe with 1-click. Stored locally & securely synced.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </div>

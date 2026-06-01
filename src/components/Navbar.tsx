@@ -22,6 +22,7 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
+    { to: "/explore", label: "Campsites" },
     { to: "/camping-guides", label: "Guides" },
     { to: "/blog", label: "Journal" },
     { to: "/community", label: "Community" },
