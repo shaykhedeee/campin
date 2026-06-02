@@ -40,9 +40,9 @@ export interface ValidationProgressSnapshot {
 export const validationTargets = [
   {
     key: "emailSubscribers",
-    label: "Email subscribers",
-    target: 500,
-    description: "Camper and newsletter emails captured with consent.",
+    label: "Camper Community members",
+    target: 10000,
+    description: "Active campers and newsletter members on the founding waitlist. Core growth target.",
   },
   {
     key: "highIntentCamperLeads",

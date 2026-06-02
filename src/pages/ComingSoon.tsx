@@ -16,7 +16,7 @@ import CampfireSignup from "../components/newsletter/CampfireSignup";
 import { CamperWaitlistForm, HostInterestForm, RoadStopLeadForm } from "../components/validation/ValidationForms";
 
 const proofTargets = [
-  { value: "500", label: "email subscribers" },
+  { value: "10,000", label: "camper community members" },
   { value: "100", label: "high-intent campers" },
   { value: "30", label: "host applications" },
   { value: "10", label: "candidate sites" },

@@ -632,7 +632,7 @@ export default function Home() {
               </h2>
               <div className="mt-3 h-0.5 w-8 bg-orange" />
               <p className="mt-4 max-w-[560px] text-xs font-medium leading-6 tracking-[-0.015em] text-white/74 sm:mt-5 sm:text-sm sm:leading-7">
-                Get early access to guides, behind-the-scenes updates, and the first permission-first camping leads.
+                Our first-class goal is to build a vibrant, safety-conscious community of 10,000 campers. We will focus purely on community-building, organic route support, and safety guides—halting major marketplace feature updates—until we reach this milestone. Join the founding cohort and get early access to reviewed spots!
               </p>
 
               <div className="mt-6 space-y-4 sm:mt-7">
