@@ -314,7 +314,214 @@ export default function OpsCenter() {
           </div>
         </div>
       </section>
+
+      {/* Dynamic Email Automation & Marketing Simulator Hub */}
+      <EmailAutomationHub />
     </div>
+  );
+}
+
+function EmailAutomationHub() {
+  const [logs, setLogs] = useState<any[]>([]);
+  const [selectedLog, setSelectedLog] = useState<any>(null);
+  const [activeTemplate, setActiveTemplate] = useState<any>(null);
+  const [testEmail, setTestEmail] = useState("");
+  const [selectedTemplateName, setSelectedTemplateName] = useState("");
+  const [templates, setTemplates] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Dynamic import to avoid SSR or bundle problems
+    import("../lib/emailSimulator").then((mod) => {
+      setLogs(mod.readEmailLogs());
+      setTemplates(mod.emailTemplates);
+      if (mod.emailTemplates.length > 0) {
+        setActiveTemplate(mod.emailTemplates[0]);
+        setSelectedTemplateName(mod.emailTemplates[0].name);
+      }
+    });
+
+    const handleSync = () => {
+      import("../lib/emailSimulator").then((mod) => {
+        setLogs(mod.readEmailLogs());
+      });
+    };
+
+    window.addEventListener("campin-email-logs-updated", handleSync);
+    return () => window.removeEventListener("campin-email-logs-updated", handleSync);
+  }, []);
+
+  const triggerTestSend = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!testEmail || !selectedTemplateName) return;
+
+    const mod = await import("../lib/emailSimulator");
+    const result = mod.triggerSimulatedEmail(testEmail, selectedTemplateName);
+    if (result) {
+      setSelectedLog(result);
+      setTestEmail("");
+    }
+  };
+
+  const handleClear = async () => {
+    const mod = await import("../lib/emailSimulator");
+    mod.clearEmailLogs();
+    setSelectedLog(null);
+  };
+
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 border-t border-forest/10">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-8">
+        <div>
+          <p className="font-bold text-orange">📨 Email Automation & Campaign Simulator</p>
+          <h2 className="text-3xl font-black text-forest">Outbound Hub: support@campin.co.in</h2>
+          <p className="text-sm text-textgrey mt-1">
+            Simulate dynamic welcome sequences, overlanding safety broadcasts, and gated contact auto-triggers.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={handleClear}
+          className="rounded-lg bg-offwhite px-4 py-2 text-xs font-black text-forest hover:text-orange hover:bg-orange/5 transition-all border border-forest/10"
+        >
+          Clear simulator logs
+        </button>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Templates Picker & Trigger Panel */}
+        <div className="rounded-2xl border border-forest/10 bg-white p-6 shadow-sm">
+          <h3 className="text-lg font-black text-forest mb-4">1. Dispatch Automated Campaign</h3>
+          <form onSubmit={triggerTestSend} className="space-y-4">
+            <label className="block">
+              <span className="text-xs font-black uppercase text-orange tracking-wider">Select Sequence Template</span>
+              <select
+                value={selectedTemplateName}
+                onChange={(e) => {
+                  setSelectedTemplateName(e.target.value);
+                  const temp = templates.find((t) => t.name === e.target.value);
+                  if (temp) setActiveTemplate(temp);
+                }}
+                className="mt-2 h-11 w-full rounded-xl border border-forest/10 bg-offwhite px-3 text-xs font-semibold text-forest outline-none focus:border-orange focus:bg-white"
+              >
+                {templates.map((t) => (
+                  <option key={t.name} value={t.name}>
+                    {t.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="block">
+              <span className="text-xs font-black uppercase text-orange tracking-wider">Recipient Email</span>
+              <input
+                required
+                type="email"
+                placeholder="camper@domain.com"
+                value={testEmail}
+                onChange={(e) => setTestEmail(e.target.value)}
+                className="mt-2 h-11 w-full rounded-xl border border-forest/10 bg-offwhite px-3 text-xs font-semibold text-forest outline-none focus:border-orange focus:bg-white"
+              />
+            </label>
+
+            <button
+              type="submit"
+              className="h-11 w-full rounded-xl bg-forest hover:bg-forest-light text-white font-extrabold text-xs transition-colors flex items-center justify-center gap-2"
+            >
+              Trigger Simulated Email
+              <ArrowRight size={14} />
+            </button>
+          </form>
+
+          {/* Active Template Design Preview */}
+          {activeTemplate && (
+            <div className="mt-6 border-t border-forest/10 pt-4">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-[10px] font-black uppercase tracking-wider text-orange">Template Draft View</span>
+                <span className="rounded bg-orange/10 px-2 py-0.5 text-[9px] font-black text-orange uppercase tracking-wide">
+                  {activeTemplate.category}
+                </span>
+              </div>
+              <div className="rounded-lg bg-offwhite p-3 text-[11px] leading-5 text-forest/80 max-h-44 overflow-y-auto">
+                <p className="font-extrabold text-forest mb-1">Subject: {activeTemplate.subject}</p>
+                <hr className="border-forest/10 my-2" />
+                <pre className="whitespace-pre-wrap font-sans text-xs">{activeTemplate.bodyText}</pre>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Transactional Outgoing Logs */}
+        <div className="rounded-2xl border border-forest/10 bg-white p-6 shadow-sm max-h-[500px] overflow-y-auto">
+          <h3 className="text-lg font-black text-forest mb-2">2. Outbound simulated transactions</h3>
+          <p className="text-xs text-textgrey mb-4">Click any outgoing mail to preview the simulated dispatch.</p>
+          
+          <div className="space-y-3">
+            {logs.length === 0 ? (
+              <div className="text-center py-12 rounded-lg bg-offwhite border border-dashed border-forest/10">
+                <p className="text-xs text-textgrey font-semibold">No emails sent yet.</p>
+                <p className="text-[10px] text-textgrey/60 mt-1">Submit waitlist forms or click the dispatcher above to send.</p>
+              </div>
+            ) : (
+              logs.map((log) => (
+                <button
+                  key={log.id}
+                  type="button"
+                  onClick={() => setSelectedLog(log)}
+                  className={`w-full text-left p-3.5 rounded-xl border transition-all text-xs flex flex-col gap-1.5 ${
+                    selectedLog?.id === log.id
+                      ? "border-orange bg-orange/5 text-forest shadow-sm"
+                      : "border-forest/10 bg-offwhite hover:bg-forest/5 text-forest"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-black text-orange tracking-tight">{log.id}</span>
+                    <span className="text-[9px] text-textgrey font-semibold">
+                      {new Date(log.sentAt).toLocaleTimeString()}
+                    </span>
+                  </div>
+                  <p className="font-bold truncate">To: {log.recipient}</p>
+                  <p className="text-textgrey/80 truncate font-semibold">{log.subject}</p>
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Dynamic Outbox Email Previewer */}
+        <div className="rounded-2xl border border-forest/10 bg-white p-6 shadow-sm">
+          <h3 className="text-lg font-black text-forest mb-4">3. Outbox Email Inspector</h3>
+          {selectedLog ? (
+            <div className="rounded-xl bg-[#fafafa] border border-forest/10 p-5 font-sans">
+              <div className="border-b border-forest/10 pb-4 mb-4 text-xs space-y-1.5 text-textgrey font-semibold">
+                <p>
+                  <strong className="text-forest">From:</strong> support@campin.co.in
+                </p>
+                <p>
+                  <strong className="text-forest">To:</strong> {selectedLog.recipient}
+                </p>
+                <p>
+                  <strong className="text-forest">Subject:</strong> {selectedLog.subject}
+                </p>
+                <p>
+                  <strong className="text-forest">Status:</strong>{" "}
+                  <span className="rounded bg-emerald-100 text-emerald-800 px-2 py-0.5 text-[9px] font-black uppercase">
+                    {selectedLog.status}
+                  </span>
+                </p>
+              </div>
+              <pre className="text-xs whitespace-pre-wrap font-sans text-forest bg-white p-4 rounded-xl border border-forest/5 leading-6 shadow-inner max-h-64 overflow-y-auto">
+                {selectedLog.bodyText}
+              </pre>
+            </div>
+          ) : (
+            <div className="text-center py-24 rounded-xl bg-offwhite border border-forest/10 text-textgrey">
+              <p className="text-sm font-bold">Inbox Preview Empty</p>
+              <p className="text-xs mt-1 text-textgrey/60">Select a logged outgoing email to verify templates.</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }
 

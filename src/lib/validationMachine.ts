@@ -91,6 +91,21 @@ export function saveValidationLead(type: LeadType, data: LeadData, score: number
 
   const leads = readValidationLeads();
   writeValidationLeads([lead, ...leads]);
+  
+  // Auto-trigger simulated automated emails from support@campin.co.in
+  const email = typeof data.email === "string" ? data.email.trim() : "";
+  if (email) {
+    import("../lib/emailSimulator").then(({ triggerSimulatedEmail }) => {
+      if (type === "camper") {
+        triggerSimulatedEmail(email, "Camper Welcome #1: Welcome to The Campfire 🏕️");
+      } else if (type === "host") {
+        triggerSimulatedEmail(email, "Host Onboarding #1: We Received Your Host Application!");
+      } else {
+        triggerSimulatedEmail(email, "Live Safety Broadcast: Mudslide & Route Closures (Western Ghats)");
+      }
+    }).catch(() => {});
+  }
+
   void submitMvpLead({
     type: mvpTypeFor(type),
     sourcePage: "/validation",
