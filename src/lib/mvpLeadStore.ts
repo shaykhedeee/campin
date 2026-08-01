@@ -34,6 +34,10 @@ export async function submitMvpLead(input: MvpLeadInput) {
 
   saveLocalLead(lead);
 
+  // Netlify Forms provides the launch-phase email notification path. Supabase
+  // remains the structured review store when its public client is configured.
+  await submitNetlifyForm(lead);
+
   const client = getSupabaseClient();
   if (!client) return lead;
 
@@ -55,6 +59,34 @@ export async function submitMvpLead(input: MvpLeadInput) {
   lead.syncStatus = error ? "supabase_failed" : "supabase_synced";
   updateLocalLead(lead);
   return lead;
+}
+
+async function submitNetlifyForm(lead: MvpLeadRecord) {
+  if (typeof window === "undefined") return;
+
+  const formData = new URLSearchParams({
+    "form-name": `campin-${lead.type}`,
+    lead_id: lead.id,
+    source_page: lead.sourcePage,
+    created_at: lead.createdAt,
+    name: lead.name || "",
+    email: lead.email || "",
+    phone: lead.phone || "",
+    city: lead.city || "",
+    status: lead.status || "new",
+    payload: JSON.stringify(lead.payload),
+  });
+
+  try {
+    const response = await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formData.toString(),
+    });
+    if (!response.ok) throw new Error(`Netlify Forms returned ${response.status}`);
+  } catch (error) {
+    console.warn("Netlify Forms submission could not be delivered", error);
+  }
 }
 
 export function readMvpLeads() {

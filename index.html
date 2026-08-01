@@ -9,6 +9,8 @@
       content="Find permission-first camping guides, reviewed outdoor stays, BYOT-friendly hosts, and safer road-trip stops across India."
     />
     <meta name="robots" content="index,follow,max-image-preview:large" />
+    <!-- Add the Search Console token here, or set it through the deployment template before verification. -->
+    <meta name="google-site-verification" content="" />
     <link rel="canonical" href="https://campin.co.in/" />
     <meta property="og:title" content="CampIn - India's outdoors, reviewed" />
     <meta
@@ -90,6 +92,13 @@
     </script>
   </head>
   <body>
+    <!-- Netlify detects these forms at build time; notification routing is configured in Netlify. -->
+    <form name="campin-camper_waitlist" netlify hidden></form>
+    <form name="campin-guide_unlock" netlify hidden></form>
+    <form name="campin-host_interest" netlify hidden></form>
+    <form name="campin-listing_inquiry" netlify hidden></form>
+    <form name="campin-newsletter" netlify hidden></form>
+    <form name="campin-road_stop" netlify hidden></form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
