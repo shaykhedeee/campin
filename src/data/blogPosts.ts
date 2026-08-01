@@ -59,7 +59,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Informational (safety + “where can I stop overnight?”), with practical planning checklist.",
     "summary": "In India, the safest way to park overnight on a road trip is to use permissioned places: a registered stay (hotel/estate/campsite), a designated caravan park, or a well‑run highway amenity where overnight halts are explicitly allowed. Rules vary by...",
     "directAnswer": "In India, the safest way to park overnight on a road trip is to use permissioned places: a registered stay (hotel/estate/campsite), a designated caravan park, or a well‑run highway amenity where overnight halts are explicitly allowed. Rules vary by state/city and even by property, so don’t assume “parking = camping.” Use this checklist to verify safety, sanitation, lighting, staff presence, and clear permission before you stop.",
-    "heroImage": "/images/blog_campervan_stop.png",
+    "heroImage": "/images/blog_campervan_stop.jpg",
     "takeaways": [
       "Highway infrastructure is adding more formal “stop-and-refresh” options: NHAI has been developing Wayside Amenities roughly every 40–60 km with...",
       "If you remember only one thing:",
@@ -195,7 +195,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Informational + planning (“Where can I pitch my own tent near Bangalore, safely and legally?”)",
     "summary": "“Own-tent camping near Bangalore” is usually safest (and least legally ambiguous) when you camp on permissioned private land (farm/estate/campsite) that explicitly allows pitching your own tent. Avoid treating forests, reserves, riverbanks, or “hidden spots”...",
     "directAnswer": "“Own-tent camping near Bangalore” is usually safest (and least legally ambiguous) when you camp on permissioned private land (farm/estate/campsite) that explicitly allows pitching your own tent. Avoid treating forests, reserves, riverbanks, or “hidden spots” as default campgrounds—access in forest areas is regulated, and campsite operators may require multiple local permissions/NOCs. Use the checklist below to confirm permission, boundaries, safety, sanitation, and bonfire rules before you go.",
-    "heroImage": "/images/blog_bangalore_hill.png",
+    "heroImage": "/images/blog_bangalore_hill.jpg",
     "takeaways": [
       "CampIn’s trust-first rule is simple:",
       "BYOT (Bring Your Own Tent / Own-Tent Camping): You carry and pitch your tent at a location that permits it. Hosted tents: Tents are provided and...",
@@ -331,7 +331,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Seasonal planning + risk screening (\"Should I camp during monsoon, and what do I verify before I go?\")",
     "summary": "Monsoon camping in Coorg, Wayanad, and Chikmagalur can be incredible, but only when it is permissioned (private land/managed campsite) and weather-aware. IMD’s May 2026 forecast suggested monsoon onset over Kerala around 26 May (±4 days), and its April...",
     "directAnswer": "Monsoon camping in Coorg, Wayanad, and Chikmagalur can be incredible, but only when it is permissioned (private land/managed campsite) and weather-aware. IMD’s May 2026 forecast suggested monsoon onset over Kerala around 26 May (±4 days), and its April outlook indicated below-normal all-India June–September rainfall. Use that as a planning cue: expect heavy bursts, slippery terrain, and last-minute changes—choose easy-exit sites, verify host safety basics, and postpone when alerts spike.",
-    "heroImage": "/images/blog_monsoon_ghats.png",
+    "heroImage": "/images/blog_monsoon_ghats.jpg",
     "takeaways": [
       "Monsoon timing affects everything: roads, leeches, landslide risk, and even whether treks/camps are open. IMD’s operational onset forecast for...",
       "Before you chase a “hidden spot”, ask:",
@@ -453,7 +453,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Informational + planning (find a practical, safe, permissioned campsite near Ramanagara for a quick overnight from Bangalore)",
     "summary": "For “camping near Ramanagara,” the safest, most predictable option is to book a permissioned private campsite/farm/adventure camp (with a named manager/owner) rather than pitching up near hills, lakes, or “empty land.” If your plan touches forest/sanctuary...",
     "directAnswer": "For “camping near Ramanagara,” the safest, most predictable option is to book a permissioned private campsite/farm/adventure camp (with a named manager/owner) rather than pitching up near hills, lakes, or “empty land.” If your plan touches forest/sanctuary areas, assume access is regulated and overnight camping is only for designated sites with permission. For comfort and safety, aim for October–February; late May–September needs extra rain + slip-risk planning.",
-    "heroImage": "/images/blog_bangalore_hill.png",
+    "heroImage": "/images/blog_bangalore_hill.jpg",
     "takeaways": [
       "Season shift: Karnataka’s tourism department notes the state’s rainy season is often June–September, and May is typically hotter—so “quick...",
       "Before you pay, drive, or pitch your tent, get three things:",
@@ -578,7 +578,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Seasonal decision support (\"Should I camp in Wayanad during monsoon, what should I verify, and when should I cancel?\")",
     "summary": "Monsoon camping in Wayanad can be worth it only when it is permissioned (private land/managed campsite) and weather-aware. Before you go, check IMD warnings for Kerala, confirm all-weather access and safe parking, and choose sites with drainage, toilets,...",
     "directAnswer": "Monsoon camping in Wayanad can be worth it only when it is permissioned (private land/managed campsite) and weather-aware. Before you go, check IMD warnings for Kerala, confirm all-weather access and safe parking, and choose sites with drainage, toilets, lighting, and a staffed contact. If heavy-rain alerts spike or access roads are uncertain, postpone. This is practical guidance, not legal or medical advice.",
-    "heroImage": "/images/blog_monsoon_ghats.png",
+    "heroImage": "/images/blog_monsoon_ghats.jpg",
     "takeaways": [
       "Wayanad enters its most volatile camping season right as southwest monsoon activity ramps up. IMD's May 2026 onset forecast indicated monsoon onset...",
       "Monsoon is not the season for \"we'll find a spot when we reach.\" CampIn's trust-first rule:",
@@ -705,7 +705,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Practical planning + due diligence (find a real, safe “coffee estate camping” stay in Coorg—or set one up on private land without sliding into forest/permit trouble)",
     "summary": "Coffee estate camping in Coorg is safest when it’s explicitly hosted on private land (with a named owner/manager, clear boundaries, and basic facilities). Don’t treat “estate + forest vibes” as permission to wild-camp: if the property is forest-adjacent,...",
     "directAnswer": "Coffee estate camping in Coorg is safest when it’s explicitly hosted on private land (with a named owner/manager, clear boundaries, and basic facilities). Don’t treat “estate + forest vibes” as permission to wild-camp: if the property is forest-adjacent, access and activities can be regulated. For hosts, plan to follow Karnataka’s tourism trade registration and (if you’re offering tents as accommodation) align with tented accommodation guidelines—then publish clear on-site rules.",
-    "heroImage": "/images/blog_coorg_estate.png",
+    "heroImage": "/images/blog_coorg_estate.jpg",
     "takeaways": [
       "Demand is rising, scrutiny is rising too: Karnataka’s tourism department has published revised homestay registration guidance (2025) and an...",
       "When people search “coffee estate camping Coorg,” they often mean one of these:",
@@ -832,7 +832,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Understand where Kerala caravan infrastructure exists and what to confirm before using it.",
     "summary": "Kerala has official caravan-tourism signals and named caravan park leads, but CampIn should not present any park as instantly available until current operations, tariff, bay size, water, power, waste handling, and booking contact are confirmed with...",
     "directAnswer": "Kerala has official caravan-tourism signals and named caravan park leads, but CampIn should not present any park as instantly available until current operations, tariff, bay size, water, power, waste handling, and booking contact are confirmed with reviewable evidence.",
-    "heroImage": "/images/blog_campervan_stop.png",
+    "heroImage": "/images/blog_campervan_stop.jpg",
     "takeaways": [
       "Kerala is one of India's clearest caravan-tourism signals because state tourism has promoted caravan parks and related policy. That makes it ideal...",
       "KAVA Eco Camp and Caravan Park in the Malampuzha/Palakkad corridor and Caravan Meadows near Vagamon are high-priority leads because public tourism...",
@@ -929,7 +929,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "A practical, answer-first guide to decide whether to camp during a heatwave in India and how to reduce heat illness risk at a permissioned, hosted campsite.",
     "summary": "If IMD heatwave/severe-heatwave conditions are active for your route, treat camping as high-risk unless it's a permissioned, hosted stay with reliable water, shade, ventilation, and an on-site contact. Avoid peak sun hours (especially 12-3 pm), plan...",
     "directAnswer": "If IMD heatwave/severe-heatwave conditions are active for your route, treat camping as high-risk unless it's a permissioned, hosted stay with reliable water, shade, ventilation, and an on-site contact. Avoid peak sun hours (especially 12-3 pm), plan hydration (water + ORS/salted drinks), and set \"cancel triggers\" like no potable water, long sun-exposed hikes, or weak phone signal. If someone feels unwell, move them to a cooler place and seek medical care.",
-    "heroImage": "/images/blog_ramanagara_stars.png",
+    "heroImage": "/images/blog_ramanagara_stars.jpg",
     "takeaways": [
       "IMD's 26 May 2026 press release warned that heat wave to severe heat wave conditions were likely to continue over parts of India in the short term,...",
       "Heat amplifies every small problem. Prefer stays where someone is responsible and reachable:",
@@ -1072,7 +1072,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Find safe, legal-feeling places near Bangalore where a camper can pitch their own tent without guessing.",
     "summary": "The safest way to do own-tent camping near Bangalore is to use a host, farm, homestay, or campsite that explicitly allows BYOT, has washrooms and water, and confirms night stay permission before travel. Do not treat random lakesides, forest edges, or empty...",
     "directAnswer": "The safest way to do own-tent camping near Bangalore is to use a host, farm, homestay, or campsite that explicitly allows BYOT, has washrooms and water, and confirms night stay permission before travel. Do not treat random lakesides, forest edges, or empty land as camping spots.",
-    "heroImage": "/images/blog_bangalore_hill.png",
+    "heroImage": "/images/blog_bangalore_hill.jpg",
     "takeaways": [
       "Search demand for \"camping near Bangalore\" is high, but most results blur package camps, glamping, trekking, and public-space camping. CampIn's...",
       "A good BYOT lead should answer four practical questions: can you pitch your own tent, can your vehicle stay nearby overnight, are washrooms and...",
@@ -1169,7 +1169,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "A practical, answer-first checklist to pick safer hosted campsites and reduce solo risk (without pretending camping is \"legal everywhere\").",
     "summary": "Solo women can camp more safely in India by choosing permissioned, hosted stays (private campsites/farms/homestays) and verifying basics before leaving: boundary/ownership clarity, staffed contact, lighting and lockable toilets/rooms, reliable phone signal,...",
     "directAnswer": "Solo women can camp more safely in India by choosing permissioned, hosted stays (private campsites/farms/homestays) and verifying basics before leaving: boundary/ownership clarity, staffed contact, lighting and lockable toilets/rooms, reliable phone signal, and an exit plan. Share your itinerary + check-in times with someone, and save 112 (emergency) and 181 (women helpline). Avoid \"empty public spots\" where nobody can grant permission.",
-    "heroImage": "/images/blog_solo_woman.png",
+    "heroImage": "/images/blog_solo_woman.jpg",
     "takeaways": [
       "The pre-monsoon/monsoon transition raises risk from thunderstorms/lightning and sudden weather changes; \"figure it out on arrival\" is a bad plan for...",
       "If you're solo, avoid ambiguity. Prefer places where someone is responsible for the property at night:",
@@ -1289,7 +1289,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Compare Chikmagalur BYOT leads and understand safety/permission questions.",
     "summary": "Own-tent camping in Chikmagalur is best handled through homestays, coffee estates, or operators that explicitly allow tents and provide washrooms, water, and host support. Avoid assuming that scenic estate land, hill viewpoints, or forest-edge areas are open...",
     "directAnswer": "Own-tent camping in Chikmagalur is best handled through homestays, coffee estates, or operators that explicitly allow tents and provide washrooms, water, and host support. Avoid assuming that scenic estate land, hill viewpoints, or forest-edge areas are open for camping.",
-    "heroImage": "/images/blog_bangalore_hill.png",
+    "heroImage": "/images/blog_bangalore_hill.jpg",
     "takeaways": [
       "Chikmagalur has the right ingredients for CampIn: weekend demand from Bangalore, estate stays, cool weather, and outdoor appeal. It also has monsoon...",
       "A strong lead should mention bring-your-own-tent or tenting space, provide clean washrooms and drinking water, allow vehicle parking, and have a...",
@@ -1386,7 +1386,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Find permissioned (not \"wild\") overnight caravan/campervan stops in Maharashtra and a practical checklist to avoid unsafe/illegal parking.",
     "summary": "In Maharashtra, the safest way to plan caravan road stops is to use designated caravan parks (including hybrid parks) and other explicitly permitted, fenced, managed properties—not public roads, beaches, dam edges, fort bases, or forest fringes. Use...",
     "directAnswer": "In Maharashtra, the safest way to plan caravan road stops is to use designated caravan parks (including hybrid parks) and other explicitly permitted, fenced, managed properties—not public roads, beaches, dam edges, fort bases, or forest fringes. Use Maharashtra's Caravan Tourism Policy and the Ministry of Tourism's caravan/camping park guideline as your checklist: permission/NOCs, controlled entry, security, water/power/sewage compatibility, and emergency readiness.",
-    "heroImage": "/images/blog_campervan_stop.png",
+    "heroImage": "/images/blog_campervan_stop.jpg",
     "takeaways": [
       "Caravans and campervans solve one big India road-trip problem—sleep + safety + toilets—but only if your overnight stop is permissioned and managed....",
       "For CampIn Journal, a road stop is not \"anywhere you can fit a van\".",
@@ -1532,7 +1532,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Understand what a safe, permissioned overnight “stop” should provide (not just a pin on a map) and how CampIn will verify it.",
     "summary": "A real campervan road stop in India is a permissioned overnight bay with predictable basics: safe access/turning space, a confirmed check-in contact, toilets open at night, drinking/utility water, lighting/security, clear waste rules, and an exit plan for...",
     "directAnswer": "A real campervan road stop in India is a permissioned overnight bay with predictable basics: safe access/turning space, a confirmed check-in contact, toilets open at night, drinking/utility water, lighting/security, clear waste rules, and an exit plan for bad weather. If any one of these is unclear, treat it as “not a stop yet.” CampIn labels stops by verification stage, not hype.",
-    "heroImage": "/images/blog_campervan_stop.png",
+    "heroImage": "/images/blog_campervan_stop.jpg",
     "takeaways": [
       "Two trends are colliding:",
       "Think of this as the same discipline you’d want in a hotel booking—just adapted for vehicles.",
@@ -1669,7 +1669,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Get a clear yes/no-style answer, plus what permissions to get and what safer alternatives exist.",
     "summary": "Camping in India is not a single yes/no. It is allowed only when you have explicit permission from the landowner or the controlling authority. Entry and activities inside wildlife sanctuaries and national parks are restricted and permit-based, so don’t “just...",
     "directAnswer": "Camping in India is not a single yes/no. It is allowed only when you have explicit permission from the landowner or the controlling authority. Entry and activities inside wildlife sanctuaries and national parks are restricted and permit-based, so don’t “just pitch a tent” there. For beaches, forest edges, and public land, treat camping as not allowed unless clearly permitted in writing.",
-    "heroImage": "/images/blog_legal_verify.png",
+    "heroImage": "/images/blog_legal_verify.jpg",
     "takeaways": [
       "Late May marks the transition into the southwest monsoon window, when “quick weekend camping” plans often turn into last-minute route and safety...",
       "If a camping plan fails any one of these, CampIn treats it as a no:",
@@ -1813,7 +1813,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Learn if camping in Wayanad during monsoon is sensible and what precautions are needed.",
     "summary": "Wayanad monsoon camping should only be considered at hosted, permissioned properties with safe access, weather awareness, washrooms, water, and a solid indoor backup. Avoid riverbanks, slopes, forest edges, and remote pitches during heavy rain warnings.",
     "directAnswer": "Wayanad monsoon camping should only be considered at hosted, permissioned properties with safe access, weather awareness, washrooms, water, and a solid indoor backup. Avoid riverbanks, slopes, forest edges, and remote pitches during heavy rain warnings.",
-    "heroImage": "/images/blog_monsoon_ghats.png",
+    "heroImage": "/images/blog_monsoon_ghats.jpg",
     "takeaways": [
       "Monsoon searches create seasonal demand, but safety must lead the page. Heavy rain can change road access, stream levels, soil stability, and...",
       "A monsoon-ready camping lead needs a host on site, a marked pitch away from water flow, nearby washrooms, drinking water, parking that will not get...",
@@ -1909,7 +1909,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Find overlanding campsite leads in Northeast India and understand what must be verified.",
     "summary": "Northeast India has promising overlanding campsite leads in Meghalaya, Assam, and Arunachal Pradesh, but CampIn should treat them as research leads until direct host acceptance, local permits, road access, vehicle limits, washrooms, water, and current...",
     "directAnswer": "Northeast India has promising overlanding campsite leads in Meghalaya, Assam, and Arunachal Pradesh, but CampIn should treat them as research leads until direct host acceptance, local permits, road access, vehicle limits, washrooms, water, and current booking rules are confirmed.",
-    "heroImage": "/images/blog_host_land.png",
+    "heroImage": "/images/blog_host_land.jpg",
     "takeaways": [
       "The Northeast is attractive for overlanders because routes are scenic and less standardized. That also means CampIn must be more careful: permits,...",
       "CampIn's lead set includes overland-friendly camps, lodge-camps, tea estate stays, and adventure camps that show signals for drinking water,...",
@@ -2009,7 +2009,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Get a clear practical answer about camping permission in India.",
     "summary": "No. Campers should not pitch a tent anywhere in India. Treat camping as permission-required unless a landowner, campsite operator, tourism authority, or local rule clearly allows it. Public land, forests, beaches, lakebeds, and roadside areas can create...",
     "directAnswer": "No. Campers should not pitch a tent anywhere in India. Treat camping as permission-required unless a landowner, campsite operator, tourism authority, or local rule clearly allows it. Public land, forests, beaches, lakebeds, and roadside areas can create safety, legal, wildlife, and local-conflict risks.",
-    "heroImage": "/images/blog_bangalore_hill.png",
+    "heroImage": "/images/blog_bangalore_hill.jpg",
     "takeaways": [
       "Many search results and social posts make camping look spontaneous. That is dangerous in India because land ownership, forest rules, local village...",
       "The safest camping path is hosted private land, an official campsite, a tourism-recognized facility, or a guide-led experience where the operator...",
@@ -2106,7 +2106,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Learn how landowners, farms, estates, homestays, and cafes can become camping hosts.",
     "summary": "To host campers on your land in India, start small: confirm local permission, mark a safe pitch or parking area, provide washrooms and water, set house rules, define quiet hours and fire policy, and use a request-first flow until operations are proven.",
     "directAnswer": "To host campers on your land in India, start small: confirm local permission, mark a safe pitch or parking area, provide washrooms and water, set house rules, define quiet hours and fire policy, and use a request-first flow until operations are proven.",
-    "heroImage": "/images/blog_host_land.png",
+    "heroImage": "/images/blog_host_land.jpg",
     "takeaways": [
       "CampIn needs supply that is more trustworthy than generic campsites. Many farms, homestays, estates, cafes, and resorts already have the assets...",
       "A host should provide a permissioned area, safe access, washroom, water, parking, local support, basic lighting, emergency instructions, waste...",
@@ -2198,7 +2198,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Choose a safer desert camping setup and avoid unclear claims.",
     "summary": "Jaisalmer desert camping should be booked through a host or operator that confirms permission, washrooms, drinking water, vehicle access, temperature and wind precautions, and emergency support. BYOT is only appropriate if the operator explicitly allows own...",
     "directAnswer": "Jaisalmer desert camping should be booked through a host or operator that confirms permission, washrooms, drinking water, vehicle access, temperature and wind precautions, and emergency support. BYOT is only appropriate if the operator explicitly allows own tents and can explain the pitch conditions.",
-    "heroImage": "/images/blog_bangalore_hill.png",
+    "heroImage": "/images/blog_bangalore_hill.jpg",
     "takeaways": [
       "Desert camping content often focuses on photos, dunes, and packages. CampIn's opportunity is to answer the practical questions: is the pitch...",
       "Hosted tents are easier for first-time travelers because the operator controls bedding, meals, and setup. BYOT can work for experienced campers, but...",
@@ -2286,7 +2286,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Seasonal safety planning (\"What should I do if there’s thunder/lightning while camping in India?\")",
     "summary": "If you hear thunder while camping, treat it as a lightning risk: stop outdoor activity, move to a safer shelter, and wait it out. Follow IMD thunderstorm/lightning do’s and don’ts and use the 30–30 rule: if lightning-to-thunder is 30 seconds or less, seek...",
     "directAnswer": "If you hear thunder while camping, treat it as a lightning risk: stop outdoor activity, move to a safer shelter, and wait it out. Follow IMD thunderstorm/lightning do’s and don’ts and use the 30–30 rule: if lightning-to-thunder is 30 seconds or less, seek shelter; wait 30 minutes after the last thunder before going out again. A tent, open field, ridge, or isolated tree is not a safe shelter.",
-    "heroImage": "/images/blog_monsoon_ghats.png",
+    "heroImage": "/images/blog_monsoon_ghats.jpg",
     "takeaways": [
       "India’s pre-monsoon and monsoon months regularly bring thunderstorms with lightning. For camping, the risk isn’t just “getting wet” — it’s being...",
       "Before you camp (especially in monsoon months), verify these three things:",
@@ -2421,7 +2421,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Seasonal safety decision-making before a camping trip in India during monsoon alerts.",
     "summary": "If your campsite area is under an IMD red warning for heavy to very heavy rain, the safest decision is do not camp or check in. If it is under an orange warning, only proceed if the site is a managed, permissioned property with a substantial enclosed...",
     "directAnswer": "If your campsite area is under an IMD red warning for heavy to very heavy rain, the safest decision is do not camp or check in. If it is under an orange warning, only proceed if the site is a managed, permissioned property with a substantial enclosed shelter, all-weather road access, drainage, caretaker contact, and a stop-activities protocol. For random public spots, forest edges, riverbanks, and unverified private land, an orange alert is usually a reason to postpone.",
-    "heroImage": "/images/blog_monsoon_ghats.png",
+    "heroImage": "/images/blog_monsoon_ghats.jpg",
     "takeaways": [
       "This is not a hypothetical monsoon article. The IMD's May 16, 2026 onset forecast said the southwest monsoon was likely to set in over Kerala around...",
       "The IMD's public warning system uses color-coded alerts to help people act before weather conditions worsen:",
@@ -2555,7 +2555,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Decide whether and how to plan a monsoon camping-style trip in Maharashtra during the 2026 monsoon build-up.",
     "summary": "If you want a monsoon camping trip in Maharashtra in June 2026, the safest option is a managed private site such as an agro-tourism stay, farm stay, homestay with a camping zone, or a host-run base with hard shelter and same-day access confirmation. Do not...",
     "directAnswer": "If you want a monsoon camping trip in Maharashtra in June 2026, the safest option is a managed private site such as an agro-tourism stay, farm stay, homestay with a camping zone, or a host-run base with hard shelter and same-day access confirmation. Do not treat viral waterfall parking spots, open riverside pitches, or low-lying roadside clearings as equivalent to a campsite just because they are popular on social media.",
-    "heroImage": "/images/blog_monsoon_ghats.png",
+    "heroImage": "/images/blog_monsoon_ghats.jpg",
     "takeaways": [
       "This is a timely monsoon decision article, not generic travel inspiration. The IMD's public forecast page on June 3, 2026 said the southwest monsoon...",
       "Maharashtra Tourism's current monsoon page highlights the same kinds of places that drive social sharing every year: Lonavala and Khandala,...",
@@ -2705,7 +2705,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Get a practical, India-specific responsible camping checklist tied to current sustainability and tourism guidance, not generic eco slogans.",
     "summary": "If you want a practical responsible camping India checklist for World Environment Day 2026, start with seven rules: camp only where permission is clear, carry less single-use plastic, verify toilets and water before arrival, keep waste separated and packed...",
     "directAnswer": "If you want a practical responsible camping India checklist for World Environment Day 2026, start with seven rules: camp only where permission is clear, carry less single-use plastic, verify toilets and water before arrival, keep waste separated and packed out, avoid fragile river/forest edges, use fire only when the host explicitly allows it, and leave the site better documented than you found it. Responsible camping in India is less about slogans and more about operational discipline.",
-    "heroImage": "/images/blog_legal_verify.png",
+    "heroImage": "/images/blog_legal_verify.jpg",
     "takeaways": [
       "This is timely for two reasons. First, World Environment Day is on June 5, 2026, and the official 2026 campaign is framed as a global call for...",
       "Most Indian campers already understand the broad idea of \"leave no trace.\" The harder part is what that means on an actual weekend trip.",
@@ -2856,7 +2856,7 @@ const publishedBlogPosts: BlogPost[] = [
     "searchIntent": "Learn what an Indian campsite, farm-stay, or outdoor host should verify before confirming monsoon bookings in June 2026.",
     "summary": "Before you confirm a monsoon camping booking in India, verify six basics the same day: official weather alerts, road access, drainage, hard-shelter fallback, usable washrooms, and a guest cut-off rule if conditions worsen. In June 2026, a scenic property is...",
     "directAnswer": "Before you confirm a monsoon camping booking in India, verify six basics the same day: official weather alerts, road access, drainage, hard-shelter fallback, usable washrooms, and a guest cut-off rule if conditions worsen. In June 2026, a scenic property is not enough. A host becomes bookable only when the stay can still operate clearly after rain, lightning, gusty wind, or late guest arrival.",
-    "heroImage": "/images/blog_monsoon_ghats.png",
+    "heroImage": "/images/blog_monsoon_ghats.jpg",
     "takeaways": [
       "This is a timely host-education article, not a generic camping post. The India Meteorological Department press release dated June 3, 2026 said the...",
       "Many outdoor listings look strong in dry weather and weak in the first serious rain. The gap usually appears in the same places:",

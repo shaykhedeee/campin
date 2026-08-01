@@ -130,7 +130,7 @@ export default function OpsCenter() {
     primaryKeyword: "",
     summary: "",
     directAnswer: "",
-    heroImage: "/images/blog_coorg_estate.png",
+    heroImage: "/images/blog_coorg_estate.jpg",
     takeawaysInput: "Choose verified private lands\nAlways pack high-quality rain tarps",
     sectionsInput: "### 1. Preparation and Pitching\nPack ground sheets and storm anchors.\n\n### 2. Legal Boundaries\nVerify border markers with landowners.",
     faqsInput: "Is it legal to camp?\nYes, on private farms with owner approval.\n\nWhat about wildlife?\nStick to fenced properties.",
@@ -290,8 +290,8 @@ export default function OpsCenter() {
       campervanFriendly: campsiteForm.campervanFriendly,
       roadStop: campsiteForm.roadStop,
       maxGuests: Number(campsiteForm.maxGuests),
-      image: "/images/blog_coorg_estate.png",
-      gallery: ["/images/blog_coorg_estate.png"],
+      image: "/images/blog_coorg_estate.jpg",
+      gallery: ["/images/blog_coorg_estate.jpg"],
       rating: 4.8,
       reviews: 4,
       hostName: "CampIn Onboarding Team",
@@ -347,7 +347,7 @@ export default function OpsCenter() {
       triggerOutboxEmail(
         "social-draft",
         `Social draft ready: ${campsiteForm.title}`,
-        `POST PAYLOAD: {\n  "media_type": "IMAGE",\n  "image_url": "https://campin.co.in/images/blog_coorg_estate.png",\n  "caption": "New CampIn review candidate\\n\\n${campsiteForm.title} in ${campsiteForm.location}, ${campsiteForm.state}.\\n\\nRegion: ${campsiteForm.region}\\nRequest-first price signal: INR ${campsiteForm.price}/night\\n\\nCampIn reviews permission, access, washrooms, water, and host rules before any guest handoff. #campingindia #overlandingindia #campin",\n  "location_id": "india"\n}`,
+        `POST PAYLOAD: {\n  "media_type": "IMAGE",\n  "image_url": "https://campin.co.in/images/blog_coorg_estate.jpg",\n  "caption": "New CampIn review candidate\\n\\n${campsiteForm.title} in ${campsiteForm.location}, ${campsiteForm.state}.\\n\\nRegion: ${campsiteForm.region}\\nRequest-first price signal: INR ${campsiteForm.price}/night\\n\\nCampIn reviews permission, access, washrooms, water, and host rules before any guest handoff. #campingindia #overlandingindia #campin",\n  "location_id": "india"\n}`,
         "Social Draft Export"
       );
       alert(`Social draft prepared for ${campsiteForm.title}. Review before posting.`);
@@ -388,7 +388,7 @@ export default function OpsCenter() {
       primaryKeyword: "",
       summary: "",
       directAnswer: "",
-      heroImage: "/images/blog_coorg_estate.png",
+      heroImage: "/images/blog_coorg_estate.jpg",
       takeawaysInput: "Choose verified private lands\nAlways pack high-quality rain tarps",
       sectionsInput: "### 1. Preparation and Pitching\nPack ground sheets and storm anchors.\n\n### 2. Legal Boundaries\nVerify border markers with landowners.",
       faqsInput: "Is it legal to camp?\nYes, on private farms with owner approval.\n\nWhat about wildlife?\nStick to fenced properties.",
@@ -767,12 +767,12 @@ export default function OpsCenter() {
                 {isIgConnected ? (
                   <div className="grid grid-cols-3 gap-2">
                     {[
-                      "/images/blog_coorg_estate.png",
-                      "/images/blog_bangalore_hill.png",
-                      "/images/blog_legal_verify.png",
-                      "/images/blog_monsoon_ghats.png",
-                      "/images/blog_campervan_stop.png",
-                      "/images/blog_ramanagara_stars.png",
+                      "/images/blog_coorg_estate.jpg",
+                      "/images/blog_bangalore_hill.jpg",
+                      "/images/blog_legal_verify.jpg",
+                      "/images/blog_monsoon_ghats.jpg",
+                      "/images/blog_campervan_stop.jpg",
+                      "/images/blog_ramanagara_stars.jpg",
                     ].map((img, idx) => (
                       <div key={idx} className="relative aspect-square overflow-hidden rounded-lg bg-forest/5">
                         <img src={img} className="h-full w-full object-cover" />

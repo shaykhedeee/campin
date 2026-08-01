@@ -6,16 +6,16 @@ const draftsDir = path.join(root, "data", "blog", "drafts");
 const outFile = path.join(root, "src", "data", "blogPosts.ts");
 
 const imageBySlug = [
-  [/bangalore|ramanagara|kanakapura|byot|own-tent|pitch-a-tent/i, "/images/blog_bangalore_hill.png"],
-  [/coorg|coffee/i, "/images/blog_coorg_estate.png"],
-  [/monsoon|rain|wayanad|western-ghats|chikmagalur|lightning|alert/i, "/images/blog_monsoon_ghats.png"],
-  [/caravan|campervan|road-stop|parking|overnight|maharashtra/i, "/images/blog_campervan_stop.png"],
-  [/legal|permission|pledge|responsible/i, "/images/blog_legal_verify.png"],
-  [/family|kids/i, "/images/blog_family_safe.png"],
-  [/solo|women/i, "/images/blog_solo_woman.png"],
-  [/host|land|farm/i, "/images/blog_host_land.png"],
-  [/glamping|style/i, "/images/blog_glamping_pitch.png"],
-  [/desert|jaisalmer|northeast|overlanding/i, "/images/blog_ramanagara_stars.png"],
+  [/bangalore|ramanagara|kanakapura|byot|own-tent|pitch-a-tent/i, "/images/blog_bangalore_hill.jpg"],
+  [/coorg|coffee/i, "/images/blog_coorg_estate.jpg"],
+  [/monsoon|rain|wayanad|western-ghats|chikmagalur|lightning|alert/i, "/images/blog_monsoon_ghats.jpg"],
+  [/caravan|campervan|road-stop|parking|overnight|maharashtra/i, "/images/blog_campervan_stop.jpg"],
+  [/legal|permission|pledge|responsible/i, "/images/blog_legal_verify.jpg"],
+  [/family|kids/i, "/images/blog_family_safe.jpg"],
+  [/solo|women/i, "/images/blog_solo_woman.jpg"],
+  [/host|land|farm/i, "/images/blog_host_land.jpg"],
+  [/glamping|style/i, "/images/blog_glamping_pitch.jpg"],
+  [/desert|jaisalmer|northeast|overlanding/i, "/images/blog_ramanagara_stars.jpg"],
 ];
 
 function readDrafts() {
@@ -216,7 +216,7 @@ function inferCategory(slug, keyword) {
 }
 
 function inferImage(slug) {
-  return imageBySlug.find(([pattern]) => pattern.test(slug))?.[1] || "/images/blog_ramanagara_stars.png";
+  return imageBySlug.find(([pattern]) => pattern.test(slug))?.[1] || "/images/blog_ramanagara_stars.jpg";
 }
 
 function buildTakeaways(sections, directAnswer) {

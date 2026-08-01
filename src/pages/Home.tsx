@@ -197,7 +197,7 @@ export default function Home() {
             style={{ clipPath: "polygon(5% 0, 100% 0, 100% 100%, 0 100%, 2% 78%, 0 55%, 3% 30%, 0 12%)", borderTopLeftRadius: 46 }}
           >
             <img
-              src="/images/campin-hero-wilderness.png"
+              src="/images/campin-hero-wilderness.jpg"
               alt="Dramatic wilderness campsite with glowing tent and mountain view"
               className="animate-image-breathe absolute left-0 top-0 h-[72%] w-full object-cover object-[center_top] sm:h-[66%] sm:object-center"
             />
