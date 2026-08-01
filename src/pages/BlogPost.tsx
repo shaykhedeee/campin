@@ -1,10 +1,37 @@
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Calendar, CheckCircle, Clock, ExternalLink, Search, Shield } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, CheckCircle, Clock, ExternalLink, Shield } from "lucide-react";
 import { getBlogPost, getRelatedBlogPosts } from "../data/blogPosts";
 
 export default function BlogPost() {
   const { slug = "" } = useParams();
-  const post = getBlogPost(slug);
+  const [post, setPost] = useState(() => getBlogPost(slug));
+
+  useEffect(() => {
+    setPost(getBlogPost(slug));
+  }, [slug]);
+
+  useEffect(() => {
+    const handleSync = () => setPost(getBlogPost(slug));
+    window.addEventListener("campin-blogs-updated", handleSync);
+    return () => window.removeEventListener("campin-blogs-updated", handleSync);
+  }, [slug]);
+
+  useEffect(() => {
+    if (!post) return;
+    document.title = `${post.metaTitle} | CampIn Journal`;
+    setMetaTag("description", post.metaDescription);
+    setMetaTag("og:title", post.metaTitle, "property");
+    setMetaTag("og:description", post.metaDescription, "property");
+    setMetaTag("og:type", "article", "property");
+    setMetaTag("og:url", `https://campin.co.in/blog/${post.slug}`, "property");
+    setCanonical(`https://campin.co.in/blog/${post.slug}`);
+    return () => {
+      document.title = "CampIn | Permission-First Camping in India";
+      setMetaTag("description", "Find permission-first camping guides, reviewed outdoor stays, BYOT-friendly hosts, and safer road-trip stops across India.");
+      setCanonical("https://campin.co.in/");
+    };
+  }, [post]);
 
   if (!post) {
     return (
@@ -202,6 +229,26 @@ export default function BlogPost() {
       </div>
     </article>
   );
+}
+
+function setMetaTag(name: string, content: string, attribute = "name") {
+  let tag = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${name}"]`);
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute(attribute, name);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute("content", content);
+}
+
+function setCanonical(url: string) {
+  let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "canonical";
+    document.head.appendChild(link);
+  }
+  link.href = url;
 }
 
 function formatDate(date: string) {

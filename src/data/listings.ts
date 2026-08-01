@@ -169,7 +169,7 @@ function makeListing(input: Omit<Listing, "image" | "gallery" | "rating" | "revi
   };
 }
 
-export const listings: Listing[] = [
+const defaultListings: Listing[] = [
   makeListing({
     id: "kava-eco-camp-caravan-park",
     title: "KAVA Eco Camp and Caravan Park",
@@ -193,8 +193,8 @@ export const listings: Listing[] = [
     essentials: ["Water", "Parking", "Electricity", "Washroom"],
     tags: ["Kerala", "Caravan", "Official tourism", "High-priority onboarding"],
     highlights: ["Official source found", "Camper van capacity mentioned", "Waste handling signal"],
-    verification: ["Official tourism source reviewed", "Facilities listed publicly", "Current operations need founder call"],
-    bestFor: "Caravans, camper vans and Kerala road-trip validation",
+    verification: ["Official tourism source reviewed", "Facilities listed publicly", "Current operations need CampIn team review"],
+    bestFor: "Caravans, camper vans and Kerala road-trip planning",
     accessNote: "Confirm bay dimensions, plug type, tariffs and waste policy before any camper handoff.",
     signal: "Unknown until host confirmation",
     permissionStatus: "not_verified",
@@ -232,7 +232,7 @@ export const listings: Listing[] = [
     tags: ["Kerala", "Vagamon", "Caravan", "Official tourism"],
     highlights: ["Official park signal", "Route-friendly location", "Infrastructure mentioned publicly"],
     verification: ["Official tourism source reviewed", "Caravan park status noted", "Current contact not yet human-confirmed"],
-    bestFor: "Kerala caravan and campervan corridor validation",
+    bestFor: "Kerala caravan and campervan corridor planning",
     accessNote: "Confirm current operator, opening days and whether non-package campervans can book.",
     signal: "Unknown until host confirmation",
     permissionStatus: "not_verified",
@@ -276,7 +276,7 @@ export const listings: Listing[] = [
       tags: ["Maharashtra", "Caravan", "Network lead", "Request only"],
       highlights: ["Network-level facility claims", "Strong corridor fit", "Needs direct host confirmation"],
       verification: ["Public network source reviewed", "Direct host not confirmed", "Availability not live"],
-      bestFor: "Campervan, caravan and road-trip supply validation",
+      bestFor: "Campervan, caravan and road-trip supply review",
       accessNote: "Do not expose as available until the specific host and nightly rules are confirmed.",
       signal: "Unknown until host confirmation",
       permissionStatus: "not_verified",
@@ -363,7 +363,7 @@ export const listings: Listing[] = [
       tags: ["Overlanding", state, "Gated request", "Host confirmation needed"],
       highlights: ["Camper/overland fit", "Amenities visible in public source", "Needs direct acceptance check"],
       verification: ["Public source reviewed", "Direct booking not confirmed", "Availability not live"],
-      bestFor: "Overlanders, rooftop tents, road travelers and BYOT validation",
+      bestFor: "Overlanders, rooftop tents, road travelers and BYOT planning",
       accessNote: "Confirm direct host acceptance, vehicle size limits and local permits before sending campers.",
       signal: "Unknown until host confirmation",
       permissionStatus: "not_verified",
@@ -407,10 +407,10 @@ export const listings: Listing[] = [
       maxGuests: 8,
       amenities: ["BYOT signal", "Washroom signal", "Water signal", "Parking signal"],
       essentials: ["Washroom", "Water", "Parking"],
-      tags: ["BYOT", state, "Gated request", "Founder call needed"],
+      tags: ["BYOT", state, "Gated request", "CampIn team review needed"],
       highlights: ["Own tent signal", "Public business page found", "Facilities need freshness check"],
       verification: ["Public page reviewed", "Availability not live", "Host consent not yet recorded"],
-      bestFor: "Own-tent campers, car campers and early host validation",
+      bestFor: "Own-tent campers, car campers and early host review",
       accessNote: "Confirm current rules, parking location, night safety and whether CampIn can publish the contact.",
       signal: "Unknown until host confirmation",
       permissionStatus: "not_verified",
@@ -422,7 +422,7 @@ export const listings: Listing[] = [
       unknowns: ["Host consent", "Current tariff", "Night safety", "Campervan limits"],
       verificationStage: stage as VerificationStage,
       confidence: { ...defaultConfidence, byotAllowed: "high", overnightParking: "medium", washroom: title.includes("Backyard") || title.includes("Wilderness") ? "medium" : "high", water: title.includes("Backyard") || title.includes("Wilderness") ? "medium" : "high", electricity: title.includes("ChukkiMane") || title.includes("Wilderness") || title.includes("Dreamtime") ? "unknown" : "high", campervanSuitability: "medium", directBusinessContact: "medium" },
-      nextAction: "Run founder-call verification checklist before publishing as reviewed.",
+      nextAction: "Run the CampIn review checklist before publishing as reviewed.",
     }),
   ),
   makeListing({
@@ -613,15 +613,15 @@ export const listings: Listing[] = [
 ];
 
 export const categories: Category[] = [
-  { id: "all", title: "All leads", description: "Browse the CampIn research network", count: `${listings.length} places` },
-  { id: "caravan-park", title: "Caravan Parks", description: "Campervan and caravan-ready leads", count: `${listings.filter((item) => item.type === "caravan-park").length} leads` },
-  { id: "overland", title: "Overlanding", description: "Northeast and highway overland stops", count: `${listings.filter((item) => item.type === "overland").length} leads` },
-  { id: "byot", title: "BYOT", description: "Bring-your-own-tent candidates", count: `${listings.filter((item) => item.type === "byot").length} leads` },
-  { id: "road-stop", title: "Road Stops", description: "Route support and parking networks", count: `${listings.filter((item) => item.type === "road-stop").length} leads` },
-  { id: "desert", title: "Desert", description: "Desert BYOT and camping corridors", count: `${listings.filter((item) => item.type === "desert").length} leads` },
-  { id: "beach", title: "Beach", description: "Coastal BYOT candidates", count: `${listings.filter((item) => item.type === "beach").length} leads` },
-  { id: "farm", title: "Farms", description: "Farm and agri-tourism candidates", count: `${listings.filter((item) => item.type === "farm").length} leads` },
-  { id: "forest", title: "Forest", description: "Forest-edge candidates", count: `${listings.filter((item) => item.type === "forest").length} leads` },
+  { id: "all", title: "All leads", description: "Browse the CampIn research network", count: `${defaultListings.length} places` },
+  { id: "caravan-park", title: "Caravan Parks", description: "Campervan and caravan-ready leads", count: `${defaultListings.filter((item) => item.type === "caravan-park").length} leads` },
+  { id: "overland", title: "Overlanding", description: "Northeast and highway overland stops", count: `${defaultListings.filter((item) => item.type === "overland").length} leads` },
+  { id: "byot", title: "BYOT", description: "Bring-your-own-tent candidates", count: `${defaultListings.filter((item) => item.type === "byot").length} leads` },
+  { id: "road-stop", title: "Road Stops", description: "Route support and parking networks", count: `${defaultListings.filter((item) => item.type === "road-stop").length} leads` },
+  { id: "desert", title: "Desert", description: "Desert BYOT and camping corridors", count: `${defaultListings.filter((item) => item.type === "desert").length} leads` },
+  { id: "beach", title: "Beach", description: "Coastal BYOT candidates", count: `${defaultListings.filter((item) => item.type === "beach").length} leads` },
+  { id: "farm", title: "Farms", description: "Farm and agri-tourism candidates", count: `${defaultListings.filter((item) => item.type === "farm").length} leads` },
+  { id: "forest", title: "Forest", description: "Forest-edge candidates", count: `${defaultListings.filter((item) => item.type === "forest").length} leads` },
 ];
 
 export const researchGuides: ResearchGuide[] = [
@@ -645,7 +645,7 @@ export const researchGuides: ResearchGuide[] = [
     targetQuery: "caravan park India water electricity washroom",
     listingIds: ["kava-eco-camp-caravan-park", "caravan-meadows-vagamon", "mtdc-resort-parking-network", "caravaanlife-lonavala"],
     safetyNotes: ["Separate public tourism claims from current availability", "Confirm plug type and grey-water rules", "Do not imply instant booking"],
-    nextAction: "Build a founder outreach queue for tourism bodies and caravan operators.",
+    nextAction: "Build a CampIn outreach queue for tourism bodies and caravan operators.",
   },
   {
     slug: "northeast-overlanding-stops",
@@ -675,7 +675,7 @@ export const trustStandards = [
   },
   {
     title: "Human verification queue",
-    description: "Automation can draft and score leads, but verified claims wait for founder or host confirmation.",
+    description: "CampIn can draft and score leads, but verified claims wait for team or host confirmation.",
   },
 ];
 
@@ -688,12 +688,23 @@ export const roadStopFeatures = [
   "Host or operator on call",
 ];
 
-export const stats = [
-  { value: String(listings.length), label: "trust-scoped leads" },
-  { value: String(listings.filter((item) => item.verificationStage === "reviewed").length), label: "source-reviewed" },
-  { value: String(listings.filter((item) => item.campervanFriendly).length), label: "vehicle-fit leads" },
-  { value: String(researchGuides.length), label: "guide clusters" },
-];
+// Admin preview persistence for listing edits.
+const getPersistedListings = (): Listing[] => {
+  if (typeof window !== "undefined" && window.localStorage) {
+    const stored = window.localStorage.getItem("campin.listings.v2");
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch (e) {
+        console.error("Failed to parse listings from localStorage", e);
+      }
+    }
+    window.localStorage.setItem("campin.listings.v2", JSON.stringify(defaultListings));
+  }
+  return defaultListings;
+};
+
+export let listings: Listing[] = getPersistedListings();
 
 export const researchSystemHealth = {
   totalLeads: listings.length,
@@ -706,10 +717,48 @@ export const researchSystemHealth = {
   guideOpportunities: researchGuides.length,
 };
 
+export const stats = [
+  { value: String(listings.length), label: "trust-scoped leads" },
+  { value: String(listings.filter((item) => item.verificationStage === "reviewed").length), label: "source-reviewed" },
+  { value: String(listings.filter((item) => item.campervanFriendly).length), label: "vehicle-fit leads" },
+  { value: String(researchGuides.length), label: "guide clusters" },
+];
+
+export const updateSystemHealth = (list: Listing[]) => {
+  researchSystemHealth.totalLeads = list.length;
+  researchSystemHealth.newLeads = list.filter((item) => item.verificationStage === "lead" || item.verificationStage === "community_suggested").length;
+  researchSystemHealth.sourceReviewed = list.filter((item) => item.verificationStage === "reviewed").length;
+  researchSystemHealth.publishableDrafts = list.filter((item) => item.sourceUrls.length > 0 && item.availability.lastCheckedAt && item.contactPolicy === "gated_relay").length;
+  researchSystemHealth.missingProofBlockers = list.reduce((total, item) => total + item.unknowns.length, 0);
+  researchSystemHealth.staleRecords = list.filter((item) => !item.availability.lastCheckedAt).length;
+  researchSystemHealth.guideOpportunities = researchGuides.length;
+
+  stats[0].value = String(list.length);
+  stats[1].value = String(list.filter((item) => item.verificationStage === "reviewed").length);
+  stats[2].value = String(list.filter((item) => item.campervanFriendly).length);
+  stats[3].value = String(researchGuides.length);
+};
+
+// Initial sync
+updateSystemHealth(listings);
+
+export function getListings(): Listing[] {
+  return listings;
+}
+
+export function saveListings(updatedListings: Listing[]) {
+  listings = updatedListings;
+  updateSystemHealth(updatedListings);
+  if (typeof window !== "undefined" && window.localStorage) {
+    window.localStorage.setItem("campin.listings.v2", JSON.stringify(updatedListings));
+    window.dispatchEvent(new Event("campin-listings-updated"));
+  }
+}
+
 export const faqs = [
   {
     q: "Can I book instantly today?",
-    a: "No. Phase 1 is discovery and request-first validation. Availability must be confirmed by the host, CampIn, or a future calendar sync.",
+    a: "No. Phase 1 is discovery and request-first handoff. Availability must be confirmed by the host, CampIn, or a future calendar sync.",
   },
   {
     q: "What does source-reviewed mean?",
@@ -717,7 +766,7 @@ export const faqs = [
   },
   {
     q: "Why gate contact instead of showing phone numbers immediately?",
-    a: "Gated relay captures dates, guests, vehicle type and lead source before a host conversation, which makes marketplace learning measurable.",
+    a: "Gated relay captures dates, guests, vehicle type and lead source before a host conversation, which helps CampIn route better requests.",
   },
   {
     q: "Where do unverified regions go?",

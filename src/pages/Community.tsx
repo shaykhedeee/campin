@@ -17,33 +17,33 @@ import { CamperWaitlistForm } from "../components/validation/ValidationForms";
 const groups = [
   {
     name: "CampIn Announcements",
-    purpose: "Founder updates, pilot calls, safety notes, and newsletter drops.",
-    target: "Admin-only",
+    purpose: "CampIn updates, pilot-trip calls, safety notes, and guide drops.",
+    target: "Updates and guide drops",
   },
   {
     name: "CampIn Bangalore Core",
     purpose: "The first demand circle for weekend campers, own-gear users, and early testers.",
-    target: "100 members",
+    target: "Weekend campers",
   },
   {
     name: "CampIn South India Routes",
     purpose: "Coorg, Wayanad, Chikmagalur, Ramanagara, Kanakapura, and road-stop intelligence.",
-    target: "150 members",
+    target: "South India routes",
   },
   {
     name: "CampIn Own-Tent Campers",
     purpose: "People who want permissioned places to pitch their own tent.",
-    target: "100 members",
+    target: "Bring-your-own-tent campers",
   },
   {
     name: "CampIn Founding Hosts",
     purpose: "Private landowners, estates, farms, homestays, and road-stop candidates.",
-    target: "50 hosts",
+    target: "Hosts and landowners",
   },
   {
     name: "CampIn First-Time Campers",
     purpose: "Beginner safety, packing, family concerns, and confidence before first trip.",
-    target: "100 members",
+    target: "First-time campers",
   },
 ];
 
@@ -66,10 +66,10 @@ const rules = [
 ];
 
 const metrics = [
-  { value: "350", label: "90-day WhatsApp members" },
-  { value: "120", label: "weekly active members" },
-  { value: "60", label: "UGC submissions" },
-  { value: "100", label: "referral signups" },
+  { value: "Weekly", label: "route questions" },
+  { value: "Local", label: "safety notes" },
+  { value: "Real", label: "host stories" },
+  { value: "Useful", label: "trip checklists" },
 ];
 
 export default function Community() {
@@ -119,7 +119,7 @@ export default function Community() {
           <div className="rounded-lg border border-white/15 bg-white/95 p-5 text-forest shadow-2xl">
             <p className="flex items-center gap-2 text-sm font-black uppercase tracking-wide text-orange">
               <Users size={17} />
-              Community goals
+              What you can expect
             </p>
             <div className="mt-5 grid grid-cols-2 gap-3">
               {metrics.map((metric) => (
@@ -130,8 +130,8 @@ export default function Community() {
               ))}
             </div>
             <p className="mt-5 text-sm leading-6 text-textgrey">
-              These are quality targets, not vanity numbers. CampIn needs active, helpful members who generate trust
-              signals, host referrals, and honest objections.
+              CampIn is built around useful conversations: practical route help, honest safety questions, host context,
+              and responsible trip stories.
             </p>
           </div>
         </div>
@@ -143,10 +143,6 @@ export default function Community() {
             <p className="font-black text-orange">Community structure</p>
             <h2 className="mt-2 text-3xl font-black text-forest sm:text-4xl">One community, focused rooms.</h2>
           </div>
-          <Link to="/validation" className="inline-flex items-center gap-2 font-black text-forest hover:text-orange">
-            Open validation dashboard
-            <ArrowRight size={18} />
-          </Link>
         </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -235,7 +231,7 @@ export default function Community() {
             <MapPin size={22} className="text-orange" />
             <h3 className="mt-4 font-black text-forest">Suggest places</h3>
             <p className="mt-2 text-sm leading-6 text-textgrey">
-              Members can suggest private land, farms, estates, and road stops for founder verification.
+              Members can suggest private land, farms, estates, and road stops for CampIn review.
             </p>
           </div>
           <div className="rounded-lg bg-offwhite p-5">

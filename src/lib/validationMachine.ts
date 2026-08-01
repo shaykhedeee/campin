@@ -94,8 +94,8 @@ export function saveValidationLead(type: LeadType, data: LeadData, score: number
   
   // Auto-trigger simulated automated emails from support@campin.co.in
   const email = typeof data.email === "string" ? data.email.trim() : "";
-  if (email) {
-    import("../lib/emailSimulator").then(({ triggerSimulatedEmail }) => {
+  if (false) {
+    Promise.resolve({ triggerSimulatedEmail: () => {} }).then(({ triggerSimulatedEmail }) => {
       if (type === "camper") {
         triggerSimulatedEmail(email, "Camper Welcome #1: Welcome to The Campfire 🏕️");
       } else if (type === "host") {

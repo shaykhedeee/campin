@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen, Calendar, Clock, Search, Shield, Sparkles, Tent } from "lucide-react";
-import { blogPosts } from "../data/blogPosts";
+import { getBlogPosts } from "../data/blogPosts";
 
 const clusters = [
   "Own-Tent Camping",
@@ -12,8 +13,38 @@ const clusters = [
 ];
 
 export default function BlogIndex() {
-  const featured = blogPosts[0];
-  const rest = blogPosts.slice(1);
+  const [activeBlogs, setActiveBlogs] = useState(() => getBlogPosts());
+
+  useEffect(() => {
+    const handleSync = () => setActiveBlogs(getBlogPosts());
+    window.addEventListener("campin-blogs-updated", handleSync);
+    return () => window.removeEventListener("campin-blogs-updated", handleSync);
+  }, []);
+
+  useEffect(() => {
+    document.title = "CampIn Journal | Practical Camping Guides for India";
+    setMetaTag("description", "Permission-first, safety-first camping guides for own-tent campers, families, hosts, and road travelers across India.");
+    setCanonical("https://campin.co.in/blog");
+    return () => {
+      document.title = "CampIn | Permission-First Camping in India";
+      setMetaTag("description", "Find permission-first camping guides, reviewed outdoor stays, BYOT-friendly hosts, and safer road-trip stops across India.");
+      setCanonical("https://campin.co.in/");
+    };
+  }, []);
+
+  const featured = activeBlogs[0];
+  const rest = activeBlogs.slice(1);
+
+  if (!featured) {
+    return (
+      <div className="min-h-screen bg-offwhite pt-28">
+        <div className="mx-auto max-w-7xl px-4 py-12 text-center sm:px-6">
+          <p className="font-black text-orange">No posts found</p>
+          <h1 className="mt-3 text-4xl font-black text-forest">No CampIn articles are live yet.</h1>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-offwhite pt-28">
@@ -82,7 +113,7 @@ export default function BlogIndex() {
           <div className="rounded-lg border border-forest/10 bg-white p-5">
             <Tent size={22} className="text-orange" />
             <h2 className="mt-4 font-black text-forest">CampIn-led</h2>
-            <p className="mt-2 text-sm leading-6 text-textgrey">Each article points to waitlist, community, host, or road-stop validation.</p>
+            <p className="mt-2 text-sm leading-6 text-textgrey">Each article points to a useful guide, community, host, or road-stop request path.</p>
           </div>
         </div>
 
@@ -149,6 +180,26 @@ export default function BlogIndex() {
       </section>
     </div>
   );
+}
+
+function setMetaTag(name: string, content: string) {
+  let tag = document.head.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.name = name;
+    document.head.appendChild(tag);
+  }
+  tag.content = content;
+}
+
+function setCanonical(url: string) {
+  let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement("link");
+    link.rel = "canonical";
+    document.head.appendChild(link);
+  }
+  link.href = url;
 }
 
 function formatDate(date: string) {

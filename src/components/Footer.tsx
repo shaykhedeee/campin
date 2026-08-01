@@ -59,8 +59,8 @@ export default function Footer() {
               <Link to="/host-your-land" className="block text-white/60 hover:text-white">
                 List your land
               </Link>
-              <span className="block text-white/50">Founding host program</span>
-              <span className="block text-white/50">Host verification</span>
+              <span className="block text-white/50">Host community</span>
+              <span className="block text-white/50">Clear stay details</span>
               <span className="block text-white/50">Permission-first stays</span>
             </div>
           </div>
@@ -107,7 +107,7 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <p>Copyright 2026 CampIn. Stay. Explore. CampIn.</p>
-          <p>Built from the CampIn operating system, trust first.</p>
+          <p>Built for safer, more respectful camping in India.</p>
         </div>
       </div>
     </footer>

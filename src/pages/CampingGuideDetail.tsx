@@ -1,8 +1,9 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, BookOpen, CheckCircle, Download, LockKeyhole, Mail, MapPin, Phone, ShieldCheck, User } from "lucide-react";
+import { ArrowLeft, BookOpen, CheckCircle, Download, Lock, MapPin, ShieldCheck } from "lucide-react";
 import { createGuideMarkdown, getCampingGuide } from "../data/campingGuides";
 import { hasGuideAccess, saveGuideAccessLead, type GuideAccessLead } from "../lib/guideAccess";
+import { submitMvpLead } from "../lib/mvpLeadStore";
 
 function downloadTextFile(fileName: string, content: string) {
   const blob = new Blob([content], { type: "text/markdown;charset=utf-8" });
@@ -40,7 +41,7 @@ export default function CampingGuideDetail() {
         <div className="max-w-md rounded-2xl border border-forest/10 bg-white p-8 shadow-sm">
           <BookOpen className="mx-auto text-orange" size={30} />
           <h1 className="mt-5 text-2xl font-extrabold text-forest">Guide not found</h1>
-          <p className="mt-2 text-sm leading-6 text-textgrey">This CampIn guide is not in the local guide vault.</p>
+          <p className="mt-2 text-sm leading-6 text-textgrey">This CampIn guide is not available yet.</p>
           <Link to="/camping-guides" className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-forest px-5 py-3 font-bold text-white">
             <ArrowLeft size={18} />
             Back to Guides
@@ -53,9 +54,26 @@ export default function CampingGuideDetail() {
   const unlocked = alreadyUnlocked || Boolean(lead) || (guide?.slug === "first-time-family-camping-india");
   const leadId = lead?.id ?? "LOCAL-UNLOCKED";
 
-  const submit = (event: FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
     const savedLead = saveGuideAccessLead(guide, formData);
+    await submitMvpLead({
+      type: "guide_unlock",
+      sourcePage: `/camping-guides/${guide.slug}`,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      city: formData.city,
+      status: "guide_checklist_requested",
+      consent: formData.consent,
+      payload: {
+        guideSlug: guide.slug,
+        guideTitle: guide.title,
+        preferredGuide: guide.slug,
+        interest: formData.interest,
+        localGuideLeadId: savedLead.id,
+      },
+    });
     setLead(savedLead);
     setAlreadyUnlocked(true);
   };
@@ -80,7 +98,7 @@ export default function CampingGuideDetail() {
         <section className="grid gap-8 rounded-[2.5rem] border border-white/10 bg-[#0a1e14]/50 backdrop-blur-xl p-8 text-white sm:p-10 lg:grid-cols-[1.2fr_0.8fr] lg:p-12">
           <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-orange/30 bg-orange/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-orange">
-              {unlocked ? "✓ Guide unlocked" : "🔒 Premium handbook"}
+              {unlocked ? "Checklist unlocked" : "Free guide + checklist download"}
             </p>
             <h1 className="mt-5 text-3xl font-black leading-tight sm:text-5xl lg:text-6xl tracking-tight">{guide.title}</h1>
             <p className="mt-5 text-base leading-relaxed text-white/70">{guide.subtitle}</p>
@@ -126,16 +144,13 @@ export default function CampingGuideDetail() {
           
           {/* Main Manual Content */}
           <div className="space-y-8">
-            {/* SEO-indexed core sections. If locked, we blur them but render fully. */}
-            <div className={`space-y-8 transition-all duration-500 relative ${
-              !unlocked ? "blur-md select-none pointer-events-none" : ""
-            }`}>
+            <div className="space-y-8 transition-all duration-500 relative">
               
               {/* Introduction & Overview */}
               <div className="rounded-3xl border border-white/10 bg-[#0a1e14]/30 p-6 sm:p-8 backdrop-blur-sm">
                 <h2 className="text-2xl font-black tracking-tight text-white flex items-center gap-2">
                   <BookOpen size={20} className="text-orange" />
-                  1. Comprehensive Overview
+                  1. Practical Overview
                 </h2>
                 <p className="mt-4 text-sm leading-relaxed text-white/70">{guide.preview}</p>
               </div>
@@ -181,18 +196,6 @@ export default function CampingGuideDetail() {
               </div>
             </div>
 
-            {/* If locked, show absolute positioned alert banner */}
-            {!unlocked && (
-              <div className="absolute inset-0 flex items-center justify-center p-4">
-                <div className="max-w-md w-full rounded-2xl border border-white/10 bg-[#07130c]/90 backdrop-blur-md p-6 text-center shadow-2xl">
-                  <Lock className="mx-auto text-orange animate-bounce" size={28} />
-                  <h3 className="mt-4 text-lg font-black">Content Gated</h3>
-                  <p className="mt-2 text-xs leading-relaxed text-white/60">
-                    Submit your email and phone number using the form to instantly unlock this premium overlanding handbook.
-                  </p>
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Form / Unlock Sidebar */}
@@ -204,9 +207,9 @@ export default function CampingGuideDetail() {
                     <Lock size={20} />
                   </div>
                   <div>
-                    <h3 className="text-lg font-black text-white">Unlock Full Guide</h3>
+                    <h3 className="text-lg font-black text-white">Get the downloadable checklist</h3>
                     <p className="mt-1 text-xs leading-relaxed text-white/60">
-                      Unlock direct checklists, itineraries, and exact coordinates. Safe routing and zero spam.
+                      Get the offline checklist and guide-drop updates for this route. No booking is confirmed by this form.
                     </p>
                   </div>
                 </div>
@@ -262,7 +265,7 @@ export default function CampingGuideDetail() {
                   type="submit"
                   className="w-full flex items-center justify-center gap-2 rounded-xl bg-orange hover:bg-orange-dark h-12 text-sm font-black text-white transition-all shadow-[0_15px_30px_rgba(230,126,34,0.15)]"
                 >
-                  Unlock Handbook
+                    Send checklist
                   <ArrowLeft size={16} className="rotate-180" />
                 </button>
               </form>
@@ -274,7 +277,7 @@ export default function CampingGuideDetail() {
                 <div>
                   <h3 className="text-lg font-black text-white">Access Granted</h3>
                   <p className="mt-1.5 text-xs leading-relaxed text-white/60">
-                    Lead logged successfully. You can download the markdown guide format to keep offline.
+                    Your checklist is ready. CampIn may send guide and community updates for this interest.
                   </p>
                 </div>
                 <button
@@ -286,7 +289,7 @@ export default function CampingGuideDetail() {
                   Download offline manual
                 </button>
                 <div className="pt-4 border-t border-white/10 text-left">
-                  <p className="text-[10px] text-white/40 uppercase tracking-widest font-black">Local Lead Receipt</p>
+                  <p className="text-[10px] text-white/40 uppercase tracking-widest font-black">Guide Access Receipt</p>
                   <code className="block mt-2 rounded bg-white/5 p-2 text-[10px] text-orange border border-white/5 font-mono truncate">
                     {leadId}
                   </code>

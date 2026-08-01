@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle, Flame, Mail, MapPin, User } from "lucide-react";
+import { ArrowRight, CheckCircle, Flame, Mail, MapPin, Phone, User } from "lucide-react";
 import { saveValidationLead, scoreNewsletterLead, type LeadData, type ValidationLead } from "../../lib/validationMachine";
 
 const segments = [
@@ -8,15 +8,25 @@ const segments = [
   { value: "own-gear-camper", label: "Own-gear camper" },
   { value: "road-traveler", label: "Road traveler" },
   { value: "host", label: "Host" },
-  { value: "newsletter-only", label: "Just the newsletter" },
+  { value: "guide-only", label: "Just the guide" },
+];
+
+const guideDrops = [
+  { value: "camping-near-bangalore", label: "Camping near Bangalore checklist" },
+  { value: "own-tent-camping", label: "Own-tent camping starter guide" },
+  { value: "camping-legal-india", label: "Is camping legal in India?" },
+  { value: "monsoon-camping", label: "Monsoon camping safety guide" },
+  { value: "campervan-road-stops", label: "Campervan road-stop checklist" },
 ];
 
 export default function CampfireSignup() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     city: "",
     segment: "camper",
+    preferredGuide: "camping-near-bangalore",
     newsletterConsent: false,
     acknowledgePrivacy: false,
     agreeToTerms: false,
@@ -41,7 +51,7 @@ export default function CampfireSignup() {
             <p className="font-bold text-orange">Subscribed</p>
             <h3 className="mt-1 text-xl font-extrabold text-forest">Welcome to The Campfire.</h3>
             <p className="mt-2 text-sm leading-6 text-textgrey">
-              This email is now counted toward the 500-subscriber validation target.
+              Your guide-drop request is saved. CampIn will send practical camping tips, route notes, and checklist updates.
             </p>
             <button
               type="button"
@@ -63,10 +73,10 @@ export default function CampfireSignup() {
           <Flame size={24} />
         </div>
         <div className="min-w-0">
-          <p className="font-bold text-orange">The Campfire by CampIn</p>
-          <h2 className="mt-1 text-2xl font-extrabold text-forest">Weekly camping intelligence before the marketplace.</h2>
+          <p className="font-bold text-orange">Free CampIn guide drop</p>
+          <h2 className="mt-1 text-2xl font-extrabold text-forest">Get a useful camping guide, then the weekly Campfire.</h2>
           <p className="mt-2 text-sm leading-6 text-textgrey">
-            Routes, safety notes, verified-host progress, road-stop mapping, and one community question every week.
+            Choose the guide you want first. CampIn sends practical route notes, safety checks, host updates, and one community question each week.
           </p>
         </div>
       </div>
@@ -113,6 +123,19 @@ export default function CampfireSignup() {
           </div>
         </label>
         <label className="block">
+          <span className="text-sm font-bold text-forest">Phone / WhatsApp (optional)</span>
+          <div className="relative mt-2">
+            <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-textgrey" />
+            <input
+              type="tel"
+              value={formData.phone}
+              onChange={(event) => setFormData((current) => ({ ...current, phone: event.target.value }))}
+              placeholder="+91"
+              className="h-12 w-full rounded-lg border border-forest/10 bg-offwhite pl-11 pr-4 outline-none transition focus:border-orange focus:bg-white"
+            />
+          </div>
+        </label>
+        <label className="block">
           <span className="text-sm font-bold text-forest">I am mainly a</span>
           <select
             value={formData.segment}
@@ -122,6 +145,20 @@ export default function CampfireSignup() {
             {segments.map((segment) => (
               <option key={segment.value} value={segment.value}>
                 {segment.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="block">
+          <span className="text-sm font-bold text-forest">Send me this guide first</span>
+          <select
+            value={formData.preferredGuide}
+            onChange={(event) => setFormData((current) => ({ ...current, preferredGuide: event.target.value }))}
+            className="mt-2 h-12 w-full rounded-lg border border-forest/10 bg-offwhite px-4 text-forest outline-none transition focus:border-orange focus:bg-white"
+          >
+            {guideDrops.map((guide) => (
+              <option key={guide.value} value={guide.value}>
+                {guide.label}
               </option>
             ))}
           </select>
@@ -137,7 +174,7 @@ export default function CampfireSignup() {
             onChange={(event) => setFormData((current) => ({ ...current, newsletterConsent: event.target.checked }))}
             className="mt-1 h-5 w-5 shrink-0 accent-orange"
           />
-          <span>I want to receive The Campfire newsletter. I can unsubscribe anytime.</span>
+          <span>Send me the selected guide and The Campfire updates. I can unsubscribe anytime.</span>
         </label>
         <label className="flex items-start gap-3">
           <input
@@ -177,7 +214,7 @@ export default function CampfireSignup() {
         type="submit"
         className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-forest px-6 py-4 font-extrabold text-white transition-colors hover:bg-forest-light"
       >
-        Subscribe to The Campfire
+        Get the free guide drop
         <ArrowRight size={18} />
       </button>
     </form>

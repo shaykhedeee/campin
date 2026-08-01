@@ -230,7 +230,7 @@ export function CamperWaitlistForm() {
       <SuccessState
         lead={submittedLead}
         title="Camper waitlist lead captured"
-        message="This lead is now part of the validation scoreboard. High-intent leads should receive the safety survey or a founder follow-up."
+        message="Your request is saved. CampIn may send guide drops, route updates, and community access notes."
         onReset={() => setSubmittedLead(null)}
       />
     );
@@ -243,10 +243,10 @@ export function CamperWaitlistForm() {
           <Tent size={24} />
         </div>
         <div className="min-w-0">
-          <p className="font-bold text-orange">Camper waitlist</p>
+          <p className="font-bold text-orange">Camper community</p>
           <h2 className="mt-1 text-2xl font-extrabold text-forest">Find safe, permissioned camping first.</h2>
           <p className="mt-2 text-sm leading-6 text-textgrey">
-            Captures the exact fields needed to score early demand before building booking flows.
+            Tell CampIn what you want to camp, where you want to go, and what needs to feel trustworthy first.
           </p>
         </div>
       </div>
@@ -293,7 +293,7 @@ export function CamperWaitlistForm() {
       <div className="mt-6 space-y-6">
         <PillGroup label="Camping type" options={campingTypes} selected={campingType} onChange={setCampingType} />
         <PillGroup
-          label="Preferred validation region"
+          label="Preferred camping region"
           options={preferredRegions.map((region) => ({ id: region, label: region }))}
           selected={preferredRegion}
           onChange={setPreferredRegion}
@@ -434,7 +434,7 @@ export function HostInterestForm() {
       <SuccessState
         lead={submittedLead}
         title="Host application captured"
-        message="This host is now in the validation pipeline. Strong leads should receive a founder call, pin review, photo review, and amenity check."
+        message="Your host application is saved. CampIn will review permission, facilities, access, photos, and guest rules before any handoff."
         onReset={() => setSubmittedLead(null)}
       />
     );
@@ -447,10 +447,10 @@ export function HostInterestForm() {
           <Shield size={24} />
         </div>
         <div className="min-w-0">
-          <p className="font-bold text-orange">Host interest form</p>
+          <p className="font-bold text-orange">Host application</p>
           <h2 className="mt-1 text-2xl font-extrabold text-forest">Turn land into a reviewed outdoor stay.</h2>
           <p className="mt-2 text-sm leading-6 text-textgrey">
-            The form asks only for inputs needed to judge permission, amenities, safety, and founder follow-up.
+            The form asks only for inputs needed to review permission, amenities, safety, and guest readiness.
           </p>
         </div>
       </div>
@@ -665,7 +665,7 @@ export function RoadStopLeadForm() {
       <SuccessState
         lead={submittedLead}
         title="Road-stop lead captured"
-        message="This stop is now a candidate. Do not publish trust claims until overnight permission and amenities are checked."
+        message="This stop is saved for review. CampIn will not promote overnight use until permission and amenities are checked."
         onReset={() => setSubmittedLead(null)}
       />
     );
@@ -678,7 +678,7 @@ export function RoadStopLeadForm() {
           <Car size={24} />
         </div>
         <div className="min-w-0">
-          <p className="font-bold text-orange">Road-stop lead form</p>
+          <p className="font-bold text-orange">Road-stop suggestion</p>
           <h2 className="mt-1 text-2xl font-extrabold text-forest">Map safe overnight stops for the Indian road.</h2>
           <p className="mt-2 text-sm leading-6 text-textgrey">
             Captures the minimum data needed to classify a stop as candidate, basic, standard, or rejected.

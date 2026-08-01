@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import {
   categories,
-  listings,
+  getListings,
   researchGuides,
   type Listing,
   type ListingType,
@@ -43,7 +43,7 @@ const vehicleOptions = [
 
 const stageLabels: Record<VerificationStage, string> = {
   community_suggested: "Community suggested",
-  lead: "Research lead",
+  lead: "Awaiting host confirmation",
   reviewed: "Source reviewed",
   date_confirmed: "Date confirmed",
   calendar_synced: "Calendar synced",
@@ -134,7 +134,7 @@ function ListingCard({ listing }: { listing: Listing }) {
             Gated request flow
           </span>
           <span className="inline-flex items-center gap-1 font-bold text-orange">
-            Open trust ledger
+            See how CampIn checks places
             <ArrowRight size={16} className="transition group-hover:translate-x-1" />
           </span>
         </div>
@@ -163,6 +163,13 @@ export default function Explore() {
   const [showFilters, setShowFilters] = useState(false);
   const [alertEmail, setAlertEmail] = useState("");
   const [alertStatus, setAlertStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [activeListings, setActiveListings] = useState(() => getListings());
+
+  useEffect(() => {
+    const handleSync = () => setActiveListings(getListings());
+    window.addEventListener("campin-listings-updated", handleSync);
+    return () => window.removeEventListener("campin-listings-updated", handleSync);
+  }, []);
 
   useEffect(() => {
     setActiveType(getTypeFromSearch(location.search));
@@ -175,23 +182,23 @@ export default function Explore() {
     }
   }, [location.search]);
 
-  const stateOptions = useMemo(() => uniqueSorted(listings.map((listing) => listing.state)), []);
+  const stateOptions = useMemo(() => uniqueSorted(activeListings.map((listing) => listing.state)), [activeListings]);
   const regionOptions = useMemo(() => {
-    const source = stateFilter === "all" ? listings : listings.filter((listing) => listing.state === stateFilter);
+    const source = stateFilter === "all" ? activeListings : activeListings.filter((listing) => listing.state === stateFilter);
     return uniqueSorted(source.map((listing) => listing.region));
-  }, [stateFilter]);
+  }, [stateFilter, activeListings]);
   const locationOptions = useMemo(() => {
-    const source = listings.filter((listing) => {
+    const source = activeListings.filter((listing) => {
       const matchesState = stateFilter === "all" || listing.state === stateFilter;
       const matchesRegion = regionFilter === "all" || listing.region === regionFilter;
       return matchesState && matchesRegion;
     });
     return uniqueSorted(source.map((listing) => listing.location));
-  }, [regionFilter, stateFilter]);
+  }, [regionFilter, stateFilter, activeListings]);
 
   const filteredListings = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
-    return listings.filter((listing) => {
+    return activeListings.filter((listing) => {
       // Exclude unverified raw leads and raw scraper suggestions from public Campsites view
       const isVerified =
         listing.verificationStage === "reviewed" ||
@@ -231,7 +238,7 @@ export default function Explore() {
       const matchesLocation = locationFilter === "all" || listing.location === locationFilter;
       return matchesSearch && matchesType && matchesAmenities && matchesVehicle && matchesStage && matchesState && matchesRegion && matchesLocation;
     });
-  }, [activeType, locationFilter, regionFilter, searchQuery, selectedAmenities, stageFilter, stateFilter, vehicleFilter]);
+  }, [activeType, locationFilter, regionFilter, searchQuery, selectedAmenities, stageFilter, stateFilter, vehicleFilter, activeListings]);
 
   const resetFilters = () => {
     setSearchQuery("");
@@ -244,7 +251,7 @@ export default function Explore() {
     setLocationFilter("all");
   };
 
-  const reviewedCount = listings.filter((listing) => listing.verificationStage === "reviewed").length;
+  const reviewedCount = activeListings.filter((listing) => listing.verificationStage === "reviewed").length;
 
   return (
     <div className="min-h-screen bg-offwhite pt-28 pb-20">
@@ -254,10 +261,9 @@ export default function Explore() {
             <p className="inline-flex w-fit items-center gap-2 rounded-full border border-orange/30 bg-orange/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-orange">
               ✓ Verified Directory
             </p>
-            <h1 className="mt-4 text-4xl font-extrabold leading-tight sm:text-5xl">Explore Audited Campsites & Bays</h1>
+            <h1 className="mt-4 text-4xl font-extrabold leading-tight sm:text-5xl">Find camping places you can ask about with confidence</h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/75">
-              Every single stay listed below is physically audited on-ground. Find legal private estates, coffee glades, 
-              and remote overlanding bays with verified restrooms, potable water, and 24/7 host support.
+              Browse CampIn research and reviewed leads across India. Each place shows what we know, what still needs a host confirmation, and the questions to ask before you travel.
             </p>
           </div>
           <div className="rounded-2xl bg-white p-6 text-textdark flex flex-col justify-center">
@@ -281,8 +287,8 @@ export default function Explore() {
                 <p className="text-[10px] uppercase font-bold text-textgrey tracking-wider">Reviewed Stays</p>
               </div>
               <div className="rounded-xl bg-offwhite p-3 border border-forest/5">
-                <p className="text-2xl font-black text-forest">100%</p>
-                <p className="text-[10px] uppercase font-bold text-textgrey tracking-wider">Maps verified</p>
+                <p className="text-2xl font-black text-forest">Clear</p>
+                <p className="text-[10px] uppercase font-bold text-textgrey tracking-wider">Evidence labels</p>
               </div>
             </div>
           </div>
@@ -481,7 +487,7 @@ export default function Explore() {
             </div>
             <h2 className="mt-5 text-2xl font-extrabold text-forest">No matching lead yet</h2>
             <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-textgrey">
-              This search becomes validation data. Add it to the host acquisition or guide backlog before publishing a listing.
+              This search becomes a community request. CampIn can use it to prioritize host review, route notes, or a future guide.
             </p>
             <button type="button" onClick={resetFilters} className="mt-5 rounded-lg bg-forest px-5 py-3 font-bold text-white">
               Reset search
@@ -493,7 +499,7 @@ export default function Explore() {
       <section className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">
         <div className="mb-5 flex items-center gap-3">
           <BookOpen className="text-orange" size={22} />
-          <h2 className="text-2xl font-extrabold text-forest">Guide clusters for unverified demand</h2>
+          <h2 className="text-2xl font-extrabold text-forest">Regions still being reviewed</h2>
         </div>
         <div className="grid gap-4 lg:grid-cols-3">
           {researchGuides.map((guide) => (
@@ -510,7 +516,7 @@ export default function Explore() {
         </div>
       </section>
 
-      {/* Terrain & Corridor Alerts Funnel Card */}
+      {/* Terrain & Corridor Alerts Card */}
       <section className="mx-auto max-w-7xl px-4 pt-16 sm:px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#0a1e14] to-[#040f0a] border border-[#2f6548]/20 p-8 sm:p-12 text-white shadow-2xl">
           <div className="absolute top-0 right-0 h-64 w-64 rounded-full bg-orange/5 blur-3xl pointer-events-none" />

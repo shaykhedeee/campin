@@ -9,7 +9,7 @@ const sections = [
   {
     icon: MapPinned,
     title: "Route of the week",
-    text: "Bangalore-Coorg-Wayanad is the first validation route because it combines weekend demand with farm and estate supply.",
+    text: "Bangalore-Coorg-Wayanad is an early review route because it combines weekend demand with farm and estate supply.",
   },
   {
     icon: ShieldCheck,
@@ -34,7 +34,7 @@ export default function CampfireIssuePreview() {
           <p className="font-bold text-orange">Issue template</p>
           <h2 className="mt-1 text-2xl font-extrabold text-forest">The Campfire #001: Safe own-tent camping near Bangalore</h2>
           <p className="mt-2 text-sm leading-6 text-textgrey">
-            This is the reusable editorial shape for the weekly newsletter system.
+            This is the reusable shape for a guide drop plus weekly Campfire update.
           </p>
         </div>
       </div>

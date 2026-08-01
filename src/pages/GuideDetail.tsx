@@ -78,7 +78,7 @@ export default function GuideDetail() {
                   <h3 className="mt-2 text-xl font-extrabold text-forest">{listing.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-textgrey">{listing.description}</p>
                   <p className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-orange">
-                    Open trust ledger
+                    See CampIn’s place checks
                     <ArrowRight size={16} />
                   </p>
                 </Link>

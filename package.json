@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --config vite.config.admin.ts",
     "preview": "vite preview",
     "research:dry-run": "node tools/research-collector/collector.mjs --provider fixture --dry-run",
     "research:fixture": "node tools/research-collector/collector.mjs --provider fixture --out data/research/outputs",

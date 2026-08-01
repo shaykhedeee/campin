@@ -16,15 +16,15 @@ import CampfireSignup from "../components/newsletter/CampfireSignup";
 import { CamperWaitlistForm, HostInterestForm, RoadStopLeadForm } from "../components/validation/ValidationForms";
 
 const proofTargets = [
-  { value: "10,000", label: "camper community members" },
-  { value: "100", label: "high-intent campers" },
-  { value: "30", label: "host applications" },
-  { value: "10", label: "candidate sites" },
-  { value: "3", label: "manual attempts" },
-  { value: "1", label: "paid pilot stay" },
+  { value: "01", label: "permission-first promise" },
+  { value: "02", label: "camper and host paths" },
+  { value: "03", label: "trust checks per stay" },
+  { value: "04", label: "essentials we explain" },
+  { value: "05", label: "community rules" },
+  { value: "06", label: "ways to get involved" },
 ];
 
-const validationLanes = [
+const communityLanes = [
   {
     icon: Tent,
     title: "Campers",
@@ -43,15 +43,15 @@ const validationLanes = [
   {
     icon: MessageCircle,
     title: "Community",
-    text: "Join the trust-first WhatsApp and newsletter loop before CampIn becomes a booking engine.",
+    text: "Join the trust-first WhatsApp and guide-drop loop before CampIn opens broader trip requests.",
   },
 ];
 
 const launchRules = [
-  "No instant bookings until verification and legal pages are ready.",
+  "No instant bookings until a stay has a clear host and permission path.",
   "Every listing must separate verified, host-declared, community-reported, and unknown claims.",
-  "Bangalore, Coorg, Wayanad, Chikmagalur, Ramanagara, and Kanakapura are the first validation wedge.",
-  "The first pilots are manually matched so CampIn learns before it scales.",
+  "Bangalore, Coorg, Wayanad, Chikmagalur, Ramanagara, and Kanakapura are early community regions.",
+  "Early trip requests are coordinated personally so expectations stay clear before booking automation.",
 ];
 
 export default function ComingSoon() {
@@ -101,9 +101,9 @@ export default function ComingSoon() {
           <div className="rounded-lg border border-white/15 bg-white/95 p-5 text-forest shadow-2xl">
             <p className="flex items-center gap-2 text-sm font-black uppercase tracking-wide text-orange">
               <ClipboardCheck size={17} />
-              90-day proof gate
+              How CampIn opens responsibly
             </p>
-            <h2 className="mt-3 text-2xl font-black leading-tight">We launch the marketplace only after proof.</h2>
+            <h2 className="mt-3 text-2xl font-black leading-tight">More options, only when the details are clear.</h2>
             <div className="mt-5 grid grid-cols-2 gap-3">
               {proofTargets.map((target) => (
                 <div key={target.label} className="rounded-lg border border-forest/10 bg-offwhite p-4">
@@ -113,8 +113,8 @@ export default function ComingSoon() {
               ))}
             </div>
             <p className="mt-5 text-sm leading-6 text-textgrey">
-              This keeps CampIn from becoming a fake inventory site. We validate demand, qualify hosts, then run manual
-              pilots before payment and booking automation.
+              CampIn publishes useful information first, then expands trip requests when permission, facilities, access,
+              and host expectations are clear.
             </p>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function ComingSoon() {
 
       <section className="border-b border-forest/10 bg-white py-10">
         <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
-          {validationLanes.map((lane) => {
+          {communityLanes.map((lane) => {
             const Icon = lane.icon;
             return (
               <article key={lane.title} className="rounded-lg border border-forest/10 bg-offwhite p-5">
@@ -140,13 +140,13 @@ export default function ComingSoon() {
       <section id="lead-forms" className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
           <div>
-            <p className="font-black text-orange">Lead capture machine</p>
+            <p className="font-black text-orange">Help shape CampIn</p>
             <h2 className="mt-2 text-3xl font-black leading-tight text-forest sm:text-4xl">
-              Three forms decide what CampIn becomes first.
+              Tell us what a better camping trip should look like.
             </h2>
             <p className="mt-4 text-base leading-7 text-textgrey">
-              CampIn should capture demand, supply, and route infrastructure before spending energy on a heavy booking
-              engine. These forms save locally now and are structured for Tally, Airtable, and later Supabase.
+              Tell CampIn whether you are a camper, host, or road-trip traveler. Your answers help us publish better
+              guides, review the right places, and build a community that is useful before broader booking features.
             </p>
             <div className="mt-6 space-y-3">
               {launchRules.map((rule) => (

@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { ArrowRight, Camera, CheckCircle, IndianRupee, MapPin, Shield, Zap } from "lucide-react";
+import { Camera, CheckCircle, IndianRupee, MapPin, Shield, Zap } from "lucide-react";
 import { HostInterestForm } from "../components/validation/ValidationForms";
 
 const hostRequirements = [
@@ -33,13 +32,13 @@ export default function HostYourLand() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <section className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
-            <p className="font-bold text-orange">Founding host program</p>
+            <p className="font-bold text-orange">CampIn host community</p>
             <h1 className="mt-2 text-4xl font-extrabold leading-tight text-forest sm:text-5xl">
               Help CampIn build India's verified camping supply.
             </h1>
             <p className="mt-4 text-lg leading-8 text-textgrey">
-              This is the real host-intake system for the validation phase. CampIn is looking for safe private land,
-              farms, estates, homestays, and road-side businesses before any booking engine is built.
+              CampIn is looking for safe private land, farms, estates, homestays, and road-side businesses that can
+              support request-first camping with clear rules, facilities, and access notes.
             </p>
 
             <div className="mt-8 grid gap-4">
@@ -74,17 +73,13 @@ export default function HostYourLand() {
             <div className="mt-6 rounded-2xl bg-sky-mist p-5">
               <p className="flex items-center gap-2 font-bold text-forest">
                 <Zap size={18} className="text-orange" />
-                90-day supply target
+                What happens next
               </p>
               <p className="mt-2 text-sm leading-6 text-textgrey">
-                30 host applications and 10 verified candidate sites before CampIn builds paid booking infrastructure.
+                We review your details, clarify the permission and facilities picture, and contact you if your property fits
+                a community guide or request-first stay.
               </p>
             </div>
-
-            <Link to="/validation" className="mt-6 inline-flex items-center gap-2 font-extrabold text-forest hover:text-orange">
-              View validation dashboard
-              <ArrowRight size={18} />
-            </Link>
           </div>
 
           <HostInterestForm />

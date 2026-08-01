@@ -1,6 +1,6 @@
 # CampIn Ops Readiness Report
 
-Generated: 2026-05-28T13:07:37.613Z
+Generated: 2026-06-05T22:23:47.522Z
 
 Overall readiness: 37/37 (100%)
 

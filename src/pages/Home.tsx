@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -8,12 +8,11 @@ import {
   Mail,
   MapPin,
   Phone,
-  Sparkles,
 } from "lucide-react";
 import { HeroRoute, TopographicPattern, TentConstellation } from "../components/vectors/CampInVectors";
 import { submitMvpLead } from "../lib/mvpLeadStore";
 import CampInIcon from "../components/icons/CampInIcon";
-import { blogPosts } from "../data/blogPosts";
+import { getBlogPosts } from "../data/blogPosts";
 
 const heroChecks = [
   { label: "Permission first", iconName: "permission", position: "left-[22%] top-[12%]" },
@@ -92,6 +91,26 @@ const heroPrinciples = [
 export default function Home() {
   const [waitlistForm, setWaitlistForm] = useState({ email: "", phone: "" });
   const [waitlistStatus, setWaitlistStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [activeBlogs, setActiveBlogs] = useState(() => getBlogPosts());
+
+  useEffect(() => {
+    document.title = "CampIn | Find Permission-First Camping in India";
+    const description = "Find practical camping guides and permission-first outdoor stays in India. CampIn helps campers discover reviewed places, understand local rules, and travel more responsibly.";
+    let meta = document.querySelector('meta[name="description"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "description");
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute("content", description);
+    return () => { document.title = "CampIn | Permission-First Camping in India"; };
+  }, []);
+
+  useEffect(() => {
+    const handleSync = () => setActiveBlogs(getBlogPosts());
+    window.addEventListener("campin-blogs-updated", handleSync);
+    return () => window.removeEventListener("campin-blogs-updated", handleSync);
+  }, []);
 
   const submitWaitlist = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -133,8 +152,8 @@ export default function Home() {
 
         <TopographicPattern className="animate-topo-drift absolute -inset-8 h-[110%] w-[110%] text-white/5 opacity-80" />
 
-        <div className="relative mx-auto grid max-w-[1440px] gap-8 px-5 pb-10 pt-24 sm:px-8 sm:pt-32 lg:min-h-[920px] lg:grid-cols-[0.96fr_1.04fr] lg:gap-10 lg:px-10 lg:pb-0 lg:pt-28">
-          <div className="animate-fade-up min-w-0 self-start pr-1 lg:pt-32 lg:pr-0">
+        <div className="relative mx-auto grid max-w-[1440px] gap-7 px-4 pb-12 pt-20 sm:px-8 sm:pt-28 lg:min-h-[920px] lg:grid-cols-[0.96fr_1.04fr] lg:gap-10 lg:px-10 lg:pb-0 lg:pt-28">
+          <div className="order-2 animate-fade-up min-w-0 self-start pr-1 sm:order-2 lg:order-1 lg:pt-32 lg:pr-0">
             <h1 className="max-w-full break-words font-serif text-[clamp(2.9rem,12vw,3.35rem)] font-bold leading-[0.9] tracking-[-0.055em] text-[#fbf3e5] drop-shadow-[0_16px_38px_rgba(0,0,0,0.18)] sm:max-w-[760px] sm:text-8xl sm:leading-[0.88] lg:text-[6.75rem]">
               <span className="sm:whitespace-nowrap">India&apos;s Backyard,</span>
               <br />
@@ -174,16 +193,16 @@ export default function Home() {
           </div>
 
           <div
-            className="relative min-h-[430px] self-start overflow-hidden rounded-[28px] border border-white/12 bg-white/8 shadow-[0_34px_95px_rgba(0,0,0,0.34)] ring-1 ring-white/8 sm:min-h-[620px] lg:min-h-[820px] lg:rounded-none"
+            className="order-1 relative min-h-[520px] self-start overflow-hidden rounded-[32px] border border-white/12 bg-white/8 shadow-[0_34px_95px_rgba(0,0,0,0.34)] ring-1 ring-white/8 sm:min-h-[620px] lg:order-2 lg:min-h-[820px] lg:rounded-none"
             style={{ clipPath: "polygon(5% 0, 100% 0, 100% 100%, 0 100%, 2% 78%, 0 55%, 3% 30%, 0 12%)", borderTopLeftRadius: 46 }}
           >
             <img
-              src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=1800&q=85"
-              alt="Private outdoor camping landscape"
-              className="animate-image-breathe absolute left-0 top-0 h-[66%] w-full object-cover"
+              src="/images/campin-hero-wilderness.png"
+              alt="Dramatic wilderness campsite with glowing tent and mountain view"
+              className="animate-image-breathe absolute left-0 top-0 h-[72%] w-full object-cover object-[center_top] sm:h-[66%] sm:object-center"
             />
-            <div className="absolute left-0 top-0 h-[66%] w-full bg-gradient-to-br from-transparent via-transparent to-[#0f2b1d]/10" />
-            <div className="absolute inset-x-0 bottom-0 grid h-[34%] grid-cols-2 gap-px bg-white/20">
+            <div className="absolute left-0 top-0 h-[72%] w-full bg-gradient-to-br from-transparent via-transparent to-[#0f2b1d]/12 sm:h-[66%]" />
+            <div className="absolute inset-x-0 bottom-0 grid h-[28%] grid-cols-2 gap-px bg-white/20 sm:h-[34%]">
               <img
                 src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&q=80"
                 alt="Quiet hammock campsite"
@@ -196,18 +215,18 @@ export default function Home() {
               />
             </div>
 
-            <HeroRoute className="route-dash absolute left-[28%] top-[9%] h-[60%] w-[44%] text-white/78 drop-shadow-[0_3px_8px_rgba(0,0,0,0.28)] sm:left-[26%] sm:top-[10%] sm:h-[62%] sm:w-[45%]" />
+            <HeroRoute className="route-dash absolute left-[22%] top-[7%] h-[64%] w-[56%] text-white/78 drop-shadow-[0_3px_8px_rgba(0,0,0,0.28)] sm:left-[26%] sm:top-[10%] sm:h-[62%] sm:w-[45%]" />
             <div className="absolute inset-0">
               {heroChecks.map((item, index) => (
                 <div
                   key={item.label}
-                  className={`animate-float-soft absolute flex w-max items-center gap-2 rounded-full bg-[#f8f1e4]/96 px-3 py-2 text-[10px] font-black tracking-[-0.025em] text-[#173525] shadow-[0_18px_35px_rgba(0,0,0,0.24)] ring-1 ring-white/60 backdrop-blur sm:gap-3 sm:px-5 sm:py-3 sm:text-sm ${item.position}`}
+                  className={`animate-float-soft absolute flex w-max items-center gap-2 rounded-full bg-[#f8f1e4]/96 px-2.5 py-1.5 text-[9px] font-black tracking-[-0.025em] text-[#173525] shadow-[0_18px_35px_rgba(0,0,0,0.24)] ring-1 ring-white/60 backdrop-blur sm:gap-3 sm:px-5 sm:py-3 sm:text-sm ${item.position}`}
                   style={{ animationDelay: `${index * 0.35}s` }}
                 >
-                  <CampInIcon name={item.iconName} className="h-3.5 w-3.5 text-orange sm:h-4 sm:w-4" />
+                  <CampInIcon name={item.iconName} className="h-3 w-3 text-orange sm:h-4 sm:w-4" />
                   {item.label}
-                  <span className="grid h-6 w-6 place-items-center rounded-full bg-[#2f6548] text-[#f8f1e4] sm:h-8 sm:w-8">
-                    <MapPin size={14} className="fill-[#2f6548] sm:h-[18px] sm:w-[18px]" />
+                  <span className="grid h-5 w-5 place-items-center rounded-full bg-[#2f6548] text-[#f8f1e4] sm:h-8 sm:w-8">
+                    <MapPin size={12} className="fill-[#2f6548] sm:h-[18px] sm:w-[18px]" />
                   </span>
                 </div>
               ))}
@@ -226,7 +245,7 @@ export default function Home() {
               India has incredible backyards. But finding the right place to camp legally, safely, and respectfully is hard.
             </p>
             <p className="mt-4 max-w-xl text-sm font-extrabold leading-7 tracking-[-0.018em] text-[#173525] sm:mt-5 sm:text-base sm:leading-8">
-              CampIn is building the country&apos;s first permission-first camping community and trust ledger.
+              CampIn is building a permission-first camping community and a clearer way to compare what is known before a trip.
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
@@ -264,25 +283,25 @@ export default function Home() {
             {[
               {
                 title: "1. Landowner Permission",
-                description: "We audit property papers, local authority permissions, and host codes of conduct so you camp 100% legally.",
+                description: "We look for clear host permission, relevant local rules, and a written arrival handoff before presenting a place as a reviewed lead.",
                 icon: "permission",
                 benefit: "Zero harassment, zero disputes"
               },
               {
                 title: "2. Washroom Standard",
-                description: "Clean, functional water closets or dry toilets. We audit sanitization frequency, privacy locks, and layout.",
+                description: "We record what the host says about washroom access, privacy, and facilities, and keep unknowns visible.",
                 icon: "washroom",
                 benefit: "Clean and family-safe sanitization"
               },
               {
                 title: "3. Verified Water",
-                description: "On-site safe drinking water source, borewell water availability, or clear advice on camper-carried water requirements.",
+                description: "We record water availability and whether campers should carry their own supply instead of making assumptions.",
                 icon: "water",
                 benefit: "Hydration assurance before arrival"
               },
               {
-                title: "4. Exact Coordinates",
-                description: "No generic landmarks. You get precision location pins, photos, road access rules, and driving guidelines.",
+                title: "4. Clear Access Notes",
+                description: "No vague landmarks. CampIn records route notes, photos, road access rules, and handoff details before a trip is treated as ready.",
                 icon: "exact-pin",
                 benefit: "No lost detours or safety surprises"
               }
@@ -426,8 +445,7 @@ export default function Home() {
                 Featured Verified Campsites
               </h2>
               <p className="mt-4 text-sm font-medium leading-relaxed text-[#313831]/80 sm:text-base">
-                We physically audit every single coordinate. These private estates, terraces, and riverside meadows offer 
-                legal, host-supported camping with clean washrooms and verified drinking water.
+                These are research and review candidates, not a blanket promise that every site is currently available. Confirm permission, facilities, access, and local rules before travelling.
               </p>
             </div>
             <Link
@@ -553,7 +571,7 @@ export default function Home() {
               We decided to build the solution. Inspired by the proven private landowner model of Hipcamp but custom-engineered for our highways, our private farms, our caravan corridors, and our unique geography.
             </p>
             <p className="mt-5 text-sm font-medium leading-7 tracking-wide text-white/80 sm:text-base sm:leading-8">
-              CampIn isn't just a booking platform—it is a community-first movement to unlock India's backyard. By connecting passionate private landowners with outdoor enthusiasts, we make nature accessible, support local farming economies, and build the country's first safe caravan corridor stop-network.
+              CampIn is a community-first way to discover India outdoors. We connect campers with hosts and local knowledge, support respectful travel, and make it easier to ask the right questions before setting out.
             </p>
           </div>
 
@@ -577,11 +595,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pre-launch guide vault */}
+      {/* CampIn guide vault */}
       <section className="bg-[#fffaf0] py-14 sm:py-24">
         <div className="mx-auto grid max-w-[1440px] gap-10 px-4 sm:px-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-12 lg:px-10">
           <div>
-            <h2 className="font-serif text-3xl font-black tracking-[-0.04em] text-[#173525] sm:text-5xl">Pre-launch guide vault</h2>
+            <h2 className="font-serif text-3xl font-black tracking-[-0.04em] text-[#173525] sm:text-5xl">Plan better before you leave</h2>
             <div className="mt-3 h-0.5 w-8 bg-orange" />
             <p className="mt-4 max-w-xl text-sm font-medium leading-7 tracking-[-0.015em] text-[#313831] sm:mt-5 sm:text-base sm:leading-8">
               In-depth, downloadable guides to help you plan better adventures.
@@ -599,7 +617,7 @@ export default function Home() {
                     <img src={guide.image} alt={guide.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/76 via-black/12 to-transparent" />
                     <span className="absolute bottom-3 left-3 rounded-full bg-orange px-3 py-1 text-[10px] font-black uppercase tracking-wide text-white">
-                      Coming soon
+                      CampIn guide
                     </span>
                   </div>
                   <div className="p-4">
@@ -632,7 +650,7 @@ export default function Home() {
               </h2>
               <div className="mt-3 h-0.5 w-8 bg-orange" />
               <p className="mt-4 max-w-[560px] text-xs font-medium leading-6 tracking-[-0.015em] text-white/74 sm:mt-5 sm:text-sm sm:leading-7">
-                Our first-class goal is to build a vibrant, safety-conscious community of 10,000 campers. We will focus purely on community-building, organic route support, and safety guides—halting major marketplace feature updates—until we reach this milestone. Join the founding cohort and get early access to reviewed spots!
+                For the next two months, CampIn is focused on building a safety-conscious camper community with useful guide drops, route support, and host suggestions. Join the early community and help shape which places get reviewed first.
               </p>
 
               <div className="mt-6 space-y-4 sm:mt-7">
@@ -682,7 +700,7 @@ export default function Home() {
               </form>
               <p className="mt-3 text-xs font-semibold text-white/50">
                 {waitlistStatus === "saved"
-                  ? "You are on the founding list. We stored this lead locally and will sync to Supabase when connected."
+                  ? "You are on the CampIn list. Watch for guide drops, route notes, and community updates."
                   : waitlistStatus === "error"
                     ? "Could not save right now. Please try again."
                     : "No spam. Unsubscribe anytime. Submitting does not confirm any booking."}
@@ -717,7 +735,7 @@ export default function Home() {
           </div>
 
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {blogPosts.slice(0, 3).map((post) => (
+            {activeBlogs.slice(0, 3).map((post) => (
               <Link
                 key={post.slug}
                 to={`/blog/${post.slug}`}

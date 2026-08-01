@@ -1,18 +1,23 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, Lock, Compass, Sparkles, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Lock, Compass, Sparkles, CheckCircle2 } from "lucide-react";
 import { campingGuides } from "../data/campingGuides";
 import CampInIcon, { type CampInIconName } from "../components/icons/CampInIcon";
 
 const statusLabels = {
   public_preview: "Public preview",
   lead_magnet: "Email + phone unlock",
-  founder_review: "Email + phone unlock", // Ensure locked status is clearly marked
+  team_review: "Email + phone unlock",
 };
 
 const guideIcons: Record<string, CampInIconName> = {
+  "camping-near-bangalore-complete-guide": "route",
   "safe-byot-camping-near-bangalore": "own-tent",
+  "is-camping-legal-in-india-guide": "permission",
+  "camping-gear-checklist-india": "first-aid",
   "campervan-road-stops-india-standard": "campervan",
+  "camping-near-pune-pawna-lonavala": "route",
   "monsoon-camping-western-ghats-safety": "forest-edge",
+  "responsible-camping-india-guide": "reviewed",
   "host-land-for-camping-starter-kit": "farm-camp",
   "first-time-family-camping-india": "family-safe",
   "trekking-with-camping-permission-guide": "route",
@@ -33,20 +38,20 @@ export default function Guides() {
           <div className="flex flex-col justify-center">
             <p className="inline-flex w-fit items-center gap-2 rounded-full border border-orange/30 bg-orange/10 px-4 py-2 text-xs font-black uppercase tracking-wider text-orange">
               <Sparkles size={14} className="animate-pulse" />
-              CampIn Outdoor Vault
+              CampIn Guide Drop
             </p>
             <h1 className="mt-6 text-4xl font-black leading-tight sm:text-5xl lg:text-6xl tracking-tight">
-              Premium Guides. <br />
+              Practical Guides. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange to-orange-dark">No Guesswork.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/70">
-              Stop pitching your tent based on random listicles. Every manual details legal permits, safety standards, 
-              washroom availability, and ground truths. Instantly preview or unlock high-intent guides designed by seasoned Indian overlanders.
+              Stop planning from random listicles. Every guide explains permission questions, washroom and water checks,
+              route context, packing decisions, and known unknowns. Read the full guide online, then unlock the downloadable checklist.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-extrabold text-white/80">{campingGuides.length} Active Guides</span>
               <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-extrabold text-white/80">{totalMinutes} Mins Reading</span>
-              <span className="rounded-full border border-orange/20 bg-orange/5 px-4 py-2 text-xs font-extrabold text-orange">Verified Safety Norms</span>
+              <span className="rounded-full border border-orange/20 bg-orange/5 px-4 py-2 text-xs font-extrabold text-orange">Checklist Unlocks</span>
             </div>
           </div>
 
@@ -56,9 +61,9 @@ export default function Guides() {
               Our Editorial Standard
             </h3>
             {[
-              { icon: "permission", title: "100% Legal & Safe", body: "No guides promote trespass stays. We verify land classification first." },
-              { icon: "reviewed", title: "Human Inspected", body: "We physically check toilets, cellular signals, and vehicle turning room." },
-              { icon: "washroom", title: "Water & Restrooms", body: "Clear markers showing whether drinking water and restrooms are operational." },
+              { icon: "permission", title: "Permission-first", body: "No guide promotes trespass stays or unmanaged wild pins." },
+              { icon: "reviewed", title: "Source reviewed", body: "Guides separate confirmed facts, open questions, and request-first next steps." },
+              { icon: "washroom", title: "Facility clarity", body: "Washroom, water, access, weather, and host-support questions come before views." },
             ].map((item) => (
               <div key={item.title} className="flex gap-4 rounded-xl border border-white/5 bg-white/[0.02] p-4 hover:border-white/10 transition-colors">
                 <div className="mt-1 shrink-0 flex items-center justify-center h-9 w-9 rounded-lg bg-orange/10 text-orange">
@@ -77,15 +82,14 @@ export default function Guides() {
         <div className="mt-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
             <div>
-              <h2 className="text-3xl font-black tracking-tight">Comprehensive Handbooks</h2>
-              <p className="mt-2 text-white/60">Unlock practical itineraries, hidden locations, and packing checklists.</p>
+              <h2 className="text-3xl font-black tracking-tight">Rankable Camping Guides</h2>
+              <p className="mt-2 text-white/60">Read the long-form guide publicly, then unlock the portable checklist.</p>
             </div>
             <div className="h-[2px] flex-grow bg-gradient-to-r from-orange/20 to-transparent hidden md:block" />
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {campingGuides.map((guide) => {
-              const isLeadMagnet = guide.status === "lead_magnet" || guide.status === "founder_review";
               const isFreePreview = guide.slug === "first-time-family-camping-india";
 
               return (

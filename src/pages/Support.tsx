@@ -70,8 +70,8 @@ export default function Support() {
               Help build India's camping trust layer.
             </h1>
             <p className="mt-5 text-lg leading-8 text-white/78">
-              Early support should fund the work that makes the marketplace possible: host calls, route research, real
-              listing proof, community operations, and a lean product that gets campers outside safely.
+              Early support funds the work that makes CampIn useful now: host calls, route research, real listing proof,
+              community operations, and practical guides that help campers make better requests.
             </p>
           </div>
         </div>

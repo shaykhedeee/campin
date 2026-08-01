@@ -25,14 +25,14 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-import { listings, type Listing, type VerificationStage } from "../data/listings";
+import { getListings, type Listing, type VerificationStage } from "../data/listings";
 import { submitMvpLead } from "../lib/mvpLeadStore";
 
 const requestStorageKey = "campin.listing.requests.v1";
 
 const stageLabels: Record<VerificationStage, string> = {
   community_suggested: "Community suggested",
-  lead: "Research lead",
+  lead: "Review candidate",
   reviewed: "Source reviewed",
   date_confirmed: "Date confirmed",
   calendar_synced: "Calendar synced",
@@ -41,7 +41,7 @@ const stageLabels: Record<VerificationStage, string> = {
 const availabilityCopy: Record<Listing["availability"]["mode"], { label: string; body: string; cta: string }> = {
   unknown: {
     label: "Availability unknown",
-    body: "This is demand or partnership intelligence. CampIn needs a host-controlled contact before any trip handoff.",
+    body: "CampIn has not confirmed current availability yet. A host-controlled contact is needed before any trip handoff.",
     cta: "Join alert for this region",
   },
   call_to_confirm: {
@@ -82,12 +82,23 @@ function saveRequest(payload: Record<string, unknown>) {
   const current = JSON.parse(window.localStorage.getItem(requestStorageKey) || "[]");
   const requests = Array.isArray(current) ? current : [];
   window.localStorage.setItem(requestStorageKey, JSON.stringify([payload, ...requests]));
-  window.dispatchEvent(new Event("campin-validation-updated"));
+                    window.dispatchEvent(new Event("campin-request-updated"));
 }
 
 export default function ListingDetail() {
   const { id } = useParams();
-  const listing = listings.find((item) => item.id === id);
+  const [listing, setListing] = useState(() => getListings().find((item) => item.id === id));
+
+  useEffect(() => {
+    setListing(getListings().find((item) => item.id === id));
+  }, [id]);
+
+  useEffect(() => {
+    const handleSync = () => setListing(getListings().find((item) => item.id === id));
+    window.addEventListener("campin-listings-updated", handleSync);
+    return () => window.removeEventListener("campin-listings-updated", handleSync);
+  }, [id]);
+
   const [guestProfile, setGuestProfile] = useState<{ name: string; email: string; phone: string } | null>(() => {
     try {
       const stored = window.localStorage.getItem("campin.guest.profile.v1");
@@ -357,7 +368,7 @@ export default function ListingDetail() {
                 <div>
                   <p className="text-sm text-textgrey">Price state</p>
                   <p className="text-3xl font-extrabold text-forest">{listing.price > 0 ? `INR ${listing.price}` : "Confirm tariff"}</p>
-                  <p className="mt-1 text-sm text-textgrey">No instant booking in phase 1</p>
+                  <p className="mt-1 text-sm text-textgrey">Request-first handoff</p>
                 </div>
                 <div className="rounded-lg bg-offwhite px-3 py-2 text-right">
                   <p className="text-sm font-bold text-forest">{listing.hostName}</p>
@@ -495,7 +506,7 @@ export default function ListingDetail() {
                 <div className="mt-5 rounded-lg bg-forest p-4 text-white">
                   <p className="font-extrabold">Request saved: {requestId}</p>
                   <p className="mt-2 text-sm leading-6 text-white/75">
-                    Contact stays gated until CampIn reviews the request and verification gaps.
+                    Contact stays gated until CampIn reviews the request, host fit, and current trip details.
                   </p>
                 </div>
               )}
@@ -553,11 +564,11 @@ export default function ListingDetail() {
                 </span>
               </div>
               <h3 className="mt-4 text-2xl font-black tracking-tight leading-tight">
-                Unlock Contact Details & Booking Request
+                Request host handoff
               </h3>
               <p className="mt-2 text-xs leading-relaxed text-white/70">
                 CampIn protects land owners and guests by requiring a verified profile before granting direct contact details.
-                Save your profile details once to unlock requests, whatsapp coordination, and route maps across the entire website instantly.
+                Share your contact details once so CampIn can match future requests, WhatsApp updates, and route notes with your profile.
               </p>
 
               <form
@@ -602,7 +613,7 @@ export default function ListingDetail() {
                     setHandshakeStatus("saved");
                     setShowHandshakeModal(false);
 
-                    // Re-trigger actual inquiry booking flow now that credentials are saved!
+                    // Re-trigger the request flow now that contact details are saved.
                     const idValue = `REQ-${Date.now().toString(36).toUpperCase()}`;
                     const payload = {
                       id: idValue,
@@ -698,7 +709,7 @@ export default function ListingDetail() {
 
               <div className="mt-4 border-t border-white/5 pt-4 text-center">
                 <p className="text-[9px] text-white/40 font-semibold leading-relaxed">
-                  🔒 We never share details without active landowners consent. No password required. Stored securely inside local sandbox.
+                  We never share details without host consent. No booking is confirmed until CampIn or the host accepts the request.
                 </p>
               </div>
             </div>
