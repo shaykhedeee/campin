@@ -23,6 +23,7 @@ import { getListings, isListingPubliclyPublishable, saveListings, type Listing, 
 import { getBlogPosts, saveBlogPosts, type BlogPost, type BlogSection, type BlogFaq } from "../data/blogPosts";
 import { exportMvpLeadsToCsv, readMvpLeads } from "../lib/mvpLeadStore";
 import { getValidationProgress, readValidationLeads } from "../lib/validationMachine";
+import { adminEmail, supabase } from "../lib/adminAuth";
 
 const InstagramIcon = ({ size = 24, ...props }: React.SVGProps<SVGSVGElement> & { size?: number }) => (
   <svg
@@ -54,10 +55,9 @@ const setupTasks = [
 ];
 
 export default function OpsCenter() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return sessionStorage.getItem("campin.admin.auth") === "true";
-  });
-  const [password, setPassword] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authEmail, setAuthEmail] = useState(adminEmail);
+  const [authMessage, setAuthMessage] = useState("");
   const [authError, setAuthError] = useState("");
 
   const [activeTab, setActiveTab] = useState<"analytics" | "listings" | "blogs" | "outbox" | "tasks">("analytics");
@@ -151,22 +151,31 @@ export default function OpsCenter() {
   }, []);
 
   useEffect(() => {
+    if (!supabase) return;
+    supabase.auth.getSession().then(({ data }) => setIsAuthenticated(Boolean(data.session)));
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => setIsAuthenticated(Boolean(session)));
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem(checklistStorageKey, JSON.stringify([...checkedTaskIds]));
   }, [checkedTaskIds]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === "campin2026") {
-      sessionStorage.setItem("campin.admin.auth", "true");
-      setIsAuthenticated(true);
-      setAuthError("");
-    } else {
-      setAuthError("Incorrect master password. Access denied.");
+    setAuthError("");
+    setAuthMessage("");
+    if (!supabase) {
+      setAuthError("Owner access is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Netlify first.");
+      return;
     }
+    const { error } = await supabase.auth.signInWithOtp({ email: authEmail, options: { emailRedirectTo: window.location.origin + "/admin.html" } });
+    if (error) setAuthError(error.message);
+    else setAuthMessage("Check your owner email for the secure sign-in link.");
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem("campin.admin.auth");
+    void supabase?.auth.signOut();
     setIsAuthenticated(false);
   };
 
@@ -519,29 +528,30 @@ export default function OpsCenter() {
               <Lock size={32} />
             </div>
             <h1 className="mt-5 text-2xl font-black text-forest">CampIn Launch Console</h1>
-            <p className="mt-2 text-sm text-textgrey">Enter the administrative credential to control listings and content.</p>
+            <p className="mt-2 text-sm text-textgrey">Sign in with the owner email to review leads, evidence, listings, forms and content.</p>
           </div>
 
           <form onSubmit={handleLogin} className="mt-6 space-y-4">
             <div>
-              <label className="block text-xs font-black uppercase text-forest/75 tracking-wider">Master Password</label>
+              <label className="block text-xs font-black uppercase text-forest/75 tracking-wider">Owner email</label>
               <input
-                type="password"
+                type="email"
                 required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={authEmail}
+                onChange={(e) => setAuthEmail(e.target.value)}
                 placeholder="••••••••"
                 className="mt-1 w-full rounded-lg border border-forest/15 px-4 py-3 text-sm focus:border-orange focus:outline-none"
               />
             </div>
 
             {authError && <p className="text-xs font-bold text-red-500">{authError}</p>}
+            {authMessage && <p className="text-xs font-bold text-forest">{authMessage}</p>}
 
             <button
               type="submit"
               className="w-full rounded-lg bg-forest px-4 py-3 text-sm font-black text-white hover:bg-forest-light transition"
             >
-              Unlock Dashboard
+              Send secure sign-in link
             </button>
           </form>
         </div>

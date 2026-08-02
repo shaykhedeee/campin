@@ -24,7 +24,7 @@ function AdminNavbar() {
             </span>
           </Link>
           <span className="text-stone-500">|</span>
-          <span className="text-xs text-stone-400 font-mono">Secure Administration Dashboard</span>
+          <span className="text-xs text-stone-400 font-mono">Owner Operations Workspace</span>
         </div>
 
         {/* Navigation tabs */}
