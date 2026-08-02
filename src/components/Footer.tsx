@@ -12,8 +12,8 @@ export default function Footer() {
               <BrandMark inverted />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-6 text-white/70">
-              India's permission-first camping community. Built for private land stays, practical guides,
-              host nominations, and the people who want camping to be safer and more respectful.
+              India's camping discovery and community platform. Find outdoor stays, tent pitches, road stops,
+              practical guides, and host-led experiences with clearer trip details.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
@@ -61,7 +61,7 @@ export default function Footer() {
               </Link>
               <span className="block text-white/50">Host community</span>
               <span className="block text-white/50">Clear stay details</span>
-              <span className="block text-white/50">Permission-first stays</span>
+              <span className="block text-white/50">Reviewed stay details</span>
             </div>
           </div>
 

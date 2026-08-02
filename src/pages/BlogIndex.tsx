@@ -22,12 +22,12 @@ export default function BlogIndex() {
   }, []);
 
   useEffect(() => {
-    document.title = "CampIn Journal | Practical Camping Guides for India";
-    setMetaTag("description", "Permission-first, safety-first camping guides for own-tent campers, families, hosts, and road travelers across India.");
+    document.title = "CampIn Journal | Camping Guides for India";
+    setMetaTag("description", "Simple camping guides for own-tent campers, families, hosts, road travelers, and outdoor explorers across India.");
     setCanonical("https://campin.co.in/blog");
     return () => {
-      document.title = "CampIn | Permission-First Camping in India";
-      setMetaTag("description", "Find permission-first camping guides, reviewed outdoor stays, BYOT-friendly hosts, and safer road-trip stops across India.");
+      document.title = "CampIn | Find Verified Campsites and Stays Across India";
+      setMetaTag("description", "Find campsites, tent pitches, campervan stops, farm stays and glamping across India with clearer trip details.");
       setCanonical("https://campin.co.in/");
     };
   }, []);
@@ -59,8 +59,8 @@ export default function BlogIndex() {
               The practical guide to camping in India.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-textgrey">
-              Safety-first, permission-first articles for own-tent campers, road travelers, families, hosts, and
-              everyone trying to make camping in India less confusing.
+              Practical articles for own-tent campers, road travelers, families, hosts, and everyone trying to make
+              camping in India easier to plan.
             </p>
             <div className="mt-7 flex flex-wrap gap-2">
               {clusters.map((cluster) => (

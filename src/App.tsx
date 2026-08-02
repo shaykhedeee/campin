@@ -21,6 +21,7 @@ import Terms from "./pages/Terms";
 import CancellationRefund from "./pages/CancellationRefund";
 import Grievance from "./pages/Grievance";
 import ResponsibleCampingPledge from "./pages/ResponsibleCampingPledge";
+import SeoLanding from "./pages/SeoLanding";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -58,6 +59,10 @@ function AppContent() {
           <Route path="/cancellation" element={<CancellationRefund />} />
           <Route path="/grievance" element={<Grievance />} />
           <Route path="/responsible-camping-pledge" element={<ResponsibleCampingPledge />} />
+          <Route path="/camping-near-bangalore" element={<SeoLanding />} />
+          <Route path="/camping-in-coorg" element={<SeoLanding />} />
+          <Route path="/camping-in-wayanad" element={<SeoLanding />} />
+          <Route path="/glamping-india" element={<SeoLanding />} />
         </Routes>
       </main>
       {location.pathname !== "/" && <Footer />}

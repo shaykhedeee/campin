@@ -16,11 +16,11 @@ export default function Signup() {
         <section>
           <p className="font-bold text-orange">Camper community</p>
           <h1 className="mt-2 text-4xl font-extrabold leading-tight text-forest sm:text-5xl">
-            Join the waitlist for safe, permissioned camping in India.
+            Help shape India's most useful camping community.
           </h1>
           <p className="mt-4 text-lg leading-8 text-textgrey">
-            CampIn is starting with Bangalore, Coorg, Wayanad, Chikmagalur, Ramanagara, and Kanakapura. Your answers
-            decide which hosts, routes, and road stops get verified first.
+            CampIn is starting with Bangalore, Coorg, Wayanad, Chikmagalur, Ramanagara, and Kanakapura. Share what
+            you want to find so we can review the right camps, stays, routes, and road stops first.
           </p>
 
           <div className="mt-8 grid gap-4">
