@@ -35,10 +35,23 @@ export const amenities = [
   "Kayak rental", "Generator rental", "Portable power station rental",
 ] as const;
 
+export const vehicleFeatures = ["Big rig access", "Drive-through pitches", "Pull-through sites", "Hardstanding pitches", "Grass pitches", "Shade available", "Awning space", "Extra vehicle parking", "Dump station", "Water refill station"] as const;
+export const rentals = ["Tent rental", "Sleeping bag rental", "Camping chair rental", "Camping table rental", "BBQ rental", "Cooking equipment rental", "Bicycle rental", "Kayak rental", "Generator rental", "Portable power station rental"] as const;
+export const nearbyAttractions = ["National parks", "Waterfalls", "Trekking trails", "Lakes", "Beaches", "Historical monuments", "Local villages", "Markets", "Adventure parks", "Wildlife sanctuaries", "Vineyards", "Scenic viewpoints"] as const;
+export const tripFilters = ["Price per night", "Instant booking", "Free cancellation", "Pet friendly", "Child friendly", "Accessible", "Open year-round", "Campfire allowed", "BBQ allowed", "Quiet sites", "Remote locations", "4x4 required", "Best for beginners", "Best for experienced campers"] as const;
+export const experiences = ["Guided camping", "Survival training", "Bushcraft workshops", "Local food experiences", "Farm tours", "Wine tasting", "Coffee plantation tours", "Photography workshops", "Astronomy nights", "Cultural performances"] as const;
+export const hostServices = ["Equipment setup", "Tent setup", "Airport pickup", "Local transport", "Guided hikes", "Meal packages", "Breakfast included", "Campfire dinner", "Grocery delivery", "Emergency assistance"] as const;
+
 export const campinDiscoveryTaxonomy = {
   accommodationTypes,
   campingLocations,
   campingStyles,
   activities,
   amenities,
+  vehicleFeatures,
+  rentals,
+  nearbyAttractions,
+  tripFilters,
+  experiences,
+  hostServices,
 } as const;

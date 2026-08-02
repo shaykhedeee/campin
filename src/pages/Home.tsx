@@ -13,6 +13,7 @@ import { HeroRoute, TopographicPattern, TentConstellation } from "../components/
 import { submitMvpLead } from "../lib/mvpLeadStore";
 import CampInIcon from "../components/icons/CampInIcon";
 import { getBlogPosts } from "../data/blogPosts";
+import { campinDiscoveryTaxonomy } from "../data/campinTaxonomy";
 
 const heroChecks = [
   { label: "Permission first", iconName: "permission", position: "left-[22%] top-[12%]" },
@@ -94,8 +95,8 @@ export default function Home() {
   const [activeBlogs, setActiveBlogs] = useState(() => getBlogPosts());
 
   useEffect(() => {
-    document.title = "CampIn | Find Permission-First Camping in India";
-    const description = "Find practical camping guides and permission-first outdoor stays in India. CampIn helps campers discover reviewed places, understand local rules, and travel more responsibly.";
+    document.title = "CampIn | Find Verified Campsites and Stays Across India";
+    const description = "Find verified campsites, tent pitches, campervan stops, farm stays and glamping across India. CampIn helps campers compare places, permissions, amenities and local experiences before they travel.";
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
       meta = document.createElement("meta");
@@ -160,8 +161,8 @@ export default function Home() {
               Unlocked.
             </h1>
             <p className="mt-5 max-w-[34rem] pr-2 text-[15px] font-medium leading-7 tracking-[-0.025em] text-white/78 sm:mt-7 sm:max-w-2xl sm:pr-0 sm:text-xl sm:leading-9 sm:text-white/82">
-              Wake up to views, not hotel bills. Discover safe terraces, private farms, and permission-first camping
-              leads for India&apos;s early outdoor community.
+              Find verified campsites, tent pitches, campervan stops, farm stays and glamping across India. Compare the stay,
+              setting, access and amenities before you pack.
             </p>
 
             <div className="mt-6 flex flex-col gap-3 sm:mt-9 sm:flex-row">
@@ -169,14 +170,14 @@ export default function Home() {
                 to="/explore"
                 className="premium-focus inline-flex w-full items-center justify-center gap-3 rounded-lg bg-orange px-5 py-3.5 text-sm font-black text-white shadow-[0_18px_50px_rgba(230,126,34,0.34)] transition duration-300 hover:-translate-y-0.5 hover:bg-orange-dark hover:shadow-[0_24px_58px_rgba(230,126,34,0.42)] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
-                Find Campsites
+                Explore camps across India
                 <ArrowRight size={19} />
               </Link>
               <Link
                 to="/camping-guides"
                 className="premium-focus inline-flex w-full items-center justify-center gap-3 rounded-lg border border-white/55 bg-white/6 px-5 py-3.5 text-sm font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:bg-white/12 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
-                Unlock camping guides
+                Plan your camping trip
                 <BookOpen size={19} />
               </Link>
             </div>
@@ -232,6 +233,42 @@ export default function Home() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="border-b border-[#173525]/10 bg-[#f0eadc] py-14 sm:py-20" aria-labelledby="camping-search-choices">
+        <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-10">
+          <div className="max-w-2xl">
+            <span className="rounded-full bg-[#173525]/8 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-[#2f6548]">Find your kind of outdoors</span>
+            <h2 id="camping-search-choices" className="mt-4 font-serif text-3xl font-black tracking-[-0.04em] text-[#173525] sm:text-5xl">One place for every way to camp in India</h2>
+            <p className="mt-4 text-sm font-medium leading-7 text-[#313831] sm:text-base sm:leading-8">From bringing your own tent to arriving in a motorhome, CampIn brings together stays, landscapes, activities and practical trip details in one searchable platform.</p>
+          </div>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              ["Arrive your way", "Motorhomes, caravans, campervans, travel trailers, RVs and BYOT tent pitches.", "Motorhome sites"],
+              ["Stay your way", "Pre-pitched tents, bell tents, safari tents, glamping, yurts, domes, cabins and more.", "Pre-pitched tents"],
+              ["Choose your setting", "Mountains, terraces, farms, forests, riversides, lakesides, beaches, estates and plantations.", "Mountain camping"],
+              ["Make it your trip", "Family, solo, couple, pet-friendly, adventure, wellness, off-grid and digital-detox camping.", "Family camping"],
+            ].map(([title, body, keyword]) => (
+              <Link key={title} to="/explore" className="group rounded-2xl border border-[#173525]/10 bg-white/70 p-5 transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-lg sm:p-6">
+                <p className="text-xs font-black uppercase tracking-widest text-orange">{keyword}</p>
+                <h3 className="mt-3 text-lg font-black text-[#173525] group-hover:text-orange">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-[#313831]">{body}</p>
+                <span className="mt-4 inline-flex items-center gap-2 text-sm font-black text-[#2f6548]">Browse options <ArrowRight size={15} /></span>
+              </Link>
+            ))}
+          </div>
+          <details className="mt-8 rounded-2xl border border-[#173525]/10 bg-white/45 p-5 sm:p-6">
+            <summary className="cursor-pointer text-sm font-black text-[#173525] sm:text-base">What you can search for on CampIn</summary>
+            <div className="mt-5 grid gap-5 text-xs leading-6 text-[#313831] sm:grid-cols-2 lg:grid-cols-3">
+              {Object.entries(campinDiscoveryTaxonomy).map(([group, values]) => (
+                <div key={group}>
+                  <h3 className="font-black capitalize text-[#2f6548]">{group.replace(/([A-Z])/g, " $1")}</h3>
+                  <p className="mt-1">{values.join(" · ")}</p>
+                </div>
+              ))}
+            </div>
+          </details>
         </div>
       </section>
 
