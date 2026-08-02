@@ -93,12 +93,12 @@
   </head>
   <body>
     <!-- Netlify detects these forms at build time; notification routing is configured in Netlify. -->
-    <form name="campin-camper_waitlist" netlify hidden></form>
-    <form name="campin-guide_unlock" netlify hidden></form>
-    <form name="campin-host_interest" netlify hidden></form>
-    <form name="campin-listing_inquiry" netlify hidden></form>
-    <form name="campin-newsletter" netlify hidden></form>
-    <form name="campin-road_stop" netlify hidden></form>
+    <form name="campin-camper_waitlist" netlify hidden><input name="lead_id" /><input name="email" /></form>
+    <form name="campin-guide_unlock" netlify hidden><input name="lead_id" /><input name="email" /></form>
+    <form name="campin-host_interest" netlify hidden><input name="lead_id" /><input name="email" /></form>
+    <form name="campin-listing_inquiry" netlify hidden><input name="lead_id" /><input name="email" /></form>
+    <form name="campin-newsletter" netlify hidden><input name="lead_id" /><input name="email" /></form>
+    <form name="campin-road_stop" netlify hidden><input name="lead_id" /><input name="email" /></form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
