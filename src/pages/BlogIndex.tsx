@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen, Calendar, Clock, Search, Shield, Sparkles, Tent } from "lucide-react";
 import { getBlogPosts } from "../data/blogPosts";
+import SeoFaq from "../components/SeoFaq";
+
+const journalFaqs = [
+  { question: "What does CampIn cover?", answer: "CampIn publishes practical camping guides for India, including own-tent stays, glamping, farm camps, campervan routes, road stops, safety, and host questions." },
+  { question: "Are CampIn articles based on verified information?", answer: "We separate sourced facts, host-confirmed details, and open questions. Readers should still confirm availability, access, weather, and facilities before travelling." },
+  { question: "Can I suggest a camping topic or location?", answer: "Yes. Share a location, route, safety question, or host lead through the CampIn community and we will prioritise useful, sourceable research." },
+];
 
 const clusters = [
   "Own-Tent Camping",
@@ -157,6 +164,7 @@ export default function BlogIndex() {
         </div>
       </section>
 
+      <SeoFaq items={journalFaqs} />
       <section className="border-t border-forest/10 bg-forest px-4 py-12 text-white sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div>

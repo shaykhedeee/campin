@@ -29,6 +29,13 @@ import {
   isListingPubliclyPublishable,
 } from "../data/listings";
 import { submitMvpLead } from "../lib/mvpLeadStore";
+import SeoFaq from "../components/SeoFaq";
+
+const exploreFaqs = [
+  { question: "What can I find on CampIn?", answer: "Explore camping and outdoor stays across India, including tent pitches, BYOT sites, glamping, farm stays, motorhome-friendly places, and road-stop leads when details are confirmed." },
+  { question: "How does CampIn show verification?", answer: "Each public listing must pass CampIn's review gate. We show the verification stage and avoid publishing unresolved property details as confirmed facts." },
+  { question: "Can I request a place that is not listed?", answer: "Yes. Use the location request or community form and tell us the destination, stay type, and trip dates. Requests go to support@campin.co.in for review." },
+];
 
 type ActiveType = ListingType | "all";
 type VehicleFilter = "all" | "byot" | "campervan" | "road-stop";
@@ -607,6 +614,7 @@ export default function Explore() {
           </div>
         </div>
       </section>
+      <SeoFaq items={exploreFaqs} />
     </div>
   );
 }
