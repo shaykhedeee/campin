@@ -26,6 +26,7 @@ import {
   type Listing,
   type ListingType,
   type VerificationStage,
+  isListingPubliclyPublishable,
 } from "../data/listings";
 import { submitMvpLead } from "../lib/mvpLeadStore";
 
@@ -163,10 +164,10 @@ export default function Explore() {
   const [showFilters, setShowFilters] = useState(false);
   const [alertEmail, setAlertEmail] = useState("");
   const [alertStatus, setAlertStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
-  const [activeListings, setActiveListings] = useState(() => getListings());
+  const [activeListings, setActiveListings] = useState(() => getListings().filter(isListingPubliclyPublishable));
 
   useEffect(() => {
-    const handleSync = () => setActiveListings(getListings());
+    const handleSync = () => setActiveListings(getListings().filter(isListingPubliclyPublishable));
     window.addEventListener("campin-listings-updated", handleSync);
     return () => window.removeEventListener("campin-listings-updated", handleSync);
   }, []);

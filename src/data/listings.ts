@@ -85,6 +85,8 @@ export interface Listing {
   description: string;
   longDescription: string;
   image: string;
+  /** Only true when the image is supplied or explicitly licensed by the property/source. */
+  imageVerified?: boolean;
   gallery: string[];
   rating: number;
   reviews: number;
@@ -744,6 +746,18 @@ updateSystemHealth(listings);
 
 export function getListings(): Listing[] {
   return listings;
+}
+
+export function isListingPubliclyPublishable(listing: Listing) {
+  return Boolean(
+    listing.imageVerified &&
+      listing.sourceUrls.length > 0 &&
+      (listing.sourceType === "official" || listing.sourceType === "host_direct") &&
+      listing.verificationStage === "reviewed" &&
+      listing.unknowns.length === 0 &&
+      listing.availability.lastCheckedAt &&
+      listing.contactPolicy === "gated_relay",
+  );
 }
 
 export function saveListings(updatedListings: Listing[]) {

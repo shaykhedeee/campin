@@ -19,7 +19,7 @@ import {
   Trash,
   Zap,
 } from "lucide-react";
-import { getListings, saveListings, type Listing, type ListingType, type VerificationStage } from "../data/listings";
+import { getListings, isListingPubliclyPublishable, saveListings, type Listing, type ListingType, type VerificationStage } from "../data/listings";
 import { getBlogPosts, saveBlogPosts, type BlogPost, type BlogSection, type BlogFaq } from "../data/blogPosts";
 import { exportMvpLeadsToCsv, readMvpLeads } from "../lib/mvpLeadStore";
 import { getValidationProgress, readValidationLeads } from "../lib/validationMachine";
@@ -106,6 +106,7 @@ export default function OpsCenter() {
     description: "",
     longDescription: "",
     googlePin: "",
+    imageVerified: false,
     byotFriendly: true,
     campervanFriendly: false,
     roadStop: false,
@@ -233,6 +234,7 @@ export default function OpsCenter() {
       description: "",
       longDescription: "",
       googlePin: "",
+      imageVerified: false,
       byotFriendly: true,
       campervanFriendly: false,
       roadStop: false,
@@ -260,6 +262,7 @@ export default function OpsCenter() {
       description: listing.description,
       longDescription: listing.longDescription,
       googlePin: listing.googlePin,
+      imageVerified: Boolean(listing.imageVerified),
       byotFriendly: listing.byotFriendly,
       campervanFriendly: listing.campervanFriendly,
       roadStop: listing.roadStop,
@@ -291,6 +294,7 @@ export default function OpsCenter() {
       roadStop: campsiteForm.roadStop,
       maxGuests: Number(campsiteForm.maxGuests),
       image: "/images/blog_coorg_estate.jpg",
+      imageVerified: campsiteForm.imageVerified,
       gallery: ["/images/blog_coorg_estate.jpg"],
       rating: 4.8,
       reviews: 4,
@@ -366,6 +370,10 @@ export default function OpsCenter() {
   const toggleVerification = (id: string) => {
     const nextListings = activeListings.map((l) => {
       if (l.id === id) {
+        if (l.verificationStage !== "reviewed" && !isListingPubliclyPublishable({ ...l, verificationStage: "reviewed" })) {
+          alert("This listing is blocked. Add source-backed details, a verified property image, a current check date, and clear all unknowns before approving it.");
+          return l;
+        }
         const nextStage: VerificationStage = l.verificationStage === "reviewed" ? "lead" : "reviewed";
         return { ...l, verificationStage: nextStage };
       }
@@ -905,6 +913,15 @@ export default function OpsCenter() {
                       className="mt-1 w-full rounded-lg border border-forest/15 px-3 py-2 text-sm focus:border-orange focus:outline-none"
                     />
                   </div>
+                  <label className="flex items-start gap-3 rounded-xl border border-orange/20 bg-orange/5 p-4 text-sm text-textgrey sm:col-span-2">
+                    <input
+                      type="checkbox"
+                      checked={campsiteForm.imageVerified}
+                      onChange={(e) => setCampsiteForm({ ...campsiteForm, imageVerified: e.target.checked })}
+                      className="mt-1 h-4 w-4 accent-orange"
+                    />
+                    <span><strong className="text-forest">Property image verified</strong><br />Only check this when the image was supplied by the property or its source and you have permission to publish it.</span>
+                  </label>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
