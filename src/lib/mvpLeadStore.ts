@@ -124,8 +124,8 @@ export function exportMvpLeadsToCsv(leads = readMvpLeads()) {
 function getSupabaseClient() {
   if (supabaseClient !== undefined) return supabaseClient;
 
-  const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+  const url = (import.meta.env.VITE_SUPABASE_URL as string | undefined) || "https://qhtsapsomxexbnpdmcmc.supabase.co";
+  const anonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined) || "sb_publishable_CGMN2qwandFkWLeM7S_bLA_jqOwmlT9";
 
   supabaseClient = url && anonKey ? createClient(url, anonKey) : null;
   return supabaseClient;

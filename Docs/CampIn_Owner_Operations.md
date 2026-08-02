@@ -2,6 +2,8 @@
 
 CampIn is currently a discovery, community and request-first platform. The public site does not require camper accounts. The owner workspace is separate at `/admin.html`.
 
+The production Supabase project is `campin` (`qhtsapsomxexbnpdmcmc`) in `ap-south-1`.
+
 ## What the workspace controls
 
 - Review camper, host, road-stop, newsletter and guide requests.
