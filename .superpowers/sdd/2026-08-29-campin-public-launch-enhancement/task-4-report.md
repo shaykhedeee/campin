@@ -95,4 +95,4 @@ Re-review implementation commit: `34db580`.
 - Removed only generated untracked `pnpm-lock.yaml` and `pnpm-workspace.yaml`; unrelated `work/` content was left untouched.
 - Focused gallery test: 1 file passed, 3 tests passed (4.40s). Full suite: 5 files passed, 12 tests passed (3.72s). Client build: 1,917 modules transformed; `dist/index.html` built successfully in 11.88s. Admin build: 1,887 modules transformed; `dist-admin/admin.html` built successfully in 4.36s. `git diff --check` passed.
 
-Round 3 implementation commit: pending.
+Round 3 implementation commit: `f57c340`.
