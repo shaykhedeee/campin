@@ -725,7 +725,7 @@ export default function OpsCenter() {
                   </div>
                 ))}
               </div>
-              <div className="mt-5 overflow-hidden rounded-xl border border-forest/10">
+              <div className="mt-5 overflow-x-auto rounded-xl border border-forest/10">
                 <table className="min-w-full divide-y divide-forest/10 text-left text-sm">
                   <thead className="bg-forest/5 text-xs font-black uppercase tracking-wider text-forest/75">
                     <tr>
@@ -1014,7 +1014,7 @@ export default function OpsCenter() {
             )}
 
             {/* Campsites Listing Table */}
-            <div className="overflow-hidden rounded-2xl border border-forest/10 bg-white shadow-sm">
+            <div className="overflow-x-auto rounded-2xl border border-forest/10 bg-white shadow-sm">
               <table className="min-w-full divide-y divide-forest/10">
                 <thead className="bg-forest/5 text-left text-xs font-black uppercase text-forest/75 tracking-wider">
                   <tr>
@@ -1266,7 +1266,7 @@ export default function OpsCenter() {
             )}
 
             {/* Blog Post list table */}
-            <div className="overflow-hidden rounded-2xl border border-forest/10 bg-white shadow-sm">
+            <div className="overflow-x-auto rounded-2xl border border-forest/10 bg-white shadow-sm">
               <table className="min-w-full divide-y divide-forest/10">
                 <thead className="bg-forest/5 text-left text-xs font-black uppercase text-forest/75 tracking-wider">
                   <tr>

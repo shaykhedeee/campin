@@ -17,8 +17,10 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "dist-admin",
-    emptyOutDir: true,
+    // The hosting providers publish `dist`, so add the admin entry to the
+    // public build instead of producing a second, undeployed directory.
+    outDir: "dist",
+    emptyOutDir: false,
     rollupOptions: {
       input: {
         admin: path.resolve(__dirname, "admin.html"),

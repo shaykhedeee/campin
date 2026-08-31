@@ -15,7 +15,7 @@ function AdminNavbar() {
 
   return (
     <header className="bg-stone-900 border-b border-stone-800 text-stone-100 sticky top-0 z-50 px-4 py-3 shadow-md">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto flex min-w-0 flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center">
         {/* Brand / Title */}
         <div className="flex items-center gap-3">
           <Link to="/" className="flex items-center gap-2">
@@ -28,7 +28,10 @@ function AdminNavbar() {
         </div>
 
         {/* Navigation tabs */}
-        <nav className="flex items-center gap-1 bg-stone-950 p-1 rounded-lg border border-stone-800">
+        <nav
+          aria-label="Owner tools"
+          className="flex w-full items-center gap-1 overflow-x-auto rounded-lg border border-stone-800 bg-stone-950 p-1 sm:w-auto"
+        >
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
@@ -36,7 +39,7 @@ function AdminNavbar() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+                className={`flex shrink-0 items-center gap-2 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
                   isActive
                     ? "bg-amber-600/20 text-orange-400 border border-orange-500/30"
                     : "text-stone-400 hover:text-stone-200 hover:bg-stone-900 border border-transparent"
@@ -67,7 +70,7 @@ export default function AdminApp() {
     <Router>
       <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans">
         <AdminNavbar />
-        <main className="flex-1">
+        <main className="min-w-0 flex-1 overflow-x-hidden">
           <Routes>
             <Route path="/" element={<OpsCenter />} />
             <Route path="/validation" element={<ValidationMachine />} />
