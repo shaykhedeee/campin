@@ -47,14 +47,17 @@ it("keeps gallery alt text and responsive sources aligned per image", () => {
   );
 
   const galleryImages = screen.getAllByRole("img").slice(1, 4);
-  expect(galleryImages.map((image) => image.getAttribute("alt"))).toEqual([
-    mediaRegistry.forest.alt,
-    mediaRegistry.road.alt,
-    mediaRegistry.farm.alt,
-  ]);
-  for (const image of galleryImages) {
-    expect(image).toHaveAttribute("srcset", expect.stringContaining("900w"));
-    expect(image).toHaveAttribute("srcset", expect.stringContaining("1600w"));
+  const expectedAssets = [mediaRegistry.forest, mediaRegistry.road, mediaRegistry.farm];
+  expect(galleryImages).toHaveLength(expectedAssets.length);
+  for (const [index, image] of galleryImages.entries()) {
+    const asset = expectedAssets[index];
+    const compactSrc = asset.src.replace("-1600.webp", "-900.webp");
+    expect(image).toHaveAttribute("src", asset.src);
+    expect(image).toHaveAttribute("srcset", `${compactSrc} 900w, ${asset.src} 1600w`);
     expect(image).toHaveAttribute("sizes", "(min-width: 1024px) 38vw, (min-width: 640px) 31vw, 100vw");
+    expect(image).toHaveAttribute("alt", asset.alt);
+    if (asset.usage === "editorial-region") {
+      expect(image.parentElement).toHaveTextContent("Regional editorial image");
+    }
   }
 });
