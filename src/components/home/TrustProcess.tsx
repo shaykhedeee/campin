@@ -2,6 +2,14 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import CampInIcon from "../icons/CampInIcon";
 
+const publicListingStages = [
+  "Community suggested",
+  "Awaiting host confirmation",
+  "Source reviewed",
+  "Date confirmed",
+  "Calendar synced",
+] as const;
+
 const trustStages = [
   {
     number: "01",
@@ -18,7 +26,7 @@ const trustStages = [
   {
     number: "03",
     title: "Status and unknowns",
-    body: "Each place shows what is a review candidate, reviewed, or host-confirmed—and what still needs an answer before a trip.",
+    body: "Public listing stages show how far CampIn's evidence has progressed. Host-confirmed details are shown separately where they apply, alongside anything still unknown.",
     iconName: "exact-pin",
   },
 ] as const;
@@ -42,7 +50,7 @@ export default function TrustProcess() {
             </h2>
           </div>
           <p className="max-w-2xl text-sm font-medium leading-7 text-[#313831] sm:text-base sm:leading-8">
-            Trust comes from clear context, not a blanket badge. We separate what has been reviewed from what a host has confirmed, and keep missing details visible.
+            Trust comes from clear context, not a blanket badge. We separate the public evidence stage from details a host has confirmed, and keep missing details visible.
           </p>
         </div>
 
@@ -63,6 +71,17 @@ export default function TrustProcess() {
             </li>
           ))}
         </ol>
+
+        <div className="mb-5 border-y border-[#173525]/15 py-5 lg:flex lg:items-center lg:gap-7">
+          <p className="shrink-0 text-xs font-black uppercase tracking-[0.16em] text-[#173525]">Public listing stages</p>
+          <ul aria-label="Public listing stages" className="mt-3 flex flex-wrap gap-2 lg:mt-0">
+            {publicListingStages.map((stage) => (
+              <li key={stage} className="rounded-full border border-[#173525]/20 bg-[#fffaf0]/55 px-3 py-1.5 text-xs font-bold text-[#4f574f]">
+                {stage}
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <Link
           to="/responsible-camping-pledge"

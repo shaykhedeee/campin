@@ -41,6 +41,24 @@ it("shows one concise trust explanation and both marketplace actions", () => {
   expect(screen.getAllByRole("link", { name: "List your land" })[0]).toHaveAttribute("href", "/host-your-land");
 });
 
+it("uses the public listing stages and keeps host confirmation as separate evidence", () => {
+  render(
+    <MemoryRouter>
+      <Home />
+    </MemoryRouter>,
+  );
+
+  const publicStages = screen.getByRole("list", { name: "Public listing stages" });
+  expect(within(publicStages).getAllByRole("listitem").map((item) => item.textContent)).toEqual([
+    "Community suggested",
+    "Awaiting host confirmation",
+    "Source reviewed",
+    "Date confirmed",
+    "Calendar synced",
+  ]);
+  expect(screen.getByText(/host-confirmed details are shown separately where they apply/i)).toBeInTheDocument();
+});
+
 it("removes the repeated homepage trust and founder narratives", () => {
   render(
     <MemoryRouter>
