@@ -76,3 +76,5 @@ Implementation commit: `a872fb9`. The report was recorded in the follow-up docum
 - Added UI regression coverage for local homepage sources, editorial featured cards, Explore listing cards, ListingDetail disclosure, and responsive source selection.
 
 Review-fix focused tests: 4 files passed, 6 tests passed. Final full suite: 5 files passed, 11 tests passed (Vitest 4.1.11, 2.86s). Final client build: 1,849 modules transformed; `dist/index.html` built successfully in 4.15s. Final admin build: 1,819 modules transformed; `dist-admin/admin.html` built successfully in 3.75s. `git diff --check` passed after the review fixes.
+
+Review-fix implementation commit: `1276237`.
