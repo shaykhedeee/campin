@@ -78,3 +78,13 @@ Implementation commit: `a872fb9`. The report was recorded in the follow-up docum
 Review-fix focused tests: 4 files passed, 6 tests passed. Final full suite: 5 files passed, 11 tests passed (Vitest 4.1.11, 2.86s). Final client build: 1,849 modules transformed; `dist/index.html` built successfully in 4.15s. Final admin build: 1,819 modules transformed; `dist-admin/admin.html` built successfully in 3.75s. `git diff --check` passed after the review fixes.
 
 Review-fix implementation commit: `1276237`.
+
+## Re-review fixes
+
+- Added `galleryAssets`, aligned by index with `gallery`, so every thumbnail carries its own regional subject, alt text, usage, and attribution metadata. ListingDetail renders that metadata rather than reusing the primary image alt text.
+- Added 900w/1600w `srcSet` and `sizes` to gallery thumbnails and Home guide images. Existing hero, category, featured, and CTA consumers retain the same responsive behavior.
+- Added a multi-image regression test for distinct gallery alt text plus responsive source/sizes assertions; the Home regression now verifies guide variants as well.
+
+Re-review focused tests: 2 files passed, 5 tests passed. Final full suite: 5 files passed, 12 tests passed (Vitest 4.1.11, 3.56s). Final client build: 1,849 modules transformed; `dist/index.html` built successfully in 3.88s. Final admin build: 1,819 modules transformed; `dist-admin/admin.html` built successfully in 3.63s. `git diff --check` passed.
+
+Re-review implementation commit: `34db580`.
