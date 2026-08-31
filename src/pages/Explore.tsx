@@ -85,7 +85,8 @@ function matchesExploreCategory(listing: Listing, category: ExploreCategory | nu
 
   switch (category) {
     case "bring-your-own-tent":
-      return listing.byotFriendly;
+    case "road-trip-stops":
+      return true;
     case "pre-pitched-glamping":
       return listing.inventory.some((unit) => unit.unitType === "pre_pitched_tent") || /pre-pitched|glamping/.test(searchableListingText);
     case "farms-estates":
@@ -94,8 +95,6 @@ function matchesExploreCategory(listing: Listing, category: ExploreCategory | nu
       return listing.type === "forest" || /mountain|forest|high altitude/.test(searchableListingText);
     case "waterside":
       return /river|riverside|waterside|lake|waterfront/.test(searchableListingText);
-    case "road-trip-stops":
-      return listing.roadStop;
   }
 }
 
@@ -196,6 +195,10 @@ export default function Explore() {
   const [alertStatus, setAlertStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [activeListings, setActiveListings] = useState(() => getListings().filter(isListingPubliclyPublishable));
   const activeCategory = parseExploreCategory(location.search);
+  const categoryVehicleFilter: VehicleFilter | null =
+    activeCategory === "bring-your-own-tent" ? "byot" : activeCategory === "road-trip-stops" ? "road-stop" : null;
+  const activeVehicleTab = activeCategory && !categoryVehicleFilter ? null : categoryVehicleFilter ?? vehicleFilter;
+  const effectiveVehicleFilter = categoryVehicleFilter ?? vehicleFilter;
 
   useEffect(() => {
     const handleSync = () => setActiveListings(getListings().filter(isListingPubliclyPublishable));
@@ -261,17 +264,17 @@ export default function Explore() {
           [...listing.amenities, ...listing.essentials].some((amenity) => amenity.toLowerCase().includes(filter.toLowerCase())),
         );
       const matchesVehicle =
-        vehicleFilter === "all" ||
-        (vehicleFilter === "byot" && listing.byotFriendly) ||
-        (vehicleFilter === "campervan" && listing.campervanFriendly) ||
-        (vehicleFilter === "road-stop" && listing.roadStop);
+        effectiveVehicleFilter === "all" ||
+        (effectiveVehicleFilter === "byot" && listing.byotFriendly) ||
+        (effectiveVehicleFilter === "campervan" && listing.campervanFriendly) ||
+        (effectiveVehicleFilter === "road-stop" && listing.roadStop);
       const matchesStage = stageFilter === "all" || listing.verificationStage === stageFilter;
       const matchesState = stateFilter === "all" || listing.state === stateFilter;
       const matchesRegion = regionFilter === "all" || listing.region === regionFilter;
       const matchesLocation = locationFilter === "all" || listing.location === locationFilter;
       return matchesSearch && matchesType && matchesCategory && matchesAmenities && matchesVehicle && matchesStage && matchesState && matchesRegion && matchesLocation;
     });
-  }, [activeCategory, activeType, locationFilter, regionFilter, searchQuery, selectedAmenities, stageFilter, stateFilter, vehicleFilter, activeListings]);
+  }, [activeCategory, activeType, effectiveVehicleFilter, locationFilter, regionFilter, searchQuery, selectedAmenities, stageFilter, stateFilter, activeListings]);
 
   const resetFilters = () => {
     setSearchQuery("");
@@ -346,9 +349,10 @@ export default function Explore() {
               <button
                 key={tab.value}
                 type="button"
-                onClick={() => setVehicleFilter(tab.value as any)}
+                onClick={() => setVehicleFilter(tab.value as VehicleFilter)}
+                aria-pressed={activeVehicleTab === tab.value}
                 className={`shrink-0 rounded-lg px-4 py-2.5 text-sm font-black transition-all ${
-                  vehicleFilter === tab.value
+                  activeVehicleTab === tab.value
                     ? "bg-forest text-white shadow-sm"
                     : "bg-white text-forest hover:bg-[#eef1e6]/60 border border-forest/10"
                 }`}
@@ -463,8 +467,9 @@ export default function Explore() {
                       key={value}
                       type="button"
                       onClick={() => setVehicleFilter(value)}
+                      aria-pressed={activeVehicleTab === value}
                       className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${
-                        vehicleFilter === value ? "bg-forest text-white" : "bg-offwhite text-forest hover:bg-sky-mist"
+                        activeVehicleTab === value ? "bg-forest text-white" : "bg-offwhite text-forest hover:bg-sky-mist"
                       }`}
                     >
                       <Icon size={15} />
