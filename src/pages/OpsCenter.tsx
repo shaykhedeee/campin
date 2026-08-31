@@ -7,8 +7,6 @@ import {
   ExternalLink,
   FileText,
   LayoutDashboard,
-  Lock,
-  LogOut,
   Mail,
   MapPin,
   Plus,
@@ -23,7 +21,6 @@ import { getListings, isListingPubliclyPublishable, saveListings, type Listing, 
 import { getBlogPosts, saveBlogPosts, type BlogPost, type BlogSection, type BlogFaq } from "../data/blogPosts";
 import { exportMvpLeadsToCsv, readMvpLeads } from "../lib/mvpLeadStore";
 import { getValidationProgress, readValidationLeads } from "../lib/validationMachine";
-import { adminEmail, supabase } from "../lib/adminAuth";
 
 const InstagramIcon = ({ size = 24, ...props }: React.SVGProps<SVGSVGElement> & { size?: number }) => (
   <svg
@@ -55,11 +52,6 @@ const setupTasks = [
 ];
 
 export default function OpsCenter() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [authEmail, setAuthEmail] = useState(adminEmail);
-  const [authMessage, setAuthMessage] = useState("");
-  const [authError, setAuthError] = useState("");
-
   const [activeTab, setActiveTab] = useState<"analytics" | "listings" | "blogs" | "outbox" | "tasks">("analytics");
   const [activeListings, setActiveListings] = useState(() => getListings());
   const [activeBlogs, setActiveBlogs] = useState(() => getBlogPosts());
@@ -151,33 +143,8 @@ export default function OpsCenter() {
   }, []);
 
   useEffect(() => {
-    if (!supabase) return;
-    supabase.auth.getSession().then(({ data }) => setIsAuthenticated(Boolean(data.session)));
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => setIsAuthenticated(Boolean(session)));
-    return () => listener.subscription.unsubscribe();
-  }, []);
-
-  useEffect(() => {
     localStorage.setItem(checklistStorageKey, JSON.stringify([...checkedTaskIds]));
   }, [checkedTaskIds]);
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuthError("");
-    setAuthMessage("");
-    if (!supabase) {
-      setAuthError("Owner access is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in Netlify first.");
-      return;
-    }
-    const { error } = await supabase.auth.signInWithOtp({ email: authEmail, options: { emailRedirectTo: window.location.origin + "/admin.html" } });
-    if (error) setAuthError(error.message);
-    else setAuthMessage("Check your owner email for the secure sign-in link.");
-  };
-
-  const handleLogout = () => {
-    void supabase?.auth.signOut();
-    setIsAuthenticated(false);
-  };
 
   // Enable manual social draft export mode.
   const connectInstagram = () => {
@@ -518,47 +485,6 @@ export default function OpsCenter() {
   const listingRequests = mvpLeads.filter((lead) => lead.type === "listing_inquiry");
   const latestLeadRows = [...mvpLeads, ...legacyLeads].slice(0, 8);
 
-  // Auth screen fallback
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-offwhite px-4">
-        <div className="w-full max-w-md rounded-3xl border border-forest/10 bg-white p-8 shadow-xl">
-          <div className="flex flex-col items-center text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-orange/10 text-orange">
-              <Lock size={32} />
-            </div>
-            <h1 className="mt-5 text-2xl font-black text-forest">CampIn Launch Console</h1>
-            <p className="mt-2 text-sm text-textgrey">Sign in with the owner email to review leads, evidence, listings, forms and content.</p>
-          </div>
-
-          <form onSubmit={handleLogin} className="mt-6 space-y-4">
-            <div>
-              <label className="block text-xs font-black uppercase text-forest/75 tracking-wider">Owner email</label>
-              <input
-                type="email"
-                required
-                value={authEmail}
-                onChange={(e) => setAuthEmail(e.target.value)}
-                placeholder="••••••••"
-                className="mt-1 w-full rounded-lg border border-forest/15 px-4 py-3 text-sm focus:border-orange focus:outline-none"
-              />
-            </div>
-
-            {authError && <p className="text-xs font-bold text-red-500">{authError}</p>}
-            {authMessage && <p className="text-xs font-bold text-forest">{authMessage}</p>}
-
-            <button
-              type="submit"
-              className="w-full rounded-lg bg-forest px-4 py-3 text-sm font-black text-white hover:bg-forest-light transition"
-            >
-              Send secure sign-in link
-            </button>
-          </form>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-offwhite pt-24 pb-20">
       {/* Top Navbar */}
@@ -573,13 +499,6 @@ export default function OpsCenter() {
               <p className="text-xs text-textgrey font-semibold">Launch capture command center</p>
             </div>
           </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 rounded-lg border border-forest/10 px-4 py-2 text-sm font-bold text-forest hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition"
-          >
-            <LogOut size={16} />
-            Logout
-          </button>
         </div>
       </header>
 
