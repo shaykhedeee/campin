@@ -26,7 +26,7 @@ export default function Navbar() {
     { to: "/camping-guides", label: "Guides" },
     { to: "/blog", label: "Journal" },
     { to: "/community", label: "Community" },
-    { to: "/host-your-land", label: "Host" },
+    { to: "/host-your-land", label: "List your land" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -70,10 +70,10 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
-            to="/coming-soon"
+            to="/explore"
             className="premium-focus ml-12 inline-flex items-center gap-2 rounded-lg bg-orange px-10 py-4 text-base font-black tracking-[-0.025em] text-white shadow-[0_18px_45px_rgba(230,126,34,0.26)] transition duration-300 hover:-translate-y-0.5 hover:bg-orange-dark"
           >
-            Join Waitlist
+            Explore camps
           </Link>
         </div>
 
@@ -104,11 +104,11 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
-              to="/coming-soon"
+              to="/explore"
               onClick={() => setIsOpen(false)}
               className="flex items-center justify-center gap-2 rounded-lg bg-orange px-4 py-3 text-base font-bold text-white"
             >
-              Join Waitlist
+              Explore camps
             </Link>
           </div>
         </div>

@@ -9,12 +9,14 @@ import {
   MapPin,
   Phone,
 } from "lucide-react";
-import { HeroRoute, TopographicPattern, TentConstellation } from "../components/vectors/CampInVectors";
+import { HeroRoute, TopographicPattern } from "../components/vectors/CampInVectors";
 import { submitMvpLead } from "../lib/mvpLeadStore";
 import CampInIcon from "../components/icons/CampInIcon";
 import { getBlogPosts } from "../data/blogPosts";
 import CampInDefinition from "../components/home/CampInDefinition";
 import CategoryExplorer from "../components/home/CategoryExplorer";
+import HostInvitation from "../components/home/HostInvitation";
+import TrustProcess from "../components/home/TrustProcess";
 import { mediaRegistry, mediaSrcSet } from "../data/mediaRegistry";
 
 const heroChecks = [
@@ -22,37 +24,6 @@ const heroChecks = [
   { label: "Washroom check", iconName: "washroom", position: "left-[8%] top-[31%]" },
   { label: "Water check", iconName: "water", position: "left-[19%] top-[49%]" },
   { label: "Host reviewed", iconName: "host-present", position: "left-[15%] top-[66%]" },
-] as const;
-
-const principles = [
-  {
-    title: "Respect the land",
-    body: "We start with permission and follow local rules, always.",
-    iconName: "permission",
-  },
-  {
-    title: "Trust over hype",
-    body: "Every claim is checked and timestamped by humans.",
-    iconName: "reviewed",
-  },
-  {
-    title: "Curated, not crowded",
-    body: "Better experiences over more listings. Quality beats quantity.",
-    iconName: "forest-edge",
-  },
-  {
-    title: "Community first",
-    body: "Share knowledge, help hosts, and grow the community.",
-    iconName: "host-present",
-  },
-] as const;
-
-const verificationChecks = [
-  { title: "Permission", body: "Landowner approval and local guidelines confirmed.", iconName: "permission" },
-  { title: "Washroom", body: "Clean and functional washroom access verified.", iconName: "washroom" },
-  { title: "Water", body: "Potable or safe water source available on-site.", iconName: "water" },
-  { title: "Safety", body: "Host background review and location safety check.", iconName: "first-aid" },
-  { title: "On-ground check", body: "Real photos and notes from our verification visits.", iconName: "exact-pin" },
 ] as const;
 
 const guideCards = [
@@ -76,32 +47,14 @@ const guideCards = [
   },
 ];
 
-const heroPrinciples = [
-  {
-    title: "Permission first",
-    body: "Every place starts with respect and landowner approval.",
-    iconName: "permission",
-  },
-  {
-    title: "Verified by humans",
-    body: "Real checks, real hosts, real photos. No fake badges.",
-    iconName: "reviewed",
-  },
-  {
-    title: "Built for our community",
-    body: "Share, learn, suggest places, and help CampIn grow.",
-    iconName: "family-safe",
-  },
-] as const;
-
 export default function Home() {
   const [waitlistForm, setWaitlistForm] = useState({ email: "", phone: "" });
   const [waitlistStatus, setWaitlistStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [activeBlogs, setActiveBlogs] = useState(() => getBlogPosts());
 
   useEffect(() => {
-    document.title = "CampIn | Find Verified Campsites and Stays Across India";
-    const description = "Find verified campsites, tent pitches, campervan stops, farm stays and glamping across India. CampIn helps campers compare places, permissions, amenities and local experiences before they travel.";
+    document.title = "CampIn | Permission-First Camping Across India";
+    const description = "Explore campsites, tent pitches, campervan stops, farm stays and glamping across India. Compare place context, permissions, access, amenities and unknowns before you travel.";
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
       meta = document.createElement("meta");
@@ -166,8 +119,8 @@ export default function Home() {
               Unlocked.
             </h1>
             <p className="mt-5 max-w-[34rem] pr-2 text-[15px] font-medium leading-7 tracking-[-0.025em] text-white/78 sm:mt-7 sm:max-w-2xl sm:pr-0 sm:text-xl sm:leading-9 sm:text-white/82">
-              Find verified campsites, tent pitches, campervan stops, farm stays and glamping across India. Compare the stay,
-              setting, access and amenities before you pack.
+              Discover campsites, tent pitches, campervan stops, farm stays and glamping across India. Compare the stay,
+              setting, access, essentials and unknowns before you pack.
             </p>
 
             <div className="mt-6 flex flex-col gap-3 sm:mt-9 sm:flex-row">
@@ -175,26 +128,16 @@ export default function Home() {
                 to="/explore"
                 className="premium-focus inline-flex w-full items-center justify-center gap-3 rounded-lg bg-orange px-5 py-3.5 text-sm font-black text-white shadow-[0_18px_50px_rgba(230,126,34,0.34)] transition duration-300 hover:-translate-y-0.5 hover:bg-orange-dark hover:shadow-[0_24px_58px_rgba(230,126,34,0.42)] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
-                Explore camps across India
+                Explore camps
                 <ArrowRight size={19} />
               </Link>
               <Link
-                to="/camping-guides"
+                to="/host-your-land"
                 className="premium-focus inline-flex w-full items-center justify-center gap-3 rounded-lg border border-white/55 bg-white/6 px-5 py-3.5 text-sm font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:bg-white/12 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
-                Plan your camping trip
-                <BookOpen size={19} />
+                List your land
+                <ArrowRight size={19} />
               </Link>
-            </div>
-
-            <div className="mt-8 grid gap-3 sm:mt-14 sm:grid-cols-3 sm:gap-5">
-              {heroPrinciples.map((item) => (
-                <div key={item.title} className="group rounded-xl border border-white/10 bg-white/[0.03] p-4 sm:border-l sm:border-y-0 sm:border-r-0 sm:bg-transparent sm:pl-4">
-                  <CampInIcon name={item.iconName} className="mb-3 h-5 w-5 text-[#fbf3e5] transition group-hover:text-orange sm:mb-4 sm:h-6 sm:w-6" />
-                  <p className="text-sm font-black tracking-[-0.025em] text-[#fbf3e5] sm:text-base">{item.title}</p>
-                  <p className="mt-1.5 text-xs font-medium leading-5 text-white/64 sm:mt-2 sm:text-sm sm:leading-6">{item.body}</p>
-                </div>
-              ))}
             </div>
           </div>
 
@@ -251,214 +194,16 @@ export default function Home() {
 
       <CategoryExplorer />
 
-      {/* Exists Section */}
-      <section id="trust" className="border-b border-[#173525]/10 bg-[#fffaf0] py-14 sm:py-24">
-        <div className="mx-auto grid max-w-[1440px] gap-8 px-4 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:gap-10 lg:px-10">
-          <div>
-            <h2 className="font-serif text-3xl font-black tracking-[-0.04em] text-[#173525] sm:text-5xl">Why CampIn exists</h2>
-            <div className="mt-3 h-0.5 w-8 bg-orange" />
-            <p className="mt-4 max-w-xl text-sm font-medium leading-7 tracking-[-0.015em] text-[#313831] sm:mt-5 sm:text-base sm:leading-8">
-              India has incredible backyards. But finding the right place to camp legally, safely, and respectfully is hard.
-            </p>
-            <p className="mt-4 max-w-xl text-sm font-extrabold leading-7 tracking-[-0.018em] text-[#173525] sm:mt-5 sm:text-base sm:leading-8">
-              CampIn is building a permission-first camping community and a clearer way to compare what is known before a trip.
-            </p>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
-            {principles.map((principle) => (
-              <div
-                key={principle.title}
-                className="group rounded-2xl border border-[#173525]/10 bg-white/45 px-5 py-5 text-left transition duration-300 hover:-translate-y-1 sm:border-l sm:border-y-0 sm:border-r-0 sm:bg-transparent sm:px-8 sm:py-2 sm:text-center"
-              >
-                <CampInIcon name={principle.iconName} className="h-8 w-8 text-[#2f6548] transition group-hover:text-orange sm:mx-auto sm:h-12 sm:w-12" />
-                <h3 className="mt-4 text-base font-black tracking-[-0.025em] text-[#173525] sm:mt-6 sm:text-lg">{principle.title}</h3>
-                <p className="mt-2 text-sm font-medium leading-6 text-[#313831] sm:mt-3">{principle.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Pillars Section */}
-      <section className="bg-[#fffdf9] py-14 sm:py-24 border-b border-[#173525]/10">
-        <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-10">
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="rounded-full bg-forest/10 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-[#2f6548]">
-              Trust Infrastructure
-            </span>
-            <h2 className="mt-4 font-serif text-3xl font-black tracking-[-0.04em] text-[#173525] sm:text-5xl">
-              The Four CampIn Pillars
-            </h2>
-            <div className="mx-auto mt-4 h-0.5 w-12 bg-orange" />
-            <p className="mt-4 text-sm font-medium leading-7 text-[#313831] sm:text-base sm:leading-8">
-              We verify and audit every campsite across these four core markers. No shortcuts, no fake badges.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                title: "1. Landowner Permission",
-                description: "We look for clear host permission, relevant local rules, and a written arrival handoff before presenting a place as a reviewed lead.",
-                icon: "permission",
-                benefit: "Zero harassment, zero disputes"
-              },
-              {
-                title: "2. Washroom Standard",
-                description: "We record what the host says about washroom access, privacy, and facilities, and keep unknowns visible.",
-                icon: "washroom",
-                benefit: "Clean and family-safe sanitization"
-              },
-              {
-                title: "3. Verified Water",
-                description: "We record water availability and whether campers should carry their own supply instead of making assumptions.",
-                icon: "water",
-                benefit: "Hydration assurance before arrival"
-              },
-              {
-                title: "4. Clear Access Notes",
-                description: "No vague landmarks. CampIn records route notes, photos, road access rules, and handoff details before a trip is treated as ready.",
-                icon: "exact-pin",
-                benefit: "No lost detours or safety surprises"
-              }
-            ].map((pillar) => (
-              <div key={pillar.title} className="group relative rounded-2xl border border-[#173525]/10 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-orange/20">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-forest/5 text-forest transition-colors group-hover:bg-orange/10 group-hover:text-orange">
-                  <CampInIcon name={pillar.icon as any} className="h-6 w-6" />
-                </div>
-                <h3 className="mt-5 text-lg font-black tracking-tight text-[#173525]">{pillar.title}</h3>
-                <p className="mt-3 text-sm font-medium leading-6 text-[#313831]/80">{pillar.description}</p>
-                <div className="mt-5 border-t border-[#173525]/5 pt-3">
-                  <span className="text-xs font-black uppercase tracking-wider text-orange">
-                    {pillar.benefit}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Verification stage section */}
-      <section className="relative overflow-hidden bg-[#eef1e6] py-14 sm:py-24">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_38%,rgba(47,101,72,0.08),transparent_30%),linear-gradient(180deg,rgba(255,250,240,0.3),transparent_42%)]" />
-        <div className="relative mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-10">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-serif text-3xl font-black leading-[0.98] tracking-[-0.04em] text-[#173525] sm:text-5xl">
-              What gets checked before a place goes live
-            </h2>
-            <div className="mx-auto mt-4 h-0.5 w-8 bg-orange" />
-          </div>
-
-          <div className="mt-8 grid items-center gap-7 sm:mt-12 lg:grid-cols-[1fr_500px]">
-            <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-5 md:gap-4">
-              {verificationChecks.map((check) => (
-                <div
-                  key={check.title}
-                  className="group rounded-2xl border border-[#173525]/10 bg-white/28 px-4 py-5 text-center md:border-l md:border-y-0 md:border-r-0 md:bg-transparent md:px-5 md:first:border-l-0"
-                >
-                  <div className="mx-auto flex h-10 w-10 items-center justify-center text-[#173525] sm:h-12 sm:w-12">
-                    <CampInIcon name={check.iconName} className="h-7 w-7 text-[#173525] transition group-hover:text-orange sm:h-[34px] sm:w-[34px]" />
-                  </div>
-                  <h3 className="mt-3 text-sm font-black tracking-[-0.02em] text-[#173525] sm:mt-5 sm:text-base">{check.title}</h3>
-                  <p className="mt-2 text-xs font-medium leading-5 text-[#313831] sm:mt-3 sm:text-sm sm:leading-6">{check.body}</p>
-                </div>
-              ))}
-            </div>
-            <div className="flex justify-center lg:justify-end">
-              <img
-                src="/images/campin-verification-scenery.png"
-                alt="Line art of a campsite tent below mountain ridges and pine forest"
-                className="w-full max-w-[370px] mix-blend-multiply opacity-88 contrast-125 saturate-50 lg:max-w-[660px]"
-                loading="lazy"
-              />
-            </div>
-          </div>
-
-          <p className="mx-auto mt-6 max-w-2xl text-center font-serif text-base italic text-[#6c716b] sm:mt-8 sm:text-lg">
-            Every check includes source, photo, timestamp, and reviewer.
-          </p>
-        </div>
-      </section>
-
-      {/* How it Works Section */}
-      <section className="bg-[#eef1e6]/60 py-14 sm:py-24 border-b border-[#173525]/10">
-        <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-10">
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="rounded-full bg-forest/10 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-[#2f6548]">
-              Operational Workflow
-            </span>
-            <h2 className="mt-4 font-serif text-3xl font-black tracking-[-0.04em] text-[#173525] sm:text-5xl">
-              How We Verify Campsites
-            </h2>
-            <div className="mx-auto mt-4 h-0.5 w-12 bg-orange" />
-          </div>
-
-          <div className="mt-16 relative">
-            {/* Connecting line on desktop */}
-            <div className="absolute top-[52%] left-[10%] right-[10%] h-0.5 bg-dashed bg-gradient-to-r from-forest/5 via-forest/20 to-forest/5 -translate-y-1/2 hidden lg:block" />
-
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 relative z-10">
-              {[
-                {
-                  step: "01",
-                  title: "Scout & Research",
-                  desc: "We parse community lists, geographic databases, and caravan routes to surface remote farm and lake stays.",
-                  icon: "route",
-                  glow: "group-hover:border-emerald-500/30 group-hover:shadow-[0_20px_50px_rgba(46,125,50,0.12)]"
-                },
-                {
-                  step: "02",
-                  title: "On-Ground Audit",
-                  desc: "Our verification team visits the site to record photos, check amenities, inspect washrooms, and test cellular reception.",
-                  icon: "reviewed",
-                  glow: "group-hover:border-orange/30 group-hover:shadow-[0_20px_50px_rgba(230,126,34,0.12)]"
-                },
-                {
-                  step: "03",
-                  title: "Trust Ledger Entry",
-                  desc: "Every verified data point is logged with a human reviewer name, timestamp, and unedited proof photos.",
-                  icon: "permission",
-                  glow: "group-hover:border-[#2f6548]/30 group-hover:shadow-[0_20px_50px_rgba(47,101,72,0.12)]"
-                },
-                {
-                  step: "04",
-                  title: "Gated Booking",
-                  desc: "Camper coordinates and contact info remain protected behind a respectful request-to-book relay mechanism.",
-                  icon: "campervan",
-                  glow: "group-hover:border-orange-dark/30 group-hover:shadow-[0_20px_50px_rgba(201,106,16,0.12)]"
-                }
-              ].map((item) => (
-                <div key={item.step} className={`group relative rounded-2xl bg-white p-6 sm:p-8 border border-[#173525]/10 shadow-sm transition-all duration-500 hover:-translate-y-2 ${item.glow}`}>
-                  <div className="absolute -top-4 left-6 flex h-8 w-14 items-center justify-center rounded-full bg-forest text-[11px] font-black uppercase tracking-widest text-[#fbf3e5] shadow-md transition-colors group-hover:bg-orange">
-                    Step {item.step}
-                  </div>
-                  
-                  <div className="flex items-center justify-between mt-2">
-                    <h3 className="text-lg font-black text-[#173525] group-hover:text-forest transition-colors">{item.title}</h3>
-                    <div className="h-12 w-12 shrink-0 rounded-xl bg-forest/5 text-forest flex items-center justify-center shadow-inner transition-all duration-300 group-hover:scale-110 group-hover:bg-orange/15 group-hover:text-orange">
-                      <CampInIcon name={item.icon as any} className="h-6 w-6" />
-                    </div>
-                  </div>
-                  
-                  <p className="mt-4 text-sm font-medium leading-6 text-[#313831]/80 transition-colors group-hover:text-[#313831]">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Verified Campsites Section */}
+      {/* Featured places */}
       <section className="bg-[#fffaf0] py-14 sm:py-24 border-b border-[#173525]/10">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="max-w-2xl">
               <span className="rounded-full bg-orange/10 border border-orange/20 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-orange">
-                Audited & Approved
+                Review candidates
               </span>
               <h2 className="mt-4 font-serif text-3xl font-black tracking-[-0.04em] text-[#173525] sm:text-5xl">
-                Featured Verified Campsites
+                Featured places
               </h2>
               <p className="mt-4 text-sm font-medium leading-relaxed text-[#313831]/80 sm:text-base">
                 These are research and review candidates, not a blanket promise that every site is currently available. Confirm permission, facilities, access, and local rules before travelling.
@@ -551,11 +296,11 @@ export default function Home() {
 
                   <div className="mt-6 border-t border-[#173525]/10 pt-5 flex items-center justify-between text-[#173525]">
                     <div>
-                      <p className="text-[10px] font-bold text-[#6c716b] uppercase tracking-wider">Verification Pitch Price</p>
+                      <p className="text-[10px] font-bold text-[#6c716b] uppercase tracking-wider">Indicative listing price</p>
                       <p className="text-lg font-black tracking-tight text-forest">{camp.price}</p>
                     </div>
                     <span className="inline-flex items-center gap-2 rounded-xl bg-forest text-white group-hover:bg-orange transition-colors px-4 py-2.5 text-xs font-black">
-                      Verify Details
+                      Review details
                       <ArrowRight size={13} className="transition group-hover:translate-x-1" />
                     </span>
                   </div>
@@ -566,55 +311,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Our Story Section */}
-      <section id="our-story" className="relative overflow-hidden bg-[#0d281b] text-white py-16 sm:py-28 border-b border-white/10">
-        {/* Subtle glowing canvas */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_30%,rgba(230,126,34,0.08)_0%,transparent_35%),radial-gradient(circle_at_25%_70%,rgba(46,125,50,0.18)_0%,transparent_40%),linear-gradient(180deg,#0a1f15_0%,#0e2d1e_100%)]" />
-        <TopographicPattern className="absolute -inset-10 h-[120%] w-[120%] text-white/[0.03] pointer-events-none select-none" />
+      <TrustProcess />
 
-        <div className="relative mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-10 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center">
-          <div className="animate-fade-up">
-            <span className="rounded-full bg-orange/10 border border-orange/20 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-orange-light">
-              The CampIn Narrative
-            </span>
-            <h2 className="mt-4 font-serif text-3xl font-black tracking-[-0.045em] text-[#fbf3e5] sm:text-5xl sm:leading-[1.1] lg:text-[4.2rem]">
-              Our Story: Waking Up to Sunrises, Not Hotel Bills.
-            </h2>
-            <div className="mt-5 h-0.5 w-14 bg-orange" />
-            
-            <p className="mt-6 text-sm font-medium leading-7 tracking-wide text-white/80 sm:text-base sm:leading-8">
-              Mist-covered tea terraces in Meghalaya, coffee-scented hills in Coorg, ancient cedar canopies in Himachal, silent desert dunes of Jaisalmer, apple orchards in Kashmir... India has some of the most incredibly beautiful landscapes on Earth.
-            </p>
-            <p className="mt-5 text-sm font-medium leading-7 tracking-wide text-white/80 sm:text-base sm:leading-8">
-              Yet, if you wanted to sleep under the stars legally, safely, and respectfully in any of these places, there was simply no way to do it. Your only options were either overpriced, artificial glamping resorts that cost more than a boutique hotel, or risking pitching a tent illegally hoping you wouldn't get asked to leave or harassed.
-            </p>
-            <p className="mt-5 text-sm font-extrabold leading-7 tracking-wide text-orange-light sm:text-base sm:leading-8">
-              We decided to build the solution. Inspired by the proven private landowner model of Hipcamp but custom-engineered for our highways, our private farms, our caravan corridors, and our unique geography.
-            </p>
-            <p className="mt-5 text-sm font-medium leading-7 tracking-wide text-white/80 sm:text-base sm:leading-8">
-              CampIn is a community-first way to discover India outdoors. We connect campers with hosts and local knowledge, support respectful travel, and make it easier to ask the right questions before setting out.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center justify-center bg-white/[0.02] border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-xl relative group">
-            <div className="absolute inset-0 bg-gradient-to-tr from-orange/5 to-emerald-500/5 opacity-50 rounded-3xl" />
-            <TentConstellation className="w-full max-w-[340px] text-orange-light drop-shadow-[0_8px_24px_rgba(230,126,34,0.15)] animate-float-soft" />
-            <div className="relative text-center mt-6 z-10 max-w-[320px]">
-              <h3 className="font-serif text-2xl font-bold text-[#fbf3e5]">Unlock India's Outdoors</h3>
-              <p className="mt-3 text-xs leading-5 text-white/70">
-                Be part of the founding community. Gain early, exclusive access to safe, legal, permission-first private stays and campervan stops.
-              </p>
-              <a
-                href="#founding-community"
-                className="premium-focus mt-6 inline-flex w-full items-center justify-center gap-3 rounded-lg bg-orange px-5 py-3 text-sm font-black text-white transition duration-300 hover:bg-orange-dark hover:shadow-[0_12px_28px_rgba(230,126,34,0.3)]"
-              >
-                Join the Founding List
-                <ArrowRight size={16} />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HostInvitation />
 
       {/* CampIn guide vault */}
       <section className="bg-[#fffaf0] py-14 sm:py-24">
@@ -807,23 +506,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Call to action section */}
-      <section className="relative overflow-hidden bg-[#0f2b1d] px-4 py-16 text-center text-white sm:px-6 lg:px-8">
-        <img
-          src={mediaRegistry.desert.src}
-          srcSet={mediaSrcSet(mediaRegistry.desert)}
-          sizes="100vw"
-          alt={mediaRegistry.desert.alt}
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-[#0f2b1d]/56" />
-        <div className="relative mx-auto max-w-4xl">
-          <h2 className="font-serif text-4xl font-black tracking-[-0.04em] text-[#f8f1e4] sm:text-5xl">
-            Camp more. Respect more. Connect more.
-          </h2>
-          <p className="mt-4 text-xl text-white/78">India&apos;s backyard is calling.</p>
-        </div>
-      </section>
     </div>
   );
 }

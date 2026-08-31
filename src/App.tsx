@@ -33,8 +33,6 @@ function ScrollToTop() {
 }
 
 function AppContent() {
-  const location = useLocation();
-
   return (
     <>
       <ScrollToTop />
@@ -65,7 +63,7 @@ function AppContent() {
           <Route path="/glamping-india" element={<SeoLanding />} />
         </Routes>
       </main>
-      {location.pathname !== "/" && <Footer />}
+      <Footer />
     </>
   );
 }
