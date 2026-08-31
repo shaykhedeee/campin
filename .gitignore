@@ -27,3 +27,7 @@ Thumbs.db
 # Generated browser profiles and large QA artifacts
 artifacts/chrome-*/
 artifacts/*profile*/
+
+# Agent worktree isolation
+.worktrees/
+.superpowers/
