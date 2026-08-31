@@ -32,6 +32,8 @@ import { submitMvpLead } from "../lib/mvpLeadStore";
 import { parseExploreCategory, type ExploreCategory } from "../lib/exploreFilters";
 import SeoFaq from "../components/SeoFaq";
 import { mediaSrcSet } from "../data/mediaRegistry";
+import LeadSubmissionStatus from "../components/leads/LeadSubmissionStatus";
+import { useLeadSubmission } from "../components/leads/useLeadSubmission";
 
 const exploreFaqs = [
   { question: "What can I find on CampIn?", answer: "Explore camping and outdoor stays across India, including tent pitches, BYOT sites, glamping, farm stays, motorhome-friendly places, and road-stop leads when details are confirmed." },
@@ -200,7 +202,8 @@ export default function Explore() {
   const [locationFilter, setLocationFilter] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
   const [alertEmail, setAlertEmail] = useState("");
-  const [alertStatus, setAlertStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [alertConsent, setAlertConsent] = useState(false);
+  const alertSubmission = useLeadSubmission();
   const [activeListings, setActiveListings] = useState(() => getListings().filter(isListingPubliclyPublishable));
   const activeCategory = parseExploreCategory(location.search);
   const categoryVehicleFilter: VehicleFilter | null =
@@ -518,7 +521,7 @@ export default function Explore() {
             {activeCategory && (
               <div className="mt-3 flex flex-wrap items-center gap-2" aria-live="polite">
                 <span className="rounded-full bg-forest px-3 py-1.5 text-sm font-bold text-white">
-                  Category: {activeCategory.replaceAll("-", " ")}
+                  Category: {activeCategory.replace(/-/g, " ")}
                 </span>
                 <button
                   type="button"
@@ -612,24 +615,21 @@ export default function Explore() {
                 onSubmit={async (e) => {
                   e.preventDefault();
                   if (!alertEmail.trim()) return;
-                  setAlertStatus("saving");
-                  try {
-                    await submitMvpLead({
+                  const result = await alertSubmission.run(() => submitMvpLead({
                       type: "newsletter",
                       sourcePage: "/explore",
                       email: alertEmail,
-                      consent: true,
+                      consent: alertConsent,
                       status: "subscribed_corridor_alerts",
                       score: 4,
                       payload: {
                         interest: "terrain_weather_safety_alerts",
                         segment: vehicleFilter === "all" ? "general" : vehicleFilter
                       }
-                    });
-                    setAlertStatus("saved");
+                    }));
+                  if (result?.remote === "synced") {
                     setAlertEmail("");
-                  } catch {
-                    setAlertStatus("error");
+                    setAlertConsent(false);
                   }
                 }}
                 className="mt-4 space-y-4"
@@ -647,26 +647,26 @@ export default function Explore() {
                 </label>
                 <button
                   type="submit"
-                  disabled={alertStatus === "saving"}
+                  disabled={alertSubmission.isSaving}
                   className="h-12 w-full rounded-xl bg-orange hover:bg-orange-dark text-white font-extrabold text-sm transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange/20"
                 >
-                  {alertStatus === "saving" ? "Subscribing..." : "Enable Safety Alerts"}
+                  {alertSubmission.isSaving ? "Subscribing..." : "Enable Safety Alerts"}
                   <ArrowRight size={16} />
                 </button>
+                <label className="flex items-start gap-2 text-[11px] font-semibold leading-4 text-white/55">
+                  <input
+                    required
+                    type="checkbox"
+                    checked={alertConsent}
+                    onChange={(event) => setAlertConsent(event.target.checked)}
+                    className="mt-0.5 h-4 w-4 shrink-0 accent-orange"
+                  />
+                  I agree CampIn may email me route and safety updates. I can unsubscribe anytime.
+                </label>
               </form>
-              
-              {alertStatus === "saved" && (
-                <p className="mt-4 text-xs font-bold text-emerald-400">
-                  ✓ Success! You are subscribed to live terrain and pass safety notifications.
-                </p>
-              )}
-              {alertStatus === "error" && (
-                <p className="mt-4 text-xs font-bold text-rose-400">
-                  Could not save alert request. Please try again.
-                </p>
-              )}
+              <LeadSubmissionStatus state={alertSubmission.state} message={alertSubmission.message} className="text-white/70" />
               <p className="mt-3 text-[10px] text-white/40 leading-relaxed font-semibold">
-                No spam. Unsubscribe with 1-click. Stored locally & securely synced.
+                No spam. Unsubscribe anytime. If secure sync is unavailable, this form will clearly show that the request is queued on this device.
               </p>
             </div>
           </div>

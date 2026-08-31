@@ -1,5 +1,5 @@
 import type { CampingGuide } from "../data/campingGuides";
-import { submitMvpLead } from "./mvpLeadStore";
+import { submitMvpLead, type LeadSubmissionResult } from "./mvpLeadStore";
 
 export interface GuideAccessLead {
   id: string;
@@ -31,18 +31,11 @@ export function hasGuideAccess(slug: string) {
   return getGuideAccessLeads().some((lead) => lead.guideSlug === slug);
 }
 
-export function saveGuideAccessLead(guide: CampingGuide, input: Omit<GuideAccessLead, "id" | "guideSlug" | "guideTitle" | "createdAt">) {
-  const lead: GuideAccessLead = {
-    ...input,
-    id: `GUIDE-${Date.now().toString(36).toUpperCase()}`,
-    guideSlug: guide.slug,
-    guideTitle: guide.title,
-    createdAt: new Date().toISOString(),
-  };
-
-  const leads = getGuideAccessLeads();
-  window.localStorage.setItem(storageKey, JSON.stringify([lead, ...leads]));
-  void submitMvpLead({
+export async function saveGuideAccessLead(
+  guide: CampingGuide,
+  input: Omit<GuideAccessLead, "id" | "guideSlug" | "guideTitle" | "createdAt">,
+): Promise<{ lead: GuideAccessLead; submission: LeadSubmissionResult }> {
+  const submission = await submitMvpLead({
     type: "guide_unlock",
     sourcePage: `/camping-guides/${guide.slug}`,
     name: input.name,
@@ -52,12 +45,17 @@ export function saveGuideAccessLead(guide: CampingGuide, input: Omit<GuideAccess
     status: "guide_unlocked",
     score: 3,
     consent: input.consent,
-    payload: {
-      guideSlug: guide.slug,
-      guideTitle: guide.title,
-      interest: input.interest,
-      localLeadId: lead.id,
-    },
+    payload: { guideSlug: guide.slug, guideTitle: guide.title, interest: input.interest },
   });
-  return lead;
+  const lead: GuideAccessLead = {
+    ...input,
+    id: submission.lead.id,
+    guideSlug: guide.slug,
+    guideTitle: guide.title,
+    createdAt: submission.lead.createdAt,
+  };
+
+  const leads = getGuideAccessLeads();
+  window.localStorage.setItem(storageKey, JSON.stringify([lead, ...leads]));
+  return { lead, submission };
 }

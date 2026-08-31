@@ -22,6 +22,8 @@ import CategoryExplorer from "../components/home/CategoryExplorer";
 import HostInvitation from "../components/home/HostInvitation";
 import TrustProcess from "../components/home/TrustProcess";
 import { mediaRegistry, mediaSrcSet } from "../data/mediaRegistry";
+import LeadSubmissionStatus from "../components/leads/LeadSubmissionStatus";
+import { useLeadSubmission } from "../components/leads/useLeadSubmission";
 
 const heroChecks = [
   { label: "Permission first", iconName: "permission", position: "left-[22%] top-[12%]" },
@@ -52,8 +54,8 @@ const guideCards = [
 ];
 
 export default function Home() {
-  const [waitlistForm, setWaitlistForm] = useState({ email: "", phone: "" });
-  const [waitlistStatus, setWaitlistStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [waitlistForm, setWaitlistForm] = useState({ email: "", phone: "", consent: false });
+  const waitlistSubmission = useLeadSubmission();
   const [activeBlogs, setActiveBlogs] = useState(() => getBlogPosts());
 
   useEffect(() => {
@@ -77,27 +79,20 @@ export default function Home() {
 
   const submitWaitlist = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setWaitlistStatus("saving");
-
-    try {
-      await submitMvpLead({
+    const result = await waitlistSubmission.run(() => submitMvpLead({
         type: "camper_waitlist",
         sourcePage: "/",
         email: waitlistForm.email,
         phone: waitlistForm.phone,
         status: "founding_community_waitlist",
         score: waitlistForm.phone.trim() ? 4 : 3,
-        consent: true,
+        consent: waitlistForm.consent,
         payload: {
           source: "homepage_founding_community_card",
           requestedUpdates: ["guide_access", "community_updates", "permission_first_leads"],
         },
-      });
-      setWaitlistStatus("saved");
-      setWaitlistForm({ email: "", phone: "" });
-    } catch {
-      setWaitlistStatus("error");
-    }
+      }));
+    if (result?.remote === "synced") setWaitlistForm({ email: "", phone: "", consent: false });
   };
 
   return (
@@ -428,17 +423,22 @@ export default function Home() {
                     className="premium-focus h-11 w-full rounded-md bg-[#f6f1e7] pl-10 pr-3 text-xs font-bold tracking-[-0.01em] text-[#173525] outline-none"
                   />
                 </label>
-                <button type="submit" disabled={waitlistStatus === "saving"} className="premium-focus inline-flex h-11 items-center justify-center rounded-md bg-orange px-5 text-xs font-black text-white transition duration-300 hover:bg-orange-dark disabled:cursor-wait disabled:opacity-70">
-                  {waitlistStatus === "saving" ? "Saving..." : "Join waitlist"}
+                <button type="submit" disabled={waitlistSubmission.isSaving} className="premium-focus inline-flex h-11 items-center justify-center rounded-md bg-orange px-5 text-xs font-black text-white transition duration-300 hover:bg-orange-dark disabled:cursor-wait disabled:opacity-70">
+                  {waitlistSubmission.isSaving ? "Saving..." : "Join waitlist"}
                 </button>
+                <label className="flex items-start gap-2 px-1 pt-1 text-[11px] font-semibold leading-4 text-[#4f574f] sm:col-span-3">
+                  <input
+                    required
+                    type="checkbox"
+                    checked={waitlistForm.consent}
+                    onChange={(event) => setWaitlistForm((current) => ({ ...current, consent: event.target.checked }))}
+                    className="mt-0.5 h-4 w-4 shrink-0 accent-orange"
+                  />
+                  I agree CampIn may contact me about guide drops and community updates. I can unsubscribe anytime.
+                </label>
               </form>
-              <p className="mt-3 text-xs font-semibold text-white/50">
-                {waitlistStatus === "saved"
-                  ? "You are on the CampIn list. Watch for guide drops, route notes, and community updates."
-                  : waitlistStatus === "error"
-                    ? "Could not save right now. Please try again."
-                    : "No spam. Unsubscribe anytime. Submitting does not confirm any booking."}
-              </p>
+              <LeadSubmissionStatus state={waitlistSubmission.state} message={waitlistSubmission.message} className="text-white/70" />
+              {waitlistSubmission.state === "idle" && <p className="mt-3 text-xs font-semibold text-white/50">Submitting does not confirm any booking.</p>}
             </div>
           </div>
         </div>

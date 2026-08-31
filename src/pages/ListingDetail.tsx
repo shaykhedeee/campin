@@ -28,6 +28,8 @@ import {
 import { getListings, type Listing, type VerificationStage } from "../data/listings";
 import { mediaSrcSet } from "../data/mediaRegistry";
 import { submitMvpLead } from "../lib/mvpLeadStore";
+import LeadSubmissionStatus from "../components/leads/LeadSubmissionStatus";
+import { useLeadSubmission } from "../components/leads/useLeadSubmission";
 
 const requestStorageKey = "campin.listing.requests.v1";
 
@@ -109,8 +111,9 @@ export default function ListingDetail() {
     }
   });
   const [showHandshakeModal, setShowHandshakeModal] = useState(false);
-  const [handshakeForm, setHandshakeForm] = useState({ name: "", email: "", phone: "" });
-  const [handshakeStatus, setHandshakeStatus] = useState<"idle" | "saving" | "saved">("idle");
+  const [handshakeForm, setHandshakeForm] = useState({ name: "", email: "", phone: "", consent: false });
+  const requestSubmission = useLeadSubmission();
+  const handshakeSubmission = useLeadSubmission();
 
   const [formData, setFormData] = useState({
     name: guestProfile?.name || "",
@@ -122,6 +125,7 @@ export default function ListingDetail() {
     vehicleType: "car",
     ownTent: listing?.byotFriendly ? "yes" : "no",
     essentials: "parking, washroom, water",
+    consent: false,
   });
 
   useEffect(() => {
@@ -166,22 +170,23 @@ export default function ListingDetail() {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
+        consent: formData.consent,
       });
       setShowHandshakeModal(true);
       return;
     }
 
-    const idValue = `REQ-${Date.now().toString(36).toUpperCase()}`;
     const payload = {
-      id: idValue,
       listingId: listing.id,
       listingTitle: listing.title,
-      createdAt: new Date().toISOString(),
-      status: "Awaiting CampIn review",
-      ...formData,
+      arrive: formData.arrive,
+      depart: formData.depart,
+      guests: formData.guests,
+      vehicleType: formData.vehicleType,
+      ownTent: formData.ownTent,
+      essentials: formData.essentials,
     };
-    saveRequest(payload);
-    void submitMvpLead({
+    const result = await requestSubmission.run(() => submitMvpLead({
       type: "listing_inquiry",
       sourcePage: `/listing/${listing.id}`,
       name: formData.name,
@@ -190,10 +195,13 @@ export default function ListingDetail() {
       city: listing.location,
       status: "awaiting_campin_review",
       score: formData.phone.trim() ? 5 : 4,
-      consent: true,
+      consent: formData.consent,
       payload,
-    });
-    setRequestId(idValue);
+    }));
+    if (result?.remote === "synced") {
+      saveRequest({ ...payload, id: result.lead.id, createdAt: result.lead.createdAt, status: "Awaiting CampIn review" });
+      setRequestId(result.lead.id);
+    }
   };
 
   return (
@@ -523,10 +531,22 @@ export default function ListingDetail() {
                 />
               </label>
 
-              <button type="submit" className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-orange px-5 py-4 font-extrabold text-white transition-colors hover:bg-orange-dark">
-                {availability.cta}
+              <label className="mt-4 flex items-start gap-3 rounded-lg bg-offwhite p-3 text-xs leading-5 text-textgrey">
+                <input
+                  required
+                  type="checkbox"
+                  checked={formData.consent}
+                  onChange={(event) => setFormData((current) => ({ ...current, consent: event.target.checked }))}
+                  className="mt-0.5 h-4 w-4 shrink-0 accent-orange"
+                />
+                I agree CampIn may use these details to review this request and contact me about the host handoff.
+              </label>
+
+              <button type="submit" disabled={requestSubmission.isSaving} className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-orange px-5 py-4 font-extrabold text-white transition-colors hover:bg-orange-dark disabled:cursor-wait disabled:opacity-70">
+                {requestSubmission.isSaving ? "Saving…" : availability.cta}
                 <ArrowRight size={18} />
               </button>
+              <LeadSubmissionStatus state={requestSubmission.state} message={requestSubmission.message} />
 
               {requestId && (
                 <div className="mt-5 rounded-lg bg-forest p-4 text-white">
@@ -601,59 +621,23 @@ export default function ListingDetail() {
                 onSubmit={async (e) => {
                   e.preventDefault();
                   if (!handshakeForm.email || !handshakeForm.phone) return;
-                  setHandshakeStatus("saving");
-
-                  try {
+                  await handshakeSubmission.run(async () => {
                     const profileData = {
                       name: handshakeForm.name || "Guest Camper",
                       email: handshakeForm.email,
                       phone: handshakeForm.phone,
                     };
-                    window.localStorage.setItem("campin.guest.profile.v1", JSON.stringify(profileData));
-                    
-                    // submit as waitlist or profile lead
-                    await submitMvpLead({
-                      type: "camper_waitlist",
-                      sourcePage: `/listing/${listing.id}`,
-                      name: profileData.name,
-                      email: profileData.email,
-                      phone: profileData.phone,
-                      consent: true,
-                      status: "profile_handshake_completed",
-                      score: 5,
-                      payload: {
-                        action: "unlock_listing_contact",
-                        listingId: listing.id,
-                        listingTitle: listing.title,
-                      }
-                    });
-
-                    setGuestProfile(profileData);
-                    setFormData((current) => ({
-                      ...current,
-                      name: profileData.name,
-                      email: profileData.email,
-                      phone: profileData.phone,
-                    }));
-                    
-                    setHandshakeStatus("saved");
-                    setShowHandshakeModal(false);
-
-                    // Re-trigger the request flow now that contact details are saved.
-                    const idValue = `REQ-${Date.now().toString(36).toUpperCase()}`;
                     const payload = {
-                      id: idValue,
                       listingId: listing.id,
                       listingTitle: listing.title,
-                      createdAt: new Date().toISOString(),
-                      status: "Awaiting CampIn review",
-                      ...formData,
-                      name: profileData.name,
-                      email: profileData.email,
-                      phone: profileData.phone,
+                      arrive: formData.arrive,
+                      depart: formData.depart,
+                      guests: formData.guests,
+                      vehicleType: formData.vehicleType,
+                      ownTent: formData.ownTent,
+                      essentials: formData.essentials,
                     };
-                    saveRequest(payload);
-                    await submitMvpLead({
+                    const result = await submitMvpLead({
                       type: "listing_inquiry",
                       sourcePage: `/listing/${listing.id}`,
                       name: profileData.name,
@@ -662,13 +646,19 @@ export default function ListingDetail() {
                       city: listing.location,
                       status: "awaiting_campin_review",
                       score: 5,
-                      consent: true,
+                      consent: handshakeForm.consent,
                       payload,
                     });
-                    setRequestId(idValue);
-                  } catch {
-                    setHandshakeStatus("idle");
-                  }
+                    if (result.remote === "synced") {
+                      window.localStorage.setItem("campin.guest.profile.v1", JSON.stringify(profileData));
+                      saveRequest({ ...payload, id: result.lead.id, createdAt: result.lead.createdAt, status: "Awaiting CampIn review" });
+                      setGuestProfile(profileData);
+                      setFormData((current) => ({ ...current, ...profileData, consent: false }));
+                      setRequestId(result.lead.id);
+                      setShowHandshakeModal(false);
+                    }
+                    return result;
+                  });
                 }}
                 className="mt-6 space-y-4"
               >
@@ -682,6 +672,17 @@ export default function ListingDetail() {
                     onChange={(e) => setHandshakeForm((curr) => ({ ...curr, name: e.target.value }))}
                     className="mt-2 h-11 w-full rounded-xl border border-white/10 bg-white/5 px-4 text-xs font-semibold text-white outline-none focus:border-orange focus:bg-white/10"
                   />
+                </label>
+
+                <label className="flex items-start gap-2 text-[10px] font-semibold leading-4 text-white/55">
+                  <input
+                    required
+                    type="checkbox"
+                    checked={handshakeForm.consent}
+                    onChange={(event) => setHandshakeForm((current) => ({ ...current, consent: event.target.checked }))}
+                    className="mt-0.5 h-4 w-4 shrink-0 accent-orange"
+                  />
+                  I agree CampIn may use these details to review this request and contact me about the host handoff.
                 </label>
 
                 <label className="block">
@@ -724,13 +725,14 @@ export default function ListingDetail() {
                   </button>
                   <button
                     type="submit"
-                    disabled={handshakeStatus === "saving"}
+                    disabled={handshakeSubmission.isSaving}
                     className="h-12 w-2/3 rounded-xl bg-orange hover:bg-orange-dark text-white font-extrabold text-xs transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange/20"
                   >
-                    {handshakeStatus === "saving" ? "Unlocking..." : "Verify & Unlock Contact"}
+                    {handshakeSubmission.isSaving ? "Saving…" : "Verify & Unlock Contact"}
                     <ArrowRight size={14} />
                   </button>
                 </div>
+                <LeadSubmissionStatus state={handshakeSubmission.state} message={handshakeSubmission.message} className="text-white/70" />
               </form>
 
               <div className="mt-4 border-t border-white/5 pt-4 text-center">

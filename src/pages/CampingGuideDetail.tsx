@@ -3,7 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, BookOpen, CheckCircle, Download, Lock, MapPin, ShieldCheck } from "lucide-react";
 import { createGuideMarkdown, getCampingGuide } from "../data/campingGuides";
 import { hasGuideAccess, saveGuideAccessLead, type GuideAccessLead } from "../lib/guideAccess";
-import { submitMvpLead } from "../lib/mvpLeadStore";
+import LeadSubmissionStatus from "../components/leads/LeadSubmissionStatus";
+import { useLeadSubmission } from "../components/leads/useLeadSubmission";
 
 function downloadTextFile(fileName: string, content: string) {
   const blob = new Blob([content], { type: "text/markdown;charset=utf-8" });
@@ -22,6 +23,7 @@ export default function CampingGuideDetail() {
   const guide = getCampingGuide(slug);
   const [lead, setLead] = useState<GuideAccessLead | null>(null);
   const [alreadyUnlocked, setAlreadyUnlocked] = useState(false);
+  const guideSubmission = useLeadSubmission();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -56,26 +58,12 @@ export default function CampingGuideDetail() {
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
-    const savedLead = saveGuideAccessLead(guide, formData);
-    await submitMvpLead({
-      type: "guide_unlock",
-      sourcePage: `/camping-guides/${guide.slug}`,
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      city: formData.city,
-      status: "guide_checklist_requested",
-      consent: formData.consent,
-      payload: {
-        guideSlug: guide.slug,
-        guideTitle: guide.title,
-        preferredGuide: guide.slug,
-        interest: formData.interest,
-        localGuideLeadId: savedLead.id,
-      },
+    await guideSubmission.run(async () => {
+      const outcome = await saveGuideAccessLead(guide, formData);
+      setLead(outcome.lead);
+      setAlreadyUnlocked(true);
+      return outcome.submission;
     });
-    setLead(savedLead);
-    setAlreadyUnlocked(true);
   };
 
   const downloadGuide = () => {
@@ -263,11 +251,13 @@ export default function CampingGuideDetail() {
 
                 <button
                   type="submit"
+                  disabled={guideSubmission.isSaving}
                   className="w-full flex items-center justify-center gap-2 rounded-xl bg-orange hover:bg-orange-dark h-12 text-sm font-black text-white transition-all shadow-[0_15px_30px_rgba(230,126,34,0.15)]"
                 >
-                    Send checklist
+                  {guideSubmission.isSaving ? "Saving…" : "Send checklist"}
                   <ArrowLeft size={16} className="rotate-180" />
                 </button>
+                <LeadSubmissionStatus state={guideSubmission.state} message={guideSubmission.message} className="text-white/70" />
               </form>
             ) : (
               <div className="text-center py-6 space-y-5">
@@ -279,6 +269,7 @@ export default function CampingGuideDetail() {
                   <p className="mt-1.5 text-xs leading-relaxed text-white/60">
                     Your checklist is ready. CampIn may send guide and community updates for this interest.
                   </p>
+                  <LeadSubmissionStatus state={guideSubmission.state} message={guideSubmission.message} className="text-white/70" />
                 </div>
                 <button
                   type="button"

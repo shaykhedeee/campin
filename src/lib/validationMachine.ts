@@ -1,4 +1,4 @@
-import { submitMvpLead, type MvpLeadType } from "./mvpLeadStore";
+import { submitMvpLead, type LeadSubmissionResult, type MvpLeadType } from "./mvpLeadStore";
 
 export type LeadType = "camper" | "host" | "roadStop" | "newsletter";
 
@@ -79,46 +79,39 @@ export const validationTargets = [
 const leadsStorageKey = "campin.validation.leads.v1";
 const manualMetricsStorageKey = "campin.validation.manualMetrics.v1";
 
-export function saveValidationLead(type: LeadType, data: LeadData, score: number, status?: string) {
-  const lead: ValidationLead = {
-    id: createLeadId(type),
-    type,
-    createdAt: new Date().toISOString(),
+export interface ValidationLeadSubmission {
+  lead: ValidationLead;
+  submission: LeadSubmissionResult;
+}
+
+export async function saveValidationLead(type: LeadType, data: LeadData, score: number, status?: string): Promise<ValidationLeadSubmission> {
+  const leadStatus = status || defaultStatusFor(type, score);
+  const submission = await submitMvpLead({
+    type: mvpTypeFor(type),
+    sourcePage: "/validation",
+    name: stringValue(data.name) || stringValue(data.contactName) || stringValue(data.localContact),
+    email: stringValue(data.email),
+    phone: stringValue(data.phone) || stringValue(data.phoneWhatsapp),
+    city: stringValue(data.city),
     score,
-    status: status || defaultStatusFor(type, score),
+    status: leadStatus,
+    consent: leadConsentFor(type, data),
+    payload: withoutContactFields(data),
+  });
+
+  const lead: ValidationLead = {
+    id: submission.lead.id,
+    type,
+    createdAt: submission.lead.createdAt,
+    score,
+    status: leadStatus,
     data,
   };
 
   const leads = readValidationLeads();
   writeValidationLeads([lead, ...leads]);
   
-  // Auto-trigger simulated automated emails from support@campin.co.in
-  const email = typeof data.email === "string" ? data.email.trim() : "";
-  if (false) {
-    Promise.resolve({ triggerSimulatedEmail: () => {} }).then(({ triggerSimulatedEmail }) => {
-      if (type === "camper") {
-        triggerSimulatedEmail(email, "Camper Welcome #1: Welcome to The Campfire 🏕️");
-      } else if (type === "host") {
-        triggerSimulatedEmail(email, "Host Onboarding #1: We Received Your Host Application!");
-      } else {
-        triggerSimulatedEmail(email, "Live Safety Broadcast: Mudslide & Route Closures (Western Ghats)");
-      }
-    }).catch(() => {});
-  }
-
-  void submitMvpLead({
-    type: mvpTypeFor(type),
-    sourcePage: "/validation",
-    name: typeof data.name === "string" ? data.name : undefined,
-    email: typeof data.email === "string" ? data.email : undefined,
-    phone: typeof data.phone === "string" ? data.phone : typeof data.phoneWhatsapp === "string" ? data.phoneWhatsapp : undefined,
-    city: typeof data.city === "string" ? data.city : undefined,
-    score,
-    status: lead.status,
-    consent: true,
-    payload: data,
-  });
-  return lead;
+  return { lead, submission };
 }
 
 export function readValidationLeads(): ValidationLead[] {
@@ -248,17 +241,6 @@ function writeValidationLeads(leads: ValidationLead[]) {
   window.dispatchEvent(new Event("campin-validation-updated"));
 }
 
-function createLeadId(type: LeadType) {
-  const prefixMap: Record<LeadType, string> = {
-    camper: "CAMP",
-    host: "HOST",
-    roadStop: "STOP",
-    newsletter: "NEWS",
-  };
-
-  return `${prefixMap[type]}-${Date.now().toString(36).toUpperCase()}`;
-}
-
 function defaultStatusFor(type: LeadType, score: number) {
   if (type === "camper") return score >= 8 ? "High Intent" : "New Waitlist";
   if (type === "host") return score >= 8 ? "Candidate Review" : "New Application";
@@ -271,6 +253,22 @@ function mvpTypeFor(type: LeadType): MvpLeadType {
   if (type === "host") return "host_interest";
   if (type === "roadStop") return "road_stop";
   return "newsletter";
+}
+
+function stringValue(value: LeadValue | undefined) {
+  return typeof value === "string" ? value : undefined;
+}
+
+function leadConsentFor(type: LeadType, data: LeadData) {
+  if (type === "newsletter") {
+    return Boolean(data.newsletterConsent && data.acknowledgePrivacy && data.agreeToTerms);
+  }
+  return Boolean(data.acknowledgePrivacy && data.agreeToTerms);
+}
+
+function withoutContactFields(data: LeadData) {
+  const { name: _name, email: _email, phone: _phone, phoneWhatsapp: _phoneWhatsapp, ...payload } = data;
+  return payload;
 }
 
 function csvEscape(value: string) {

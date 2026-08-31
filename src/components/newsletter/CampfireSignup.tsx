@@ -2,6 +2,8 @@ import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle, Flame, Mail, MapPin, Phone, User } from "lucide-react";
 import { saveValidationLead, scoreNewsletterLead, type LeadData, type ValidationLead } from "../../lib/validationMachine";
+import LeadSubmissionStatus from "../leads/LeadSubmissionStatus";
+import { useLeadSubmission } from "../leads/useLeadSubmission";
 
 const segments = [
   { value: "camper", label: "Camper" },
@@ -32,12 +34,16 @@ export default function CampfireSignup() {
     agreeToTerms: false,
   });
   const [submittedLead, setSubmittedLead] = useState<ValidationLead | null>(null);
+  const submission = useLeadSubmission();
 
-  const submit = (event: FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
     const data: LeadData = formData;
-    const lead = saveValidationLead("newsletter", data, scoreNewsletterLead(data), "Subscribed");
-    setSubmittedLead(lead);
+    await submission.run(async () => {
+      const outcome = await saveValidationLead("newsletter", data, scoreNewsletterLead(data), "Subscribed");
+      if (outcome.submission.remote === "synced") setSubmittedLead(outcome.lead);
+      return outcome.submission;
+    });
   };
 
   if (submittedLead) {
@@ -51,11 +57,15 @@ export default function CampfireSignup() {
             <p className="font-bold text-orange">Subscribed</p>
             <h3 className="mt-1 text-xl font-extrabold text-forest">Welcome to The Campfire.</h3>
             <p className="mt-2 text-sm leading-6 text-textgrey">
-              Your guide-drop request is saved. CampIn will send practical camping tips, route notes, and checklist updates.
+              Your guide-drop request is saved. CampIn may send practical camping tips, route notes, and checklist updates when email delivery is configured.
             </p>
+            <LeadSubmissionStatus state={submission.state} message={submission.message} />
             <button
               type="button"
-              onClick={() => setSubmittedLead(null)}
+              onClick={() => {
+                setSubmittedLead(null);
+                submission.reset();
+              }}
               className="mt-5 rounded-lg bg-offwhite px-4 py-2 text-sm font-bold text-forest transition-colors hover:text-orange"
             >
               Add another subscriber
@@ -212,11 +222,13 @@ export default function CampfireSignup() {
 
       <button
         type="submit"
+        disabled={submission.isSaving}
         className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-forest px-6 py-4 font-extrabold text-white transition-colors hover:bg-forest-light"
       >
-        Get the free guide drop
+        {submission.isSaving ? "Saving…" : "Get the free guide drop"}
         <ArrowRight size={18} />
       </button>
+      <LeadSubmissionStatus state={submission.state} message={submission.message} />
     </form>
   );
 }

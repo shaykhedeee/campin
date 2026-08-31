@@ -23,6 +23,8 @@ import {
   type LeadData,
   type ValidationLead,
 } from "../../lib/validationMachine";
+import LeadSubmissionStatus from "../leads/LeadSubmissionStatus";
+import { useLeadSubmission } from "../leads/useLeadSubmission";
 
 const campingTypes = [
   { id: "own-tent", label: "Own tent" },
@@ -68,7 +70,7 @@ interface SuccessStateProps {
 
 function SuccessState({ lead, title, message, onReset }: SuccessStateProps) {
   return (
-    <div className="min-w-0 rounded-2xl border border-forest/10 bg-white p-6 shadow-sm">
+    <div aria-live="polite" className="min-w-0 rounded-2xl border border-forest/10 bg-white p-6 shadow-sm">
       <div className="flex items-start gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-forest text-white">
           <CheckCircle size={24} />
@@ -217,12 +219,16 @@ export function CamperWaitlistForm() {
   const [preferredRegion, setPreferredRegion] = useState<string[]>(["Bangalore"]);
   const [safetyConcern, setSafetyConcern] = useState<string[]>(["Safety", "Permission"]);
   const [submittedLead, setSubmittedLead] = useState<ValidationLead | null>(null);
+  const submission = useLeadSubmission();
 
-  const submit = (event: FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
     const data: LeadData = { ...formData, campingType, preferredRegion, safetyConcern };
-    const lead = saveValidationLead("camper", data, scoreCamperLead(data));
-    setSubmittedLead(lead);
+    await submission.run(async () => {
+      const outcome = await saveValidationLead("camper", data, scoreCamperLead(data));
+      if (outcome.submission.remote === "synced") setSubmittedLead(outcome.lead);
+      return outcome.submission;
+    });
   };
 
   if (submittedLead) {
@@ -231,7 +237,10 @@ export function CamperWaitlistForm() {
         lead={submittedLead}
         title="Camper waitlist lead captured"
         message="Your request is saved. CampIn may send guide drops, route updates, and community access notes."
-        onReset={() => setSubmittedLead(null)}
+        onReset={() => {
+          setSubmittedLead(null);
+          submission.reset();
+        }}
       />
     );
   }
@@ -394,11 +403,13 @@ export function CamperWaitlistForm() {
 
       <button
         type="submit"
+        disabled={submission.isSaving}
         className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange px-6 py-4 font-extrabold text-white transition-colors hover:bg-orange-dark"
       >
-        Capture camper lead
+        {submission.isSaving ? "Saving…" : "Capture camper lead"}
         <ArrowRight size={18} />
       </button>
+      <LeadSubmissionStatus state={submission.state} message={submission.message} />
     </form>
   );
 }
@@ -421,12 +432,16 @@ export function HostInterestForm() {
   });
   const [propertyType, setPropertyType] = useState<string[]>([]);
   const [submittedLead, setSubmittedLead] = useState<ValidationLead | null>(null);
+  const submission = useLeadSubmission();
 
-  const submit = (event: FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
     const data: LeadData = { ...formData, propertyType, expectedPrice: Number(formData.expectedPrice || 0) };
-    const lead = saveValidationLead("host", data, scoreHostLead(data));
-    setSubmittedLead(lead);
+    await submission.run(async () => {
+      const outcome = await saveValidationLead("host", data, scoreHostLead(data));
+      if (outcome.submission.remote === "synced") setSubmittedLead(outcome.lead);
+      return outcome.submission;
+    });
   };
 
   if (submittedLead) {
@@ -435,7 +450,10 @@ export function HostInterestForm() {
         lead={submittedLead}
         title="Host application captured"
         message="Your host application is saved. CampIn will review permission, facilities, access, photos, and guest rules before any handoff."
-        onReset={() => setSubmittedLead(null)}
+        onReset={() => {
+          setSubmittedLead(null);
+          submission.reset();
+        }}
       />
     );
   }
@@ -624,12 +642,13 @@ export function HostInterestForm() {
 
       <button
         type="submit"
-        disabled={propertyType.length === 0}
+        disabled={propertyType.length === 0 || submission.isSaving}
         className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange px-6 py-4 font-extrabold text-white transition-colors hover:bg-orange-dark"
       >
-        Capture host application
+        {submission.isSaving ? "Saving…" : "Capture host application"}
         <ArrowRight size={18} />
       </button>
+      <LeadSubmissionStatus state={submission.state} message={submission.message} />
     </form>
   );
 }
@@ -648,16 +667,20 @@ export function RoadStopLeadForm() {
   });
   const [vehicleAccess, setVehicleAccess] = useState<string[]>(["Car", "SUV"]);
   const [submittedLead, setSubmittedLead] = useState<ValidationLead | null>(null);
+  const submission = useLeadSubmission();
 
-  const submit = (event: FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
     const data: LeadData = {
       ...formData,
       parkingCapacity: Number(formData.parkingCapacity || 0),
       vehicleAccess,
     };
-    const lead = saveValidationLead("roadStop", data, scoreRoadStopLead(data));
-    setSubmittedLead(lead);
+    await submission.run(async () => {
+      const outcome = await saveValidationLead("roadStop", data, scoreRoadStopLead(data));
+      if (outcome.submission.remote === "synced") setSubmittedLead(outcome.lead);
+      return outcome.submission;
+    });
   };
 
   if (submittedLead) {
@@ -666,7 +689,10 @@ export function RoadStopLeadForm() {
         lead={submittedLead}
         title="Road-stop lead captured"
         message="This stop is saved for review. CampIn will not promote overnight use until permission and amenities are checked."
-        onReset={() => setSubmittedLead(null)}
+        onReset={() => {
+          setSubmittedLead(null);
+          submission.reset();
+        }}
       />
     );
   }
@@ -816,11 +842,13 @@ export function RoadStopLeadForm() {
 
       <button
         type="submit"
+        disabled={submission.isSaving}
         className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange px-6 py-4 font-extrabold text-white transition-colors hover:bg-orange-dark"
       >
-        Capture road-stop lead
+        {submission.isSaving ? "Saving…" : "Capture road-stop lead"}
         <ArrowRight size={18} />
       </button>
+      <LeadSubmissionStatus state={submission.state} message={submission.message} />
     </form>
   );
 }

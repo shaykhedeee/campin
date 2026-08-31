@@ -1,47 +1,126 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { normalizeLead, type MvpLeadInput, type MvpLeadType } from "./leadSchema";
 
-export type MvpLeadType = "camper_waitlist" | "guide_unlock" | "host_interest" | "listing_inquiry" | "newsletter" | "road_stop";
+export type { MvpLeadInput, MvpLeadType } from "./leadSchema";
 
-export interface MvpLeadInput {
-  type: MvpLeadType;
-  sourcePage: string;
-  email?: string;
-  phone?: string;
-  name?: string;
-  city?: string;
-  status?: string;
-  score?: number;
-  consent?: boolean;
-  payload: Record<string, unknown>;
-}
+export type LeadTransportStatus = "sent" | "skipped" | "failed";
 
 export interface MvpLeadRecord extends MvpLeadInput {
   id: string;
   createdAt: string;
-  syncStatus: "local_only" | "supabase_synced" | "supabase_failed";
+  syncStatus: "retry_queued" | "supabase_synced";
 }
 
-const localStorageKey = "campin.mvp.leads.v1";
+export interface LeadSubmissionResult {
+  lead: MvpLeadRecord;
+  remote: "synced" | "queued";
+  notification: LeadTransportStatus;
+  metadata: {
+    netlifyForm: LeadTransportStatus;
+    retryReason?: "supabase_not_configured" | "supabase_insert_failed";
+  };
+}
+
+interface SupabaseInsertClient {
+  from(table: string): {
+    insert(values: Record<string, unknown>): PromiseLike<{ error: unknown | null }>;
+  };
+}
+
+export interface LeadSubmissionDependencies {
+  supabase?: SupabaseInsertClient | null;
+  fetcher?: typeof fetch;
+  storage?: Pick<Storage, "getItem" | "setItem"> | null;
+  netlifyFormFallback?: boolean;
+  createId?: (type: MvpLeadType) => string;
+  now?: () => Date;
+}
+
+const retryStorageKey = "campin.mvp.lead-retry-queue.v1";
 let supabaseClient: SupabaseClient | null | undefined;
 
-export async function submitMvpLead(input: MvpLeadInput) {
-  const lead: MvpLeadRecord = {
+export async function submitMvpLead(
+  rawInput: MvpLeadInput,
+  dependencies: LeadSubmissionDependencies = {},
+): Promise<LeadSubmissionResult> {
+  const input = normalizeLead(rawInput);
+  const now = dependencies.now ?? (() => new Date());
+  const createId = dependencies.createId ?? createLeadId;
+  const storage = dependencies.storage === undefined ? browserStorage() : dependencies.storage;
+  const client = dependencies.supabase === undefined ? getSupabaseClient() : dependencies.supabase;
+  const fetcher = dependencies.fetcher ?? (typeof fetch === "function" ? fetch.bind(globalThis) : undefined);
+
+  let lead: MvpLeadRecord = {
     ...input,
-    id: createLeadId(input.type),
-    createdAt: new Date().toISOString(),
-    syncStatus: "local_only",
+    id: createId(input.type),
+    createdAt: now().toISOString(),
+    syncStatus: "retry_queued",
   };
+  let remote: LeadSubmissionResult["remote"] = "queued";
+  let retryReason: LeadSubmissionResult["metadata"]["retryReason"] = "supabase_not_configured";
 
-  saveLocalLead(lead);
+  if (client) {
+    try {
+      const { error } = await client.from("mvp_leads").insert(toSupabaseRow(lead));
+      if (!error) {
+        lead = { ...lead, syncStatus: "supabase_synced" };
+        remote = "synced";
+        retryReason = undefined;
+      } else {
+        retryReason = "supabase_insert_failed";
+      }
+    } catch {
+      retryReason = "supabase_insert_failed";
+    }
+  }
 
-  // Netlify Forms provides the launch-phase email notification path. Supabase
-  // remains the structured review store when its public client is configured.
-  await submitNetlifyForm(lead);
+  if (remote === "queued") queueLeadForRetry(lead, storage);
 
-  const client = getSupabaseClient();
-  if (!client) return lead;
+  const notification = await submitSupportNotification(lead, fetcher);
+  const netlifyForm =
+    notification === "sent" || !isNetlifyFallbackEnabled(dependencies.netlifyFormFallback)
+      ? "skipped"
+      : await submitNetlifyForm(lead, fetcher);
 
-  const { error } = await client.from("mvp_leads").insert({
+  return {
+    lead,
+    remote,
+    notification,
+    metadata: { netlifyForm, ...(retryReason ? { retryReason } : {}) },
+  };
+}
+
+export function readMvpLeads(storage: Pick<Storage, "getItem"> | null = browserStorage()): MvpLeadRecord[] {
+  if (!storage) return [];
+  try {
+    const raw = storage.getItem(retryStorageKey);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? (parsed as MvpLeadRecord[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function exportMvpLeadsToCsv(leads = readMvpLeads()) {
+  const headers = ["id", "type", "sourcePage", "createdAt", "syncStatus", "name", "email", "phone", "city", "status", "score", "consent", "payload"];
+  const rows = leads.map((lead) => [
+    lead.id, lead.type, lead.sourcePage, lead.createdAt, lead.syncStatus, lead.name || "", lead.email || "",
+    lead.phone || "", lead.city || "", lead.status || "", String(lead.score ?? 0), String(Boolean(lead.consent)),
+    JSON.stringify(lead.payload),
+  ]);
+  return [headers, ...rows].map((row) => row.map(csvEscape).join(",")).join("\n");
+}
+
+function getSupabaseClient() {
+  if (supabaseClient !== undefined) return supabaseClient;
+  const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+  supabaseClient = url && anonKey ? createClient(url, anonKey) : null;
+  return supabaseClient;
+}
+
+function toSupabaseRow(lead: MvpLeadRecord) {
+  return {
     id: lead.id,
     lead_type: lead.type,
     source_page: lead.sourcePage,
@@ -51,19 +130,39 @@ export async function submitMvpLead(input: MvpLeadInput) {
     city: lead.city || null,
     status: lead.status || "new",
     score: lead.score ?? 0,
-    consent: Boolean(lead.consent),
+    consent: true,
     payload: lead.payload,
     created_at: lead.createdAt,
-  });
-
-  lead.syncStatus = error ? "supabase_failed" : "supabase_synced";
-  updateLocalLead(lead);
-  return lead;
+  };
 }
 
-async function submitNetlifyForm(lead: MvpLeadRecord) {
-  if (typeof window === "undefined") return;
+async function submitSupportNotification(lead: MvpLeadRecord, fetcher?: typeof fetch): Promise<LeadTransportStatus> {
+  if (!fetcher) return "skipped";
+  try {
+    const response = await fetcher("/.netlify/functions/notify-lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: lead.id,
+        type: lead.type,
+        sourcePage: lead.sourcePage,
+        name: lead.name,
+        email: lead.email,
+        phone: lead.phone,
+        city: lead.city,
+        createdAt: lead.createdAt,
+      }),
+    });
+    const body = (await response.json().catch(() => null)) as { status?: LeadTransportStatus } | null;
+    if (body?.status === "sent" || body?.status === "skipped" || body?.status === "failed") return body.status;
+    return response.ok ? "sent" : "failed";
+  } catch {
+    return "failed";
+  }
+}
 
+async function submitNetlifyForm(lead: MvpLeadRecord, fetcher?: typeof fetch): Promise<LeadTransportStatus> {
+  if (!fetcher || typeof window === "undefined") return "skipped";
   const formData = new URLSearchParams({
     "form-name": `campin-${lead.type}`,
     lead_id: lead.id,
@@ -74,79 +173,40 @@ async function submitNetlifyForm(lead: MvpLeadRecord) {
     phone: lead.phone || "",
     city: lead.city || "",
     status: lead.status || "new",
-    payload: JSON.stringify(lead.payload),
   });
-
   try {
-    const response = await fetch("/", {
+    const response = await fetcher("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: formData.toString(),
     });
-    if (!response.ok) throw new Error(`Netlify Forms returned ${response.status}`);
-  } catch (error) {
-    console.warn("Netlify Forms submission could not be delivered", error);
-  }
-}
-
-export function readMvpLeads() {
-  if (typeof window === "undefined") return [] as MvpLeadRecord[];
-
-  try {
-    const raw = window.localStorage.getItem(localStorageKey);
-    return raw ? (JSON.parse(raw) as MvpLeadRecord[]) : [];
+    return response.ok ? "sent" : "failed";
   } catch {
-    return [];
+    return "failed";
   }
 }
 
-export function exportMvpLeadsToCsv(leads = readMvpLeads()) {
-  const headers = ["id", "type", "sourcePage", "createdAt", "syncStatus", "name", "email", "phone", "city", "status", "score", "consent", "payload"];
-  const rows = leads.map((lead) => [
-    lead.id,
-    lead.type,
-    lead.sourcePage,
-    lead.createdAt,
-    lead.syncStatus,
-    lead.name || "",
-    lead.email || "",
-    lead.phone || "",
-    lead.city || "",
-    lead.status || "",
-    String(lead.score ?? 0),
-    String(Boolean(lead.consent)),
-    JSON.stringify(lead.payload),
-  ]);
-
-  return [headers, ...rows].map((row) => row.map(csvEscape).join(",")).join("\n");
+function queueLeadForRetry(lead: MvpLeadRecord, storage: Pick<Storage, "getItem" | "setItem"> | null) {
+  if (!storage) throw new Error("The lead could not be saved remotely and local retry storage is unavailable.");
+  const current = readMvpLeads(storage);
+  storage.setItem(retryStorageKey, JSON.stringify([lead, ...current.filter((item) => item.id !== lead.id)]));
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("campin-mvp-leads-updated"));
 }
 
-function getSupabaseClient() {
-  if (supabaseClient !== undefined) return supabaseClient;
-
-  const url = (import.meta.env.VITE_SUPABASE_URL as string | undefined) || "https://qhtsapsomxexbnpdmcmc.supabase.co";
-  const anonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined) || "sb_publishable_CGMN2qwandFkWLeM7S_bLA_jqOwmlT9";
-
-  supabaseClient = url && anonKey ? createClient(url, anonKey) : null;
-  return supabaseClient;
+function browserStorage() {
+  return typeof window === "undefined" ? null : window.localStorage;
 }
 
-function saveLocalLead(lead: MvpLeadRecord) {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(localStorageKey, JSON.stringify([lead, ...readMvpLeads()]));
-  window.dispatchEvent(new Event("campin-mvp-leads-updated"));
-}
-
-function updateLocalLead(lead: MvpLeadRecord) {
-  if (typeof window === "undefined") return;
-  const leads = readMvpLeads().map((current) => (current.id === lead.id ? lead : current));
-  window.localStorage.setItem(localStorageKey, JSON.stringify(leads));
-  window.dispatchEvent(new Event("campin-mvp-leads-updated"));
+function isNetlifyFallbackEnabled(override?: boolean) {
+  return override ?? import.meta.env.VITE_ENABLE_NETLIFY_FORM_FALLBACK === "true";
 }
 
 function createLeadId(type: MvpLeadType) {
   const prefix = type.split("_").map((part) => part[0]).join("").toUpperCase();
-  return `${prefix}-${Date.now().toString(36).toUpperCase()}`;
+  const random = typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID().split("-")[0].toUpperCase()
+    : Math.random().toString(36).slice(2, 10).toUpperCase();
+  return `${prefix}-${Date.now().toString(36).toUpperCase()}-${random}`;
 }
 
 function csvEscape(value: string) {
