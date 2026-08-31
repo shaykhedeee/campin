@@ -51,3 +51,14 @@ Tests       5 passed (5)
 ## Commit
 
 Implementation commit: `1b5a2be` (`refactor: simplify the CampIn homepage journey`).
+
+## Review fix round 1: public status vocabulary
+
+- Replaced the invented `review candidate / reviewed / host-confirmed` summary in `TrustProcess` with the exact public stages: `Community suggested`, `Awaiting host confirmation`, `Source reviewed`, `Date confirmed`, and `Calendar synced`.
+- Clarified that the public stage describes evidence progress, while host-confirmed details are displayed separately only where they apply; unknowns remain visible.
+- Added a focused regression that locks the five labels in order and the separate host-confirmation explanation.
+- RED: focused homepage suite failed 1 of 6 tests because the canonical stage list was absent.
+- GREEN: focused homepage suite passed 6 of 6 tests; final full suite passed 16 of 16 tests across 5 files.
+- Client build passed with 1,919 modules and admin build passed with 1,887 modules; `git diff --check` passed.
+
+Review-fix implementation commit: `8bf8ed2` (`fix: align homepage trust stages`).
