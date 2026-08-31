@@ -92,6 +92,8 @@ export interface Listing {
   /** Only true when the image is supplied or explicitly licensed by the property/source. */
   imageVerified?: boolean;
   gallery: string[];
+  /** Metadata aligned by index with gallery so editorial images retain their own attribution and alt text. */
+  galleryAssets?: MediaAsset[];
   rating: number;
   reviews: number;
   hostName: string;
@@ -147,6 +149,7 @@ const imageSet = {
   hills: "hills",
   water: "water",
   forest: "forest",
+  farm: "farm",
   desert: "desert",
   road: "road",
   beach: "water",
@@ -165,11 +168,15 @@ const defaultConfidence: ListingClaimConfidence = {
 function makeListing(input: Omit<Listing, "image" | "gallery" | "rating" | "reviews" | "contactPolicy" | "hostContactMode"> & { imageKey: keyof typeof imageSet }): Listing {
   const imageAsset = getMediaAsset(imageSet[input.imageKey]);
   const image = imageAsset.src;
+  const galleryAssets = [imageAsset, getMediaAsset(imageSet.road), getMediaAsset(imageSet.forest), getMediaAsset(imageSet.farm)].filter(
+    (asset, index) => index === 0 || asset.src !== imageAsset.src,
+  ).slice(0, 3);
   return {
     ...input,
     image,
     imageAsset,
-    gallery: [image, getMediaAsset(imageSet.road).src, getMediaAsset(imageSet.forest).src],
+    gallery: galleryAssets.map((asset) => asset.src),
+    galleryAssets,
     rating: input.verificationStage === "reviewed" ? 4.8 : 0,
     reviews: 0,
     contactPolicy: "gated_relay",
@@ -702,7 +709,15 @@ const getPersistedListings = (): Listing[] => {
     const stored = window.localStorage.getItem("campin.listings.v2");
     if (stored) {
       try {
-        return JSON.parse(stored);
+        const parsed = JSON.parse(stored);
+        if (
+          Array.isArray(parsed) &&
+          parsed.every(
+            (item) => item?.imageAsset && item?.galleryAssets?.length >= 3 && new Set(item.galleryAssets.map((asset: MediaAsset) => asset.src)).size >= 3,
+          )
+        ) {
+          return parsed;
+        }
       } catch (e) {
         console.error("Failed to parse listings from localStorage", e);
       }

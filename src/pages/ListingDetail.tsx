@@ -257,10 +257,18 @@ export default function ListingDetail() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-            {listing.gallery.slice(0, 3).map((image, index) => (
+            {listing.gallery.slice(0, 3).map((image, index) => {
+              const galleryAsset = listing.galleryAssets?.[index];
+              return (
               <div key={`${image}-${index}`} className="relative min-h-32 overflow-hidden rounded-lg bg-white">
-                <img src={image} alt={listing.imageAsset?.alt ?? `${listing.title} visual ${index + 1}`} className="h-full min-h-32 w-full object-cover" />
-                {listing.imageAsset?.usage === "editorial-region" && (
+                <img
+                  src={image}
+                  alt={galleryAsset?.alt ?? `${listing.title} visual ${index + 1}`}
+                  srcSet={galleryAsset ? mediaSrcSet(galleryAsset) : undefined}
+                  sizes="(min-width: 1024px) 38vw, (min-width: 640px) 31vw, 100vw"
+                  className="h-full min-h-32 w-full object-cover"
+                />
+                {galleryAsset?.usage === "editorial-region" && (
                   <div className="absolute right-3 top-3 rounded-lg bg-white/90 px-2.5 py-1 text-xs font-bold text-forest">
                     Regional editorial image
                   </div>
@@ -269,7 +277,8 @@ export default function ListingDetail() {
                   Source visual {index + 1}
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 

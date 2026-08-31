@@ -60,16 +60,19 @@ const guideCards = [
     title: "Vanlife Guide to South India",
     body: "Routes, seasons, stays and local tips.",
     image: mediaRegistry.water.src,
+    imageAsset: mediaRegistry.water,
   },
   {
     title: "Backyard Camping 101",
     body: "Gear, etiquette, safety and more.",
     image: mediaRegistry.tent.src,
+    imageAsset: mediaRegistry.tent,
   },
   {
     title: "Monsoon Camping in India",
     body: "Where to go, what to pack.",
     image: mediaRegistry.hills.src,
+    imageAsset: mediaRegistry.hills,
   },
 ];
 
@@ -632,7 +635,13 @@ export default function Home() {
                   className="group overflow-hidden rounded-xl border border-[#173525]/10 bg-white shadow-[0_10px_28px_rgba(23,53,37,0.08)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_rgba(23,53,37,0.16)]"
                 >
                   <div className="relative h-40 overflow-hidden sm:h-44">
-                    <img src={guide.image} alt={guide.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                    <img
+                      src={guide.image}
+                      alt={guide.imageAsset.alt}
+                      srcSet={mediaSrcSet(guide.imageAsset)}
+                      sizes="(min-width: 640px) 18vw, 84vw"
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/76 via-black/12 to-transparent" />
                     <span className="absolute bottom-3 left-3 rounded-full bg-orange px-3 py-1 text-[10px] font-black uppercase tracking-wide text-white">
                       CampIn guide

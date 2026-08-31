@@ -23,4 +23,5 @@ it("keeps active homepage imagery local and labels editorial featured cards", ()
 
   expect(document.querySelectorAll('img[src^="http"]')).toHaveLength(0);
   expect(screen.getAllByText("Regional editorial image").length).toBeGreaterThanOrEqual(3);
+  expect(document.querySelectorAll('img[srcset*="900w"][srcset*="1600w"][sizes="(min-width: 640px) 18vw, 84vw"]').length).toBeGreaterThanOrEqual(3);
 });
