@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   Bath,
@@ -29,6 +29,7 @@ import {
   isListingPubliclyPublishable,
 } from "../data/listings";
 import { submitMvpLead } from "../lib/mvpLeadStore";
+import { parseExploreCategory, type ExploreCategory } from "../lib/exploreFilters";
 import SeoFaq from "../components/SeoFaq";
 
 const exploreFaqs = [
@@ -75,6 +76,27 @@ function getTypeFromSearch(search: string): ActiveType {
 
 function uniqueSorted(values: string[]) {
   return Array.from(new Set(values.filter(Boolean))).sort((a, b) => a.localeCompare(b));
+}
+
+function matchesExploreCategory(listing: Listing, category: ExploreCategory | null) {
+  if (!category) return true;
+
+  const searchableListingText = [listing.title, listing.typeLabel, listing.description, ...listing.tags].join(" ").toLowerCase();
+
+  switch (category) {
+    case "bring-your-own-tent":
+      return listing.byotFriendly;
+    case "pre-pitched-glamping":
+      return listing.inventory.some((unit) => unit.unitType === "pre_pitched_tent") || /pre-pitched|glamping/.test(searchableListingText);
+    case "farms-estates":
+      return listing.type === "farm" || /farm|estate/.test(searchableListingText);
+    case "mountains-forests":
+      return listing.type === "forest" || /mountain|forest|high altitude/.test(searchableListingText);
+    case "waterside":
+      return /river|riverside|waterside|lake|waterfront/.test(searchableListingText);
+    case "road-trip-stops":
+      return listing.roadStop;
+  }
 }
 
 function AmenityIcon({ name }: { name: string }) {
@@ -153,6 +175,7 @@ function ListingCard({ listing }: { listing: Listing }) {
 
 export default function Explore() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeType, setActiveType] = useState<ActiveType>(() => getTypeFromSearch(location.search));
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
@@ -172,6 +195,7 @@ export default function Explore() {
   const [alertEmail, setAlertEmail] = useState("");
   const [alertStatus, setAlertStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [activeListings, setActiveListings] = useState(() => getListings().filter(isListingPubliclyPublishable));
+  const activeCategory = parseExploreCategory(location.search);
 
   useEffect(() => {
     const handleSync = () => setActiveListings(getListings().filter(isListingPubliclyPublishable));
@@ -230,6 +254,7 @@ export default function Explore() {
           .toLowerCase()
           .includes(normalizedQuery);
       const matchesType = activeType === "all" || listing.type === activeType;
+      const matchesCategory = matchesExploreCategory(listing, activeCategory);
       const matchesAmenities =
         selectedAmenities.length === 0 ||
         selectedAmenities.every((filter) =>
@@ -244,9 +269,9 @@ export default function Explore() {
       const matchesState = stateFilter === "all" || listing.state === stateFilter;
       const matchesRegion = regionFilter === "all" || listing.region === regionFilter;
       const matchesLocation = locationFilter === "all" || listing.location === locationFilter;
-      return matchesSearch && matchesType && matchesAmenities && matchesVehicle && matchesStage && matchesState && matchesRegion && matchesLocation;
+      return matchesSearch && matchesType && matchesCategory && matchesAmenities && matchesVehicle && matchesStage && matchesState && matchesRegion && matchesLocation;
     });
-  }, [activeType, locationFilter, regionFilter, searchQuery, selectedAmenities, stageFilter, stateFilter, vehicleFilter, activeListings]);
+  }, [activeCategory, activeType, locationFilter, regionFilter, searchQuery, selectedAmenities, stageFilter, stateFilter, vehicleFilter, activeListings]);
 
   const resetFilters = () => {
     setSearchQuery("");
@@ -260,6 +285,12 @@ export default function Explore() {
   };
 
   const reviewedCount = activeListings.filter((listing) => listing.verificationStage === "reviewed").length;
+
+  const clearActiveCategory = () => {
+    const params = new URLSearchParams(location.search);
+    params.delete("category");
+    navigate({ pathname: location.pathname, search: params.toString() ? `?${params.toString()}` : "", hash: location.hash });
+  };
 
   return (
     <div className="min-h-screen bg-offwhite pt-28 pb-20">
@@ -471,6 +502,20 @@ export default function Explore() {
             <h2 className="mt-1 text-2xl font-extrabold text-forest">
               {filteredListings.length} trust-scoped {filteredListings.length === 1 ? "place" : "places"}
             </h2>
+            {activeCategory && (
+              <div className="mt-3 flex flex-wrap items-center gap-2" aria-live="polite">
+                <span className="rounded-full bg-forest px-3 py-1.5 text-sm font-bold text-white">
+                  Category: {activeCategory.replaceAll("-", " ")}
+                </span>
+                <button
+                  type="button"
+                  onClick={clearActiveCategory}
+                  className="inline-flex min-h-11 items-center rounded-lg border border-forest/20 bg-white px-3 text-sm font-bold text-forest transition-colors hover:text-orange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                >
+                  Clear category
+                </button>
+              </div>
+            )}
           </div>
           <button
             type="button"
