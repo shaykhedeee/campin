@@ -103,3 +103,14 @@ No accepted standalone concept existed for this scoped extension, so fidelity wa
 
 - Category media is intentionally temporary and reused from existing repository imagery, per the task constraint. The dedicated media task should replace these placeholders with the final category-specific assets without changing the current interaction or data contract.
 - The test intentionally covers the explicit contract requested by the brief (six links and the own-tent href); the responsive visual behavior was verified in-browser rather than coupled to Tailwind class assertions.
+
+## Review fix: focus visibility and accent-text contrast
+
+- Replaced `premium-focus` on the new light-surface links with `light-surface-focus`, which uses a solid `3px` `#173525` outline and a `4px` offset. The forest outline has a contrast ratio of `12.84:1` against `#fffaf0` and `11.13:1` against `#f0eadc`, comfortably exceeding the `3:1` focus-indicator threshold.
+- Changed the always-visible 12px category eyebrow and the category/audience hover and keyboard-focus title states from `#E67E22` to dark orange `#A94F08`. The accessible orange has a contrast ratio of `5.30:1` against `#fffaf0` and `4.60:1` against `#f0eadc`, exceeding `4.5:1` for normal text on both new section backgrounds.
+- Applied the same `#A94F08` to interactive arrow borders/backgrounds on hover and keyboard focus; white arrow glyphs retain strong contrast while the original brighter orange remains as a decorative accent on the definition rule.
+- The approved copy, six-category data contract, shareable hrefs, media assignments, layout, and responsive behavior are unchanged.
+- Review-fix focused test: 1 file passed, 1 test passed in 3.00s.
+- Review-fix client production build: 1,848 modules transformed; completed in 6.08s.
+- Review-fix admin production build: 1,818 modules transformed; completed in 6.03s.
+- Review-fix `git diff --check`: passed with no whitespace errors before commit.

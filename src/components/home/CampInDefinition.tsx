@@ -41,21 +41,21 @@ export default function CampInDefinition() {
               <Link
                 key={path.title}
                 to={path.href}
-                className={`premium-focus group flex min-h-28 items-center justify-between gap-5 py-6 transition-colors hover:text-orange lg:px-7 ${
+                className={`light-surface-focus group flex min-h-28 items-center justify-between gap-5 py-6 transition-colors lg:px-7 ${
                   index === 0
                     ? "border-b border-[#173525]/18 lg:border-b-0 lg:border-r lg:pl-0"
                     : "lg:pr-0"
                 }`}
               >
                 <span>
-                  <span className="block text-base font-black tracking-[-0.02em] text-[#173525] transition-colors group-hover:text-orange">
+                  <span className="block text-base font-black tracking-[-0.02em] text-[#173525] transition-colors group-hover:text-[#A94F08] group-focus-visible:text-[#A94F08]">
                     {path.title}
                   </span>
                   <span className="mt-1.5 block text-sm font-medium leading-6 text-[#5f5f5f]">
                     {path.description}
                   </span>
                 </span>
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#173525]/30 text-[#173525] transition duration-300 group-hover:border-orange group-hover:bg-orange group-hover:text-white">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#173525]/30 text-[#173525] transition duration-300 group-hover:border-[#A94F08] group-hover:bg-[#A94F08] group-hover:text-white group-focus-visible:border-[#A94F08] group-focus-visible:bg-[#A94F08] group-focus-visible:text-white">
                   <ArrowRight aria-hidden="true" focusable="false" size={18} strokeWidth={2.25} />
                 </span>
               </Link>

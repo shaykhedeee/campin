@@ -21,7 +21,7 @@ export default function CategoryExplorer() {
       <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-10">
         <div className="flex max-w-4xl items-end justify-between gap-8">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-orange">Find your kind of outdoors</p>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#A94F08]">Find your kind of outdoors</p>
             <h2
               id="category-explorer-heading"
               className="mt-3 font-serif text-4xl font-black tracking-[-0.045em] text-[#173525] sm:text-6xl"
@@ -39,7 +39,7 @@ export default function CategoryExplorer() {
             <Link
               key={category.id}
               to={categoryHref(category.id)}
-              className="premium-focus group min-w-[82%] snap-start sm:min-w-[46%] lg:min-w-0"
+              className="light-surface-focus group min-w-[82%] snap-start sm:min-w-[46%] lg:min-w-0"
             >
               <article>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-[#dce9e1]">
@@ -54,14 +54,14 @@ export default function CategoryExplorer() {
 
                 <div className="flex min-h-36 items-start justify-between gap-5 border-b border-[#173525]/18 py-5">
                   <div>
-                    <h3 className="font-serif text-2xl font-bold leading-tight tracking-[-0.025em] text-[#173525] transition-colors group-hover:text-orange sm:text-3xl">
+                    <h3 className="font-serif text-2xl font-bold leading-tight tracking-[-0.025em] text-[#173525] transition-colors group-hover:text-[#A94F08] group-focus-visible:text-[#A94F08] sm:text-3xl">
                       {category.title}
                     </h3>
                     <p className="mt-2 max-w-sm text-sm font-medium leading-6 text-[#5f5f5f]">
                       {category.description}
                     </p>
                   </div>
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#173525]/30 text-[#173525] transition duration-300 group-hover:border-orange group-hover:bg-orange group-hover:text-white">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#173525]/30 text-[#173525] transition duration-300 group-hover:border-[#A94F08] group-hover:bg-[#A94F08] group-hover:text-white group-focus-visible:border-[#A94F08] group-focus-visible:bg-[#A94F08] group-focus-visible:text-white">
                     <ArrowUpRight aria-hidden="true" focusable="false" size={18} strokeWidth={2.25} />
                   </span>
                 </div>

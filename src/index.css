@@ -134,6 +134,15 @@ textarea {
   box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.32), 0 0 0 6px rgba(255, 250, 240, 0.72);
 }
 
+.light-surface-focus {
+  outline: none;
+}
+
+.light-surface-focus:focus-visible {
+  outline: 3px solid #173525;
+  outline-offset: 4px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
