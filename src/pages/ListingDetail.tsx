@@ -26,6 +26,7 @@ import {
   Zap,
 } from "lucide-react";
 import { getListings, type Listing, type VerificationStage } from "../data/listings";
+import { mediaSrcSet } from "../data/mediaRegistry";
 import { submitMvpLead } from "../lib/mvpLeadStore";
 
 const requestStorageKey = "campin.listing.requests.v1";
@@ -215,8 +216,19 @@ export default function ListingDetail() {
 
         <section className="grid items-start gap-4 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="relative h-[440px] overflow-hidden rounded-lg bg-forest lg:h-[520px]">
-            <img src={listing.image} alt={listing.title} className="h-full w-full object-cover" />
+            <img
+              src={listing.image}
+              alt={listing.imageAsset?.alt ?? listing.title}
+              srcSet={listing.imageAsset ? mediaSrcSet(listing.imageAsset) : undefined}
+              sizes="(min-width: 1024px) 60vw, 100vw"
+              className="h-full w-full object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-forest/90 via-forest/20 to-transparent" />
+            {listing.imageAsset?.usage === "editorial-region" && (
+              <div className="absolute right-4 top-4 rounded-lg bg-white/90 px-3 py-1.5 text-xs font-bold text-forest shadow-sm">
+                Regional editorial image
+              </div>
+            )}
             <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
               <div className="mb-4 flex flex-wrap gap-2">
                 <span className="inline-flex items-center gap-2 rounded-lg bg-orange px-3 py-1.5 text-sm font-bold text-white">
@@ -247,7 +259,12 @@ export default function ListingDetail() {
           <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
             {listing.gallery.slice(0, 3).map((image, index) => (
               <div key={`${image}-${index}`} className="relative min-h-32 overflow-hidden rounded-lg bg-white">
-                <img src={image} alt={`${listing.title} visual proof ${index + 1}`} className="h-full min-h-32 w-full object-cover" />
+                <img src={image} alt={listing.imageAsset?.alt ?? `${listing.title} visual ${index + 1}`} className="h-full min-h-32 w-full object-cover" />
+                {listing.imageAsset?.usage === "editorial-region" && (
+                  <div className="absolute right-3 top-3 rounded-lg bg-white/90 px-2.5 py-1 text-xs font-bold text-forest">
+                    Regional editorial image
+                  </div>
+                )}
                 <div className="absolute left-3 top-3 rounded-lg bg-white/90 px-2.5 py-1 text-xs font-bold text-forest">
                   Source visual {index + 1}
                 </div>

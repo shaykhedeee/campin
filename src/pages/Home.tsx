@@ -15,6 +15,7 @@ import CampInIcon from "../components/icons/CampInIcon";
 import { getBlogPosts } from "../data/blogPosts";
 import CampInDefinition from "../components/home/CampInDefinition";
 import CategoryExplorer from "../components/home/CategoryExplorer";
+import { mediaRegistry, mediaSrcSet } from "../data/mediaRegistry";
 
 const heroChecks = [
   { label: "Permission first", iconName: "permission", position: "left-[22%] top-[12%]" },
@@ -58,17 +59,17 @@ const guideCards = [
   {
     title: "Vanlife Guide to South India",
     body: "Routes, seasons, stays and local tips.",
-    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=700&q=80",
+    image: mediaRegistry.water.src,
   },
   {
     title: "Backyard Camping 101",
     body: "Gear, etiquette, safety and more.",
-    image: "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=700&q=80",
+    image: mediaRegistry.tent.src,
   },
   {
     title: "Monsoon Camping in India",
     body: "Where to go, what to pack.",
-    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=700&q=80",
+    image: mediaRegistry.hills.src,
   },
 ];
 
@@ -199,20 +200,26 @@ export default function Home() {
             style={{ clipPath: "polygon(5% 0, 100% 0, 100% 100%, 0 100%, 2% 78%, 0 55%, 3% 30%, 0 12%)", borderTopLeftRadius: 46 }}
           >
             <img
-              src="/images/campin-hero-wilderness.jpg"
-              alt="Dramatic wilderness campsite with glowing tent and mountain view"
+              src={mediaRegistry.hills.src}
+              srcSet={mediaSrcSet(mediaRegistry.hills)}
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              alt={mediaRegistry.hills.alt}
               className="animate-image-breathe absolute left-0 top-0 h-[72%] w-full object-cover object-[center_top] sm:h-[66%] sm:object-center"
             />
             <div className="absolute left-0 top-0 h-[72%] w-full bg-gradient-to-br from-transparent via-transparent to-[#0f2b1d]/12 sm:h-[66%]" />
             <div className="absolute inset-x-0 bottom-0 grid h-[28%] grid-cols-2 gap-px bg-white/20 sm:h-[34%]">
               <img
-                src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&q=80"
-                alt="Quiet hammock campsite"
+                src={mediaRegistry.forest.src}
+                srcSet={mediaSrcSet(mediaRegistry.forest)}
+                sizes="50vw"
+                alt={mediaRegistry.forest.alt}
                 className="h-full w-full object-cover"
               />
               <img
-                src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=900&q=80"
-                alt="Tent under evening sky"
+                src={mediaRegistry.tent.src}
+                srcSet={mediaSrcSet(mediaRegistry.tent)}
+                sizes="50vw"
+                alt={mediaRegistry.tent.alt}
                 className="h-full w-full object-cover"
               />
             </div>
@@ -472,7 +479,8 @@ export default function Home() {
                 price: "₹1,500 / night",
                 type: "Working Coffee Estate",
                 tag: "BYOT + Campervan Fit",
-                image: "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=900&q=80",
+                image: mediaRegistry.farm.src,
+                imageAlt: mediaRegistry.farm.alt,
                 bullets: ["Private Restroom", "Secure Fencing", "Estate Coffee"],
               },
               {
@@ -482,7 +490,8 @@ export default function Home() {
                 price: "₹1,200 / night",
                 type: "High-Altitude Suspension",
                 tag: "Valley Sunset View",
-                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80",
+                image: mediaRegistry.hills.src,
+                imageAlt: mediaRegistry.hills.alt,
                 bullets: ["Western Restroom", "Living Root Bridge Trail", "Solo-Safe"],
               },
               {
@@ -492,7 +501,8 @@ export default function Home() {
                 price: "₹1,100 / night",
                 type: "Ancient Cedar Riverside",
                 tag: "Digital Detox Pitches",
-                image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&q=80",
+                image: mediaRegistry.forest.src,
+                imageAlt: mediaRegistry.forest.alt,
                 bullets: ["Eco-Washroom", "Tirthan Stream Water", "Zero Engine Noise"],
               },
             ].map((camp) => (
@@ -504,11 +514,13 @@ export default function Home() {
                 <div className="relative aspect-[4/3] w-full overflow-hidden">
                   <img
                     src={camp.image}
-                    alt={camp.title}
+                    alt={camp.imageAlt}
+                    srcSet={mediaSrcSet({ ...mediaRegistry.farm, src: camp.image })}
+                    sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute top-4 left-4 rounded-full bg-forest px-3.5 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-sm border border-white/10">
-                    Reviewed Site
+                    Regional editorial image
                   </div>
                   <div className="absolute bottom-4 left-4 rounded-full bg-white/90 backdrop-blur px-3 py-1 text-[10px] font-black uppercase tracking-wider text-forest shadow-sm">
                     {camp.tag}
@@ -789,8 +801,10 @@ export default function Home() {
       {/* Call to action section */}
       <section className="relative overflow-hidden bg-[#0f2b1d] px-4 py-16 text-center text-white sm:px-6 lg:px-8">
         <img
-          src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1800&q=80"
-          alt="Warm outdoor landscape"
+          src={mediaRegistry.desert.src}
+          srcSet={mediaSrcSet(mediaRegistry.desert)}
+          sizes="100vw"
+          alt={mediaRegistry.desert.alt}
           className="absolute inset-0 h-full w-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-[#0f2b1d]/56" />

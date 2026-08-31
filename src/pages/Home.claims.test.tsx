@@ -13,3 +13,14 @@ it("does not promise instant booking or unsupported universal verification", () 
   expect(screen.queryByText(/book instantly/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/every campsite is verified/i)).not.toBeInTheDocument();
 });
+
+it("keeps active homepage imagery local and labels editorial featured cards", () => {
+  render(
+    <MemoryRouter>
+      <Home />
+    </MemoryRouter>,
+  );
+
+  expect(document.querySelectorAll('img[src^="http"]')).toHaveLength(0);
+  expect(screen.getAllByText("Regional editorial image").length).toBeGreaterThanOrEqual(3);
+});

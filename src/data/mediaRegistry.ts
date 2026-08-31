@@ -53,7 +53,7 @@ export const mediaRegistry = {
     subject: "Jibhi waterfall bridge and forest stream",
     alt: "Green footbridge over a forest stream near Jibhi waterfall",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Bridge_at_Jibhi_Waterfall.jpg",
-    author: "Ciridae",
+    author: "Rohan Pinto",
     license: "CC BY-SA 4.0",
     usage: "editorial-region",
   },
@@ -103,4 +103,9 @@ export type MediaKey = keyof typeof mediaRegistry;
 
 export function getMediaAsset(key: MediaKey): MediaAsset {
   return mediaRegistry[key];
+}
+
+export function mediaSrcSet(asset: MediaAsset): string {
+  const compact = asset.src.replace("-1600.webp", "-900.webp");
+  return `${compact} 900w, ${asset.src} 1600w`;
 }

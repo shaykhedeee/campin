@@ -31,6 +31,7 @@ import {
 import { submitMvpLead } from "../lib/mvpLeadStore";
 import { parseExploreCategory, type ExploreCategory } from "../lib/exploreFilters";
 import SeoFaq from "../components/SeoFaq";
+import { mediaSrcSet } from "../data/mediaRegistry";
 
 const exploreFaqs = [
   { question: "What can I find on CampIn?", answer: "Explore camping and outdoor stays across India, including tent pitches, BYOT sites, glamping, farm stays, motorhome-friendly places, and road-stop leads when details are confirmed." },
@@ -113,7 +114,7 @@ function stageClass(stage: VerificationStage) {
   return "bg-white text-forest";
 }
 
-function ListingCard({ listing }: { listing: Listing }) {
+export function ListingCard({ listing }: { listing: Listing }) {
   return (
     <Link
       to={`/listing/${listing.id}`}
@@ -122,9 +123,16 @@ function ListingCard({ listing }: { listing: Listing }) {
       <div className="relative aspect-[4/3] overflow-hidden">
         <img
           src={listing.image}
-          alt={listing.title}
+          alt={listing.imageAsset?.alt ?? listing.title}
+          srcSet={listing.imageAsset ? mediaSrcSet(listing.imageAsset) : undefined}
+          sizes="(min-width: 1024px) 31vw, (min-width: 640px) 46vw, 92vw"
           className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
         />
+        {listing.imageAsset?.usage === "editorial-region" && (
+          <div className="absolute right-3 top-3 rounded-lg bg-white/90 px-3 py-1 text-xs font-bold text-forest shadow-sm">
+            Regional editorial image
+          </div>
+        )}
         <div className={`absolute left-3 top-3 rounded-lg px-3 py-1 text-xs font-bold shadow-sm ${stageClass(listing.verificationStage)}`}>
           {stageLabels[listing.verificationStage]}
         </div>

@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeCategories } from "../../data/homeCategories";
-import { mediaRegistry } from "../../data/mediaRegistry";
+import { mediaRegistry, mediaSrcSet } from "../../data/mediaRegistry";
 import { categoryHref } from "../../lib/exploreFilters";
 
 export default function CategoryExplorer() {
@@ -37,6 +37,8 @@ export default function CategoryExplorer() {
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-[#dce9e1]">
                   <img
                     src={mediaRegistry[category.mediaKey].src}
+                    srcSet={mediaSrcSet(mediaRegistry[category.mediaKey])}
+                    sizes="(min-width: 1024px) 31vw, 82vw"
                     alt={category.alt}
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
                     loading="lazy"

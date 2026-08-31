@@ -14,7 +14,7 @@ The ledger records the exact file pages and license terms. Sources are Wikimedia
 
 - Kerala backwaters houseboat — Vyacheslav Argenberg, CC BY 4.0.
 - Nohkalikai Falls of Cherrapunji in summer — Jyotishkardey, CC BY-SA 4.0.
-- Bridge at Jibhi Waterfall — Ciridae, CC BY-SA 4.0.
+- Bridge at Jibhi Waterfall — Rohan Pinto, CC BY-SA 4.0 (the Commons page uploader is Ciridae).
 - Kerala tea plantations — Karin Šubrtová, CC BY-SA 4.0.
 - The Great Indian Thar Desert — Kanthi Kiran, CC BY-SA 4.0.
 - Chandra Taal tent landscape — Adarsh Patel, CC BY-SA 4.0.
@@ -67,3 +67,12 @@ Implementation commit: `a872fb9`. The report was recorded in the follow-up docum
 ## Short contract
 
 `mediaRegistry` is a typed record of local, attributed regional imagery. Use `mediaRegistry[key].src` for discovery surfaces and inspect `imageAsset.usage` before treating a listing image as property-authorized. All current assets are `editorial-region`; none can upgrade a listing's verification or availability state.
+
+## Review fixes
+
+- Corrected the Jibhi author attribution to Rohan Pinto in the registry and ledger; Ciridae is retained only as the Commons uploader context.
+- Explore listing cards and ListingDetail now use the editorial asset alt text, show `Regional editorial image`, and carry responsive 900w/1600w `srcSet` values. Gallery visuals receive the same disclosure and are not described as visual proof.
+- Removed active homepage Unsplash hotlinks. Hero, guide, featured, category, and CTA imagery now resolve through local `mediaRegistry` assets. Featured cards use editorial status copy instead of a misleading Reviewed Site badge.
+- Added UI regression coverage for local homepage sources, editorial featured cards, Explore listing cards, ListingDetail disclosure, and responsive source selection.
+
+Review-fix focused tests: 4 files passed, 6 tests passed. Final full suite: 5 files passed, 11 tests passed (Vitest 4.1.11, 2.86s). Final client build: 1,849 modules transformed; `dist/index.html` built successfully in 4.15s. Final admin build: 1,819 modules transformed; `dist-admin/admin.html` built successfully in 3.75s. `git diff --check` passed after the review fixes.
