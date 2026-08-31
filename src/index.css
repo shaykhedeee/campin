@@ -74,26 +74,6 @@ textarea {
   animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes float-soft {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(0, -8px, 0);
-  }
-}
-
-@keyframes image-breathe {
-  0%,
-  100% {
-    transform: scale(1.01);
-  }
-  50% {
-    transform: scale(1.055);
-  }
-}
-
 @keyframes route-dash {
   to {
     stroke-dashoffset: -44;
@@ -110,20 +90,19 @@ textarea {
   }
 }
 
-.animate-float-soft {
-  animation: float-soft 7s cubic-bezier(0.37, 0, 0.63, 1) infinite;
-}
-
-.animate-image-breathe {
-  animation: image-breathe 16s ease-in-out infinite;
-}
-
 .animate-topo-drift {
-  animation: topo-drift 32s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation: topo-drift 36s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
-.route-dash path {
-  animation: route-dash 5s linear infinite;
+.route-dash .campin-route-path {
+  animation: route-dash 6s linear infinite;
+}
+
+[data-campin-vector] path,
+[data-campin-vector] circle,
+[data-campin-vector] line,
+[data-campin-vector] polyline {
+  vector-effect: non-scaling-stroke;
 }
 
 .premium-focus {

@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import CampInIcon from "../icons/CampInIcon";
+import {
+  MapPinMark,
+  PermissionCheckpointMark,
+  RouteMark,
+} from "../vectors/CampInVectors";
 
 const publicListingStages = [
   "Community suggested",
@@ -15,19 +19,19 @@ const trustStages = [
     number: "01",
     title: "Permission and host context",
     body: "We record who manages the land, the permission shared with CampIn, and the local rules campers need to know.",
-    iconName: "permission",
+    Mark: PermissionCheckpointMark,
   },
   {
     number: "02",
     title: "Access and essentials",
     body: "We capture arrival notes and host-reported details such as washrooms, water, road access, and stay limits.",
-    iconName: "route",
+    Mark: RouteMark,
   },
   {
     number: "03",
     title: "Status and unknowns",
     body: "Public listing stages show how far CampIn's evidence has progressed. Host-confirmed details are shown separately where they apply, alongside anything still unknown.",
-    iconName: "exact-pin",
+    Mark: MapPinMark,
   },
 ] as const;
 
@@ -55,18 +59,18 @@ export default function TrustProcess() {
         </div>
 
         <ol className="grid lg:grid-cols-3">
-          {trustStages.map((stage) => (
+          {trustStages.map(({ number, title, body, Mark }) => (
             <li
-              key={stage.number}
+              key={number}
               className="grid grid-cols-[auto_1fr] gap-4 border-b border-[#173525]/15 py-7 last:border-b-0 lg:block lg:border-b-0 lg:border-r lg:px-8 lg:py-10 lg:first:pl-0 lg:last:border-r-0 lg:last:pr-0"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#173525]/20 text-[#173525]">
-                <CampInIcon name={stage.iconName} className="h-5 w-5" />
+                <Mark className="h-5 w-5" />
               </div>
               <div className="lg:mt-7">
-                <p className="text-xs font-black tracking-[0.16em] text-[#A94F08]">{stage.number}</p>
-                <h3 className="mt-2 font-serif text-2xl font-bold tracking-[-0.025em] text-[#173525]">{stage.title}</h3>
-                <p className="mt-3 max-w-sm text-sm font-medium leading-7 text-[#4f574f]">{stage.body}</p>
+                <p className="text-xs font-black tracking-[0.16em] text-[#A94F08]">{number}</p>
+                <h3 className="mt-2 font-serif text-2xl font-bold tracking-[-0.025em] text-[#173525]">{title}</h3>
+                <p className="mt-3 max-w-sm text-sm font-medium leading-7 text-[#4f574f]">{body}</p>
               </div>
             </li>
           ))}

@@ -1,7 +1,10 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { mediaRegistry, mediaSrcSet } from "../../data/mediaRegistry";
-import CampInIcon from "../icons/CampInIcon";
+import {
+  LandFieldMark,
+  PermissionCheckpointMark,
+} from "../vectors/CampInVectors";
 
 const hostControls = [
   "Set your own rules, capacity, and availability",
@@ -31,7 +34,12 @@ export default function HostInvitation() {
         </div>
 
         <div className="rounded-b-[28px] border border-white/10 bg-[#143522] p-6 sm:p-10 lg:flex lg:flex-col lg:justify-center lg:rounded-r-[28px] lg:rounded-bl-none lg:p-14">
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#f2a45f]">For landowners and operators</p>
+          <div className="flex items-center gap-3 text-[#f2a45f]">
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-current/45">
+              <LandFieldMark className="h-5 w-5" />
+            </span>
+            <p className="text-xs font-black uppercase tracking-[0.18em]">For landowners and operators</p>
+          </div>
           <h2
             id="host-invitation-heading"
             className="mt-4 max-w-2xl font-serif text-4xl font-black leading-[0.98] tracking-[-0.045em] text-[#fbf3e5] sm:text-6xl"
@@ -45,7 +53,7 @@ export default function HostInvitation() {
           <ul className="mt-7 space-y-3">
             {hostControls.map((control) => (
               <li key={control} className="flex gap-3 text-sm font-semibold leading-6 text-white/85">
-                <CampInIcon name="permission" className="mt-0.5 h-5 w-5 shrink-0 text-[#f2a45f]" />
+                <PermissionCheckpointMark className="mt-0.5 h-5 w-5 shrink-0 text-[#f2a45f]" />
                 <span>{control}</span>
               </li>
             ))}
@@ -53,7 +61,7 @@ export default function HostInvitation() {
 
           <Link
             to="/host-your-land"
-            className="premium-focus mt-8 inline-flex min-h-11 w-full items-center justify-center gap-3 rounded-lg bg-orange px-6 py-3.5 text-sm font-black text-white transition duration-300 hover:-translate-y-0.5 hover:bg-orange-dark sm:w-fit sm:px-8 sm:text-base"
+            className="premium-focus mt-8 inline-flex min-h-11 w-full items-center justify-center gap-3 rounded-lg bg-orange px-6 py-3.5 text-sm font-black text-white transition duration-200 hover:-translate-y-0.5 hover:bg-orange-dark sm:w-fit sm:px-8 sm:text-base"
           >
             List your land
             <ArrowRight aria-hidden="true" size={18} />

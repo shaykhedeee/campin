@@ -6,10 +6,14 @@ import {
   Calendar,
   Clock,
   Mail,
-  MapPin,
   Phone,
 } from "lucide-react";
-import { HeroRoute, TopographicPattern } from "../components/vectors/CampInVectors";
+import {
+  CompassMark,
+  HeroRoute,
+  MapPinMark,
+  TopographicPattern,
+} from "../components/vectors/CampInVectors";
 import { submitMvpLead } from "../lib/mvpLeadStore";
 import CampInIcon from "../components/icons/CampInIcon";
 import { getBlogPosts } from "../data/blogPosts";
@@ -105,8 +109,8 @@ export default function Home() {
         
         {/* Soft breathing visual glow overlays */}
         <div className="absolute inset-0 opacity-40 mix-blend-color-dodge">
-          <div className="absolute -top-[20%] -left-[10%] h-[60%] w-[60%] animate-pulse rounded-full bg-emerald-500/10 blur-[120px] transition-all duration-[8000ms]" />
-          <div className="absolute top-[40%] -right-[10%] h-[50%] w-[50%] animate-pulse rounded-full bg-orange/5 blur-[100px] transition-all duration-[6000ms]" style={{ animationDelay: "2s" }} />
+          <div className="absolute -top-[20%] -left-[10%] h-[60%] w-[60%] rounded-full bg-emerald-500/10 blur-[120px]" />
+          <div className="absolute top-[40%] -right-[10%] h-[50%] w-[50%] rounded-full bg-orange/5 blur-[100px]" />
         </div>
 
         <TopographicPattern className="animate-topo-drift absolute -inset-8 h-[110%] w-[110%] text-white/5 opacity-80" />
@@ -126,14 +130,14 @@ export default function Home() {
             <div className="mt-6 flex flex-col gap-3 sm:mt-9 sm:flex-row">
               <Link
                 to="/explore"
-                className="premium-focus inline-flex w-full items-center justify-center gap-3 rounded-lg bg-orange px-5 py-3.5 text-sm font-black text-white shadow-[0_18px_50px_rgba(230,126,34,0.34)] transition duration-300 hover:-translate-y-0.5 hover:bg-orange-dark hover:shadow-[0_24px_58px_rgba(230,126,34,0.42)] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
+                className="premium-focus inline-flex w-full items-center justify-center gap-3 rounded-lg bg-orange px-5 py-3.5 text-sm font-black text-white shadow-[0_18px_50px_rgba(230,126,34,0.34)] transition duration-200 hover:-translate-y-0.5 hover:bg-orange-dark hover:shadow-[0_24px_58px_rgba(230,126,34,0.42)] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
                 Explore camps
                 <ArrowRight size={19} />
               </Link>
               <Link
                 to="/host-your-land"
-                className="premium-focus inline-flex w-full items-center justify-center gap-3 rounded-lg border border-white/55 bg-white/6 px-5 py-3.5 text-sm font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:bg-white/12 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
+                className="premium-focus inline-flex w-full items-center justify-center gap-3 rounded-lg border border-white/55 bg-white/6 px-5 py-3.5 text-sm font-black text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:bg-white/12 sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               >
                 List your land
                 <ArrowRight size={19} />
@@ -150,7 +154,7 @@ export default function Home() {
               srcSet={mediaSrcSet(mediaRegistry.hills)}
               sizes="(min-width: 1024px) 45vw, 100vw"
               alt={mediaRegistry.hills.alt}
-              className="animate-image-breathe absolute left-0 top-0 h-[72%] w-full object-cover object-[center_top] sm:h-[66%] sm:object-center"
+              className="absolute left-0 top-0 h-[72%] w-full object-cover object-[center_top] sm:h-[66%] sm:object-center"
             />
             <div className="absolute left-0 top-0 h-[72%] w-full bg-gradient-to-br from-transparent via-transparent to-[#0f2b1d]/12 sm:h-[66%]" />
             <div className="absolute inset-x-0 bottom-0 grid h-[28%] grid-cols-2 gap-px bg-white/20 sm:h-[34%]">
@@ -172,16 +176,15 @@ export default function Home() {
 
             <HeroRoute className="route-dash absolute left-[22%] top-[7%] h-[64%] w-[56%] text-white/78 drop-shadow-[0_3px_8px_rgba(0,0,0,0.28)] sm:left-[26%] sm:top-[10%] sm:h-[62%] sm:w-[45%]" />
             <div className="absolute inset-0">
-              {heroChecks.map((item, index) => (
+              {heroChecks.map((item) => (
                 <div
                   key={item.label}
-                  className={`animate-float-soft absolute flex w-max items-center gap-2 rounded-full bg-[#f8f1e4]/96 px-2.5 py-1.5 text-[9px] font-black tracking-[-0.025em] text-[#173525] shadow-[0_18px_35px_rgba(0,0,0,0.24)] ring-1 ring-white/60 backdrop-blur sm:gap-3 sm:px-5 sm:py-3 sm:text-sm ${item.position}`}
-                  style={{ animationDelay: `${index * 0.35}s` }}
+                  className={`absolute flex w-max items-center gap-2 rounded-full bg-[#f8f1e4]/96 px-2.5 py-1.5 text-[9px] font-black tracking-[-0.025em] text-[#173525] shadow-[0_18px_35px_rgba(0,0,0,0.24)] ring-1 ring-white/60 backdrop-blur sm:gap-3 sm:px-5 sm:py-3 sm:text-sm ${item.position}`}
                 >
                   <CampInIcon name={item.iconName} className="h-3 w-3 text-orange sm:h-4 sm:w-4" />
                   {item.label}
                   <span className="grid h-5 w-5 place-items-center rounded-full bg-[#2f6548] text-[#f8f1e4] sm:h-8 sm:w-8">
-                    <MapPin size={12} className="fill-[#2f6548] sm:h-[18px] sm:w-[18px]" />
+                    <MapPinMark className="h-3 w-3 sm:h-[18px] sm:w-[18px]" />
                   </span>
                 </div>
               ))}
@@ -281,7 +284,7 @@ export default function Home() {
                     {camp.title}
                   </h3>
                   <div className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-[#6c716b]">
-                    <MapPin size={14} className="text-orange" />
+                    <MapPinMark className="h-3.5 w-3.5 text-orange" />
                     {camp.location}
                   </div>
 
@@ -319,7 +322,12 @@ export default function Home() {
       <section className="bg-[#fffaf0] py-14 sm:py-24">
         <div className="mx-auto grid max-w-[1440px] gap-10 px-4 sm:px-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-12 lg:px-10">
           <div>
-            <h2 className="font-serif text-3xl font-black tracking-[-0.04em] text-[#173525] sm:text-5xl">Plan better before you leave</h2>
+            <div className="flex items-start gap-3 sm:gap-4">
+              <span className="mt-0.5 grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#173525]/25 text-[#173525] sm:mt-1">
+                <CompassMark className="h-5 w-5" />
+              </span>
+              <h2 className="font-serif text-3xl font-black tracking-[-0.04em] text-[#173525] sm:text-5xl">Plan better before you leave</h2>
+            </div>
             <div className="mt-3 h-0.5 w-8 bg-orange" />
             <p className="mt-4 max-w-xl text-sm font-medium leading-7 tracking-[-0.015em] text-[#313831] sm:mt-5 sm:text-base sm:leading-8">
               In-depth, downloadable guides to help you plan better adventures.
@@ -331,7 +339,7 @@ export default function Home() {
                 <Link
                   key={guide.title}
                   to="/camping-guides"
-                  className="group overflow-hidden rounded-xl border border-[#173525]/10 bg-white shadow-[0_10px_28px_rgba(23,53,37,0.08)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_rgba(23,53,37,0.16)]"
+                  className="group overflow-hidden rounded-xl border border-[#173525]/10 bg-white shadow-[0_10px_28px_rgba(23,53,37,0.08)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(23,53,37,0.16)]"
                 >
                   <div className="relative h-40 overflow-hidden sm:h-44">
                     <img
@@ -339,7 +347,7 @@ export default function Home() {
                       alt={guide.imageAsset.alt}
                       srcSet={mediaSrcSet(guide.imageAsset)}
                       sizes="(min-width: 640px) 18vw, 84vw"
-                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                      className="h-full w-full object-cover transition duration-200 group-hover:scale-[1.025]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/76 via-black/12 to-transparent" />
                     <span className="absolute bottom-3 left-3 rounded-full bg-orange px-3 py-1 text-[10px] font-black uppercase tracking-wide text-white">
@@ -355,7 +363,7 @@ export default function Home() {
             </div>
             <Link
               to="/camping-guides"
-              className="premium-focus mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#173525]/45 bg-transparent px-5 py-3.5 text-sm font-black text-[#173525] transition duration-300 hover:-translate-y-0.5 hover:border-orange hover:text-orange sm:mt-6 sm:py-4 sm:text-base"
+              className="premium-focus mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-[#173525]/45 bg-transparent px-5 py-3.5 text-sm font-black text-[#173525] transition duration-200 hover:-translate-y-0.5 hover:border-orange hover:text-orange sm:mt-6 sm:py-4 sm:text-base"
             >
               Unlock all guides
               <BookOpen size={18} />

@@ -1,30 +1,140 @@
-import type { SVGProps } from "react";
+import { useId, type ReactNode, type SVGProps } from "react";
 
-export function TopographicPattern(props: SVGProps<SVGSVGElement>) {
+type SvgElementProps = Omit<
+  SVGProps<SVGSVGElement>,
+  "aria-hidden" | "aria-labelledby" | "role" | "title"
+>;
+
+export type CampInVectorProps = SvgElementProps &
+  (
+    | { decorative?: true; title?: never }
+    | { decorative: false; title: string }
+  );
+
+function vectorAccessibility(
+  decorative: boolean,
+  titleId: string,
+) {
+  return decorative
+    ? { "aria-hidden": true as const }
+    : { "aria-labelledby": titleId, role: "img" as const };
+}
+
+function CompactMark({
+  children,
+  decorative = true,
+  title,
+  ...props
+}: CampInVectorProps & { children: ReactNode }) {
+  const titleId = useId();
+
   return (
-    <svg viewBox="0 0 1440 920" fill="none" aria-hidden="true" {...props}>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      focusable="false"
+      data-campin-vector="mark"
+      {...props}
+      {...vectorAccessibility(decorative, titleId)}
+    >
+      {!decorative && <title id={titleId}>{title}</title>}
+      <g
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {children}
+      </g>
+    </svg>
+  );
+}
+
+export function TentMark(props: CampInVectorProps) {
+  return (
+    <CompactMark {...props}>
+      <path d="M3.5 19.5 12 5l8.5 14.5h-17Z" />
+      <path d="M12 5v14.5M8.5 19.5 12 13l3.5 6.5M2.5 19.5h19" />
+    </CompactMark>
+  );
+}
+
+export function MapPinMark(props: CampInVectorProps) {
+  return (
+    <CompactMark {...props}>
+      <path d="M12 21s6-5.4 6-11a6 6 0 1 0-12 0c0 5.6 6 11 6 11Z" />
+      <circle cx="12" cy="10" r="2.25" />
+    </CompactMark>
+  );
+}
+
+export function CompassMark(props: CampInVectorProps) {
+  return (
+    <CompactMark {...props}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="m15.7 8.3-2.1 5.3-5.3 2.1 2.1-5.3 5.3-2.1Z" />
+      <path d="M12 1.5v2M12 20.5v2M1.5 12h2M20.5 12h2" />
+    </CompactMark>
+  );
+}
+
+export function RouteMark(props: CampInVectorProps) {
+  return (
+    <CompactMark {...props}>
+      <path d="M5 5.5h3.2c3.7 0 5.6 1.5 5.6 4.3s-2 4.4-5.7 4.4H7c-2.2 0-3.5 1-3.5 2.8S5 19.5 7 19.5h11.5" />
+      <circle cx="4.5" cy="5.5" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="19.5" cy="19.5" r="1.5" fill="currentColor" stroke="none" />
+    </CompactMark>
+  );
+}
+
+export function LandFieldMark(props: CampInVectorProps) {
+  return (
+    <CompactMark {...props}>
+      <path d="M3 18.5c3.2-2.2 6.2-2.2 9 0s5.8 2.2 9 0" />
+      <path d="M3 14c3.2-2.2 6.2-2.2 9 0s5.8 2.2 9 0M3 9.5c3.2-2.2 6.2-2.2 9 0s5.8 2.2 9 0" />
+      <path d="M5 5.5h14" />
+    </CompactMark>
+  );
+}
+
+export function PermissionCheckpointMark(props: CampInVectorProps) {
+  return (
+    <CompactMark {...props}>
+      <path d="M5 20V8.5M19 20V8.5M3.5 8.5h17M7 8.5V5h10v3.5" />
+      <path d="m8.5 14 2.1 2.1 4.9-5" />
+    </CompactMark>
+  );
+}
+
+export function TopographicPattern({ decorative = true, title, ...props }: CampInVectorProps) {
+  const titleId = useId();
+
+  return (
+    <svg
+      viewBox="0 0 1440 920"
+      fill="none"
+      focusable="false"
+      data-campin-vector="scenery"
+      {...props}
+      {...vectorAccessibility(decorative, titleId)}
+    >
+      {!decorative && <title id={titleId}>{title}</title>}
       <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
         <path d="M-126 206C-29 78 134 70 239 174C348 282 303 438 184 512C39 602 -137 511 -158 346" strokeWidth="1" />
-        <path d="M-86 211C-4 106 140 98 230 188C323 281 286 414 179 480C52 557 -103 484 -124 342" strokeWidth="0.85" />
         <path d="M-48 218C24 125 145 120 221 197C305 281 269 398 176 456C63 526 -73 462 -91 341" strokeWidth="0.85" />
-        <path d="M-10 229C45 158 144 150 206 213C274 282 247 374 171 421C78 478 -32 428 -51 338" strokeWidth="0.7" />
         <path d="M31 246C72 194 142 189 189 234C238 281 219 344 166 378C101 418 24 385 9 333" strokeWidth="0.65" />
 
         <path d="M330 38C501 -56 739 12 813 193C891 383 770 555 590 583C405 611 278 474 289 306" strokeWidth="1" />
-        <path d="M368 55C522 -27 724 33 790 200C858 371 753 529 592 554C428 579 315 456 325 306" strokeWidth="0.85" />
         <path d="M407 76C543 8 721 62 775 207C831 356 734 497 593 518C450 540 350 432 360 302" strokeWidth="0.85" />
-        <path d="M448 100C557 49 699 94 742 213C788 337 707 452 595 470C481 488 400 403 409 303" strokeWidth="0.7" />
         <path d="M491 128C572 93 675 128 707 220C741 316 680 406 596 421C512 436 452 373 462 304" strokeWidth="0.65" />
         <path d="M548 172C591 153 652 172 671 226C692 284 654 337 599 348C550 358 513 325 517 300" strokeWidth="0.55" />
 
         <path d="M925 120C1015 43 1161 62 1246 149C1333 238 1312 358 1214 407C1114 458 985 415 940 313" strokeWidth="0.8" opacity="0.8" />
-        <path d="M975 145C1040 91 1152 104 1216 172C1279 239 1264 329 1190 366C1117 402 1023 371 990 297" strokeWidth="0.65" opacity="0.75" />
         <path d="M1029 174C1072 139 1144 148 1187 194C1231 240 1219 300 1169 325C1121 349 1058 328 1036 279" strokeWidth="0.55" opacity="0.7" />
 
         <path d="M1024 624C1130 520 1311 531 1407 651C1505 772 1448 935 1310 984C1177 1032 1035 946 1006 811" strokeWidth="1" />
-        <path d="M1054 635C1148 547 1304 556 1390 664C1475 770 1426 910 1305 955C1190 997 1064 923 1038 807" strokeWidth="0.85" />
         <path d="M1088 649C1168 579 1296 588 1369 675C1445 768 1404 890 1302 930C1205 968 1102 904 1078 806" strokeWidth="0.8" />
-        <path d="M1127 671C1187 621 1284 628 1338 695C1395 766 1364 858 1289 888C1217 916 1140 870 1122 801" strokeWidth="0.65" />
         <path d="M1170 703C1210 673 1272 681 1307 724C1343 769 1324 827 1276 847C1229 866 1180 837 1169 797" strokeWidth="0.55" />
 
         <path d="M48 694C122 640 226 650 288 718C350 787 330 885 254 920" strokeWidth="0.65" opacity="0.6" />
@@ -35,19 +145,27 @@ export function TopographicPattern(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function HeroRoute(props: SVGProps<SVGSVGElement>) {
+export function HeroRoute({ decorative = true, title, ...props }: CampInVectorProps) {
+  const titleId = useId();
+
   return (
-    <svg viewBox="0 0 420 560" fill="none" aria-hidden="true" {...props}>
+    <svg
+      viewBox="0 0 420 560"
+      fill="none"
+      data-testid="hero-route"
+      focusable="false"
+      data-campin-vector="scenery"
+      {...props}
+      {...vectorAccessibility(decorative, titleId)}
+    >
+      {!decorative && <title id={titleId}>{title}</title>}
       <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
         <path
+          className="campin-route-path"
           d="M304 50C348 94 346 144 303 182C256 223 257 272 308 309C358 345 347 405 282 434C230 457 203 496 232 528"
           strokeWidth="4"
           strokeDasharray="9 13"
         />
-        <path d="M312 70C334 103 331 136 304 164" strokeWidth="1.25" opacity="0.5" />
-        <path d="M295 197C259 233 264 269 311 299" strokeWidth="1.25" opacity="0.5" />
-        <path d="M315 326C338 368 321 407 279 428" strokeWidth="1.25" opacity="0.5" />
-        <path d="M259 448C231 471 222 496 233 520" strokeWidth="1.25" opacity="0.5" />
       </g>
       <g fill="currentColor" opacity="0.86">
         <circle cx="304" cy="50" r="5" />
@@ -93,9 +211,19 @@ export function MountainSketch(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export function TentConstellation(props: SVGProps<SVGSVGElement>) {
+export function TentConstellation({ decorative = true, title, ...props }: CampInVectorProps) {
+  const titleId = useId();
+
   return (
-    <svg viewBox="0 0 420 300" fill="none" aria-hidden="true" {...props}>
+    <svg
+      viewBox="0 0 420 300"
+      fill="none"
+      focusable="false"
+      data-campin-vector="scenery"
+      {...props}
+      {...vectorAccessibility(decorative, titleId)}
+    >
+      {!decorative && <title id={titleId}>{title}</title>}
       <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
         <path d="M82 238C125 223 169 223 211 237C258 253 310 249 363 231" strokeWidth="1.05" opacity="0.58" />
         <path d="M58 255C103 244 148 246 192 258C249 273 305 268 372 248" strokeWidth="0.85" opacity="0.4" />
