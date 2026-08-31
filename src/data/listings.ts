@@ -1,3 +1,5 @@
+import { getMediaAsset, type MediaAsset, type MediaKey } from "./mediaRegistry";
+
 export type ListingType =
   | "caravan-park"
   | "overland"
@@ -85,6 +87,8 @@ export interface Listing {
   description: string;
   longDescription: string;
   image: string;
+  /** Regional editorial asset metadata; this is never evidence for the listing itself. */
+  imageAsset?: MediaAsset;
   /** Only true when the image is supplied or explicitly licensed by the property/source. */
   imageVerified?: boolean;
   gallery: string[];
@@ -139,14 +143,14 @@ export interface ResearchGuide {
 }
 
 const imageSet = {
-  caravan: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1600&q=80",
-  hills: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600&q=80",
-  water: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1600&q=80",
-  forest: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=80",
-  desert: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1600&q=80",
-  road: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1600&q=80",
-  beach: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80",
-};
+  caravan: "caravan",
+  hills: "hills",
+  water: "water",
+  forest: "forest",
+  desert: "desert",
+  road: "road",
+  beach: "water",
+} as const satisfies Record<string, MediaKey>;
 
 const defaultConfidence: ListingClaimConfidence = {
   byotAllowed: "unknown",
@@ -159,11 +163,13 @@ const defaultConfidence: ListingClaimConfidence = {
 };
 
 function makeListing(input: Omit<Listing, "image" | "gallery" | "rating" | "reviews" | "contactPolicy" | "hostContactMode"> & { imageKey: keyof typeof imageSet }): Listing {
-  const image = imageSet[input.imageKey];
+  const imageAsset = getMediaAsset(imageSet[input.imageKey]);
+  const image = imageAsset.src;
   return {
     ...input,
     image,
-    gallery: [image, imageSet.road, imageSet.forest],
+    imageAsset,
+    gallery: [image, getMediaAsset(imageSet.road).src, getMediaAsset(imageSet.forest).src],
     rating: input.verificationStage === "reviewed" ? 4.8 : 0,
     reviews: 0,
     contactPolicy: "gated_relay",

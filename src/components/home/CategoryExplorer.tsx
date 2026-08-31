@@ -1,16 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { homeCategories } from "../../data/homeCategories";
+import { mediaRegistry } from "../../data/mediaRegistry";
 import { categoryHref } from "../../lib/exploreFilters";
-
-const categoryMediaPaths: Record<string, string> = {
-  "own-tent": "/images/blog_bangalore_hill.jpg",
-  "pre-pitched": "/images/blog_glamping_pitch.jpg",
-  "farm-estate": "/images/blog_coorg_estate.jpg",
-  "mountain-forest": "/images/blog_solo_woman.jpg",
-  waterside: "/images/blog_monsoon_ghats.jpg",
-  "road-trip": "/images/blog_campervan_stop.jpg",
-};
 
 export default function CategoryExplorer() {
   return (
@@ -44,7 +36,7 @@ export default function CategoryExplorer() {
               <article>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-[#dce9e1]">
                   <img
-                    src={categoryMediaPaths[category.mediaKey]}
+                    src={mediaRegistry[category.mediaKey].src}
                     alt={category.alt}
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]"
                     loading="lazy"
