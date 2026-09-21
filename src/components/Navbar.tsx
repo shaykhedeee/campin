@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, Search, X } from "lucide-react";
 import BrandMark from "./BrandMark";
+import { useAuth } from "../lib/auth";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [showCampsites, setShowCampsites] = useState(false);
+  const { user } = useAuth();
   const location = useLocation();
   const isHome = location.pathname === "/";
 
@@ -21,13 +24,8 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { to: "/explore", label: "Campsites" },
-    { to: "/camping-guides", label: "Guides" },
-    { to: "/blog", label: "Journal" },
-    { to: "/community", label: "Community" },
-    { to: "/host-your-land", label: "List your land" },
-  ];
+  const navLinks = [{ to: "/explore", label: "Campsites" }, { to: "/explore", label: "Destinations" }, { to: "/about", label: "About us" }];
+  const categories = [["/explore?category=bring-your-own-tent", "Own-tent camping"], ["/explore?type=overland", "Hosted tents"], ["/explore?category=pre-pitched-glamping", "Glamping"], ["/explore?vehicle=campervan", "Campervan & RV sites"], ["/explore?category=farms-estates", "Farm stays"], ["/explore?vehicle=road-stop", "Road stops"]];
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -52,7 +50,11 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden items-center gap-9 md:flex">
-          {navLinks.map((link) => (
+          <div className="relative" onMouseEnter={()=>setShowCampsites(true)} onMouseLeave={()=>setShowCampsites(false)}>
+            <Link to="/explore" onFocus={()=>setShowCampsites(true)} className={`inline-flex items-center gap-1 rounded-lg px-1 py-2 text-base font-extrabold tracking-[-0.035em] ${isHome ? "text-white" : "text-textgrey hover:text-forest"}`}>Campsites <ChevronDown size={16}/></Link>
+            {showCampsites && <div className="absolute left-0 top-full w-56 rounded-xl border border-forest/10 bg-white p-2 shadow-xl">{categories.map(([to,label])=><Link key={to} to={to} onClick={()=>setShowCampsites(false)} className="block rounded-lg px-3 py-2 text-sm font-bold text-forest hover:bg-offwhite">{label}</Link>)}</div>}
+          </div>
+          {navLinks.slice(1).map((link) => (
             <Link
               key={link.to}
               to={link.to}
@@ -69,12 +71,9 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          <Link
-            to="/explore"
-            className="premium-focus ml-12 inline-flex items-center gap-2 rounded-lg bg-orange px-10 py-4 text-base font-black tracking-[-0.025em] text-white shadow-[0_18px_45px_rgba(230,126,34,0.26)] transition duration-300 hover:-translate-y-0.5 hover:bg-orange-dark"
-          >
-            Explore camps
-          </Link>
+          <Link to="/explore" aria-label="Search campsites" className={`ml-3 ${isHome ? "text-white" : "text-forest"}`}><Search size={20}/></Link>
+          <Link to="/host-your-land" className="premium-focus ml-2 inline-flex items-center rounded-lg bg-orange px-5 py-3 text-sm font-black text-white transition hover:bg-orange-dark">List your campsite</Link>
+          <Link to={user ? "/account" : "/auth"} className={`ml-1 text-sm font-black ${isHome ? "text-white" : "text-forest"}`}>{user ? "Account" : "Sign in"}</Link>
         </div>
 
         <button
@@ -104,12 +103,13 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
-              to="/explore"
+              to="/host-your-land"
               onClick={() => setIsOpen(false)}
               className="flex items-center justify-center gap-2 rounded-lg bg-orange px-4 py-3 text-base font-bold text-white"
             >
-              Explore camps
+              List your campsite
             </Link>
+            <Link to={user ? "/account" : "/auth"} onClick={()=>setIsOpen(false)} className="block rounded-lg bg-forest px-4 py-3 text-center text-base font-bold text-white">{user ? "Account" : "Sign in"}</Link>
           </div>
         </div>
       )}

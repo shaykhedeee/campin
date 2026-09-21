@@ -38,14 +38,14 @@ describe("Explore category URL contract", () => {
     renderExplore("?category=bring-your-own-tent");
 
     expect(screen.getByRole("button", { name: /own-tent/i })).toHaveAttribute("aria-pressed", "true");
-    expect(screen.getByRole("button", { name: /all verified sites/i })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("button", { name: /all campsites/i })).toHaveAttribute("aria-pressed", "false");
   });
 
   it("uses the category chip instead of an unrelated All control", () => {
     renderExplore("?category=pre-pitched-glamping");
 
     expect(screen.getByText("Category: pre pitched glamping")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /all verified sites/i })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("button", { name: /all campsites/i })).toHaveAttribute("aria-pressed", "false");
   });
 
   it("clears only the category and restores the non-category vehicle state", async () => {

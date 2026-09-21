@@ -5,11 +5,9 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Explore from './pages/Explore';
-import Signup from './pages/Signup';
 import HostYourLand from './pages/HostYourLand';
 import Support from './pages/Support';
 import ListingDetail from './pages/ListingDetail';
-import ComingSoon from './pages/ComingSoon';
 import Community from './pages/Community';
 import BlogIndex from './pages/BlogIndex';
 import BlogPost from './pages/BlogPost';
@@ -22,6 +20,15 @@ import CancellationRefund from "./pages/CancellationRefund";
 import Grievance from "./pages/Grievance";
 import ResponsibleCampingPledge from "./pages/ResponsibleCampingPledge";
 import SeoLanding from "./pages/SeoLanding";
+import Auth from "./pages/Auth";
+import AuthCallback from "./pages/AuthCallback";
+import ResetPassword from "./pages/ResetPassword";
+import Account from "./pages/Account";
+import Waitlist from "./pages/Waitlist";
+import SuggestCampsite from "./pages/SuggestCampsite";
+import Confirmation from "./pages/Confirmation";
+import About from "./pages/About";
+import { AuthProvider } from "./lib/auth";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -42,14 +49,22 @@ function AppContent() {
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/listing/:id" element={<ListingDetail />} />
-          <Route path="/coming-soon" element={<ComingSoon />} />
+          <Route path="/coming-soon" element={<Waitlist />} />
           <Route path="/community" element={<Community />} />
           <Route path="/blog" element={<BlogIndex />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/camping-guides" element={<Guides />} />
           <Route path="/camping-guides/:slug" element={<CampingGuideDetail />} />
           <Route path="/guides/:slug" element={<GuideDetail />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup" element={<Waitlist />} />
+          <Route path="/waitlist" element={<Waitlist />} />
+          <Route path="/suggest-campsite" element={<SuggestCampsite />} />
+          <Route path="/confirmation" element={<Confirmation />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/auth/reset-password" element={<ResetPassword />} />
+          <Route path="/account" element={<Account />} />
           <Route path="/host-your-land" element={<HostYourLand />} />
           <Route path="/support" element={<Support />} />
           <Route path="/privacy" element={<Privacy />} />
@@ -70,8 +85,6 @@ function AppContent() {
 
 export default function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <AuthProvider><Router><AppContent /></Router></AuthProvider>
   );
 }

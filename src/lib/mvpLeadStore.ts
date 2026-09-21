@@ -151,6 +151,7 @@ async function submitSupportNotification(lead: MvpLeadRecord, fetcher?: typeof f
         phone: lead.phone,
         city: lead.city,
         createdAt: lead.createdAt,
+        payload: lead.payload,
       }),
     });
     const body = (await response.json().catch(() => null)) as { status?: LeadTransportStatus } | null;

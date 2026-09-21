@@ -6,6 +6,21 @@
   directory = "netlify/functions"
 
 [[redirects]]
+  from = "/api/search"
+  to = "/.netlify/functions/search"
+  status = 200
+
+[[redirects]]
+  from = "/api/enquiries"
+  to = "/.netlify/functions/create-enquiry"
+  status = 200
+
+[[redirects]]
+  from = "/api/enquiries/:id/whatsapp"
+  to = "/.netlify/functions/enquiry-whatsapp?id=:id"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

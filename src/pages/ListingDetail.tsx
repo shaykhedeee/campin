@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   AlertTriangle,
   ArrowLeft,
@@ -30,6 +30,8 @@ import { mediaSrcSet } from "../data/mediaRegistry";
 import { submitMvpLead } from "../lib/mvpLeadStore";
 import LeadSubmissionStatus from "../components/leads/LeadSubmissionStatus";
 import { useLeadSubmission } from "../components/leads/useLeadSubmission";
+import { useAuth } from "../lib/auth";
+import { createMarketplaceEnquiry, getMarketplaceWhatsapp, isDatabaseListingId } from "../lib/marketplaceApi";
 
 const requestStorageKey = "campin.listing.requests.v1";
 
@@ -90,6 +92,8 @@ function saveRequest(payload: Record<string, unknown>) {
 
 export default function ListingDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [listing, setListing] = useState(() => getListings().find((item) => item.id === id));
 
   useEffect(() => {
@@ -140,6 +144,10 @@ export default function ListingDetail() {
   }, [guestProfile]);
 
   const [requestId, setRequestId] = useState("");
+  const [whatsAppUrl, setWhatsAppUrl] = useState("");
+  const [whatsAppMessage, setWhatsAppMessage] = useState("");
+  const [secureEnquiryId, setSecureEnquiryId] = useState("");
+  const [handoffError, setHandoffError] = useState("");
 
   if (!listing) {
     return (
@@ -149,7 +157,7 @@ export default function ListingDetail() {
             <MapPin size={26} />
           </div>
           <h1 className="mt-5 text-2xl font-extrabold text-forest">Listing not found</h1>
-          <p className="mt-2 text-sm leading-6 text-textgrey">This place is not in the current CampIn research network.</p>
+          <p className="mt-2 text-sm leading-6 text-textgrey">This campsite is unavailable or has not been published yet.</p>
           <Link to="/explore" className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-forest px-5 py-3 font-bold text-white">
             <ArrowLeft size={18} />
             Back to Explore
@@ -160,11 +168,14 @@ export default function ListingDetail() {
   }
 
   const availability = availabilityCopy[listing.availability.mode];
-  const serviceFee = listing.price > 0 ? Math.round(listing.price * 0.06) : 0;
-  const total = listing.price + serviceFee;
 
   const submitRequest = async (event: FormEvent) => {
     event.preventDefault();
+    if (!user) {
+      const next = `${window.location.pathname}${window.location.search}`;
+      navigate(`/auth?next=${encodeURIComponent(next)}`);
+      return;
+    }
     if (!guestProfile || !formData.email || !formData.phone) {
       setHandshakeForm({
         name: formData.name,
@@ -185,7 +196,36 @@ export default function ListingDetail() {
       vehicleType: formData.vehicleType,
       ownTent: formData.ownTent,
       essentials: formData.essentials,
+      question: formData.essentials,
     };
+    if (isDatabaseListingId(listing.id)) {
+      let secureId = "";
+      let secureReference = "";
+      const result = await requestSubmission.run(async () => {
+        const secureEnquiry = await createMarketplaceEnquiry({
+          listingId: listing.id,
+          startDate: formData.arrive,
+          endDate: formData.depart,
+          guests: Number(formData.guests),
+          campingStyle: formData.ownTent === "yes" ? "own_tent" : listing.type,
+          vehicleDetails: formData.vehicleType,
+          questions: formData.essentials,
+        });
+        secureId = secureEnquiry.id;
+        secureReference = secureEnquiry.reference;
+        return {
+          lead: { id: secureEnquiry.id, createdAt: new Date().toISOString(), syncStatus: "supabase_synced", ...formData, type: "listing_inquiry", sourcePage: `/listing/${listing.id}`, payload, consent: formData.consent },
+          remote: "synced",
+          notification: "skipped",
+          metadata: { netlifyForm: "skipped" },
+        };
+      });
+      if (result && secureId) {
+        setRequestId(secureReference);
+        setSecureEnquiryId(secureId);
+      }
+      return;
+    }
     const result = await requestSubmission.run(() => submitMvpLead({
       type: "listing_inquiry",
       sourcePage: `/listing/${listing.id}`,
@@ -201,6 +241,33 @@ export default function ListingDetail() {
     if (result?.remote === "synced") {
       saveRequest({ ...payload, id: result.lead.id, createdAt: result.lead.createdAt, status: "Awaiting CampIn review" });
       setRequestId(result.lead.id);
+      if (listing.publicBusinessContact) {
+        const message = [
+          `Hi, I found ${listing.title} on Campin.`,
+          `I'm ${formData.name}, enquiring for ${formData.arrive} to ${formData.depart}, for ${formData.guests} guest(s).`,
+          `Camping style: ${formData.ownTent === "yes" ? "Own tent" : listing.typeLabel}. Vehicle: ${formData.vehicleType}.`,
+          formData.essentials ? `Questions: ${formData.essentials}` : "",
+          "Please confirm availability, total price, and arrival instructions.",
+          `Campin reference: ${result.lead.id}`,
+          window.location.href,
+        ].filter(Boolean).join("\n");
+        const number = listing.publicBusinessContact.replace(/\D/g, "");
+        setWhatsAppMessage(message);
+        setWhatsAppUrl(`https://wa.me/${number}?text=${encodeURIComponent(message)}`);
+      }
+    }
+  };
+
+  const openSecureWhatsapp = async () => {
+    if (!secureEnquiryId) return;
+    setHandoffError("");
+    try {
+      const handoff = await getMarketplaceWhatsapp(secureEnquiryId);
+      setWhatsAppMessage(handoff.message);
+      setWhatsAppUrl(handoff.whatsappUrl);
+      window.open(handoff.whatsappUrl, "_blank", "noopener,noreferrer");
+    } catch (error) {
+      setHandoffError(error instanceof Error ? error.message : "Campin could not prepare the WhatsApp handoff.");
     }
   };
 
@@ -552,25 +619,16 @@ export default function ListingDetail() {
                 <div className="mt-5 rounded-lg bg-forest p-4 text-white">
                   <p className="font-extrabold">Request saved: {requestId}</p>
                   <p className="mt-2 text-sm leading-6 text-white/75">
-                    Contact stays gated until CampIn reviews the request, host fit, and current trip details.
+                    {whatsAppUrl ? "Review the prepared message, then continue to WhatsApp to send it to the host." : "CampIn will help with the host handoff because a verified WhatsApp contact is not yet available."}
                   </p>
+                  {secureEnquiryId && !whatsAppUrl && <button type="button" onClick={() => void openSecureWhatsapp()} className="mt-4 flex w-full justify-center rounded-lg bg-[#25D366] px-4 py-3 text-sm font-extrabold text-[#073b20]">Prepare WhatsApp message</button>}
+                  {whatsAppUrl && <><a href={whatsAppUrl} target="_blank" rel="noopener noreferrer" className="mt-4 flex justify-center rounded-lg bg-[#25D366] px-4 py-3 text-sm font-extrabold text-[#073b20]">Continue on WhatsApp</a><button type="button" onClick={()=>void navigator.clipboard?.writeText(whatsAppMessage)} className="mt-2 w-full rounded-lg border border-white/20 px-4 py-2 text-sm font-bold">Copy message</button></>}
+                  {handoffError && <p className="mt-3 text-sm font-semibold text-orange">{handoffError}</p>}
+                  {!whatsAppUrl && <Link to="/support" className="mt-4 inline-flex rounded-lg bg-white px-4 py-2 text-sm font-bold text-forest">Request help from Campin</Link>}
                 </div>
               )}
 
-              <div className="mt-5 rounded-lg bg-offwhite p-4">
-                <div className="flex justify-between text-sm">
-                  <span className="text-textgrey">Stay estimate</span>
-                  <span className="font-bold text-forest">{listing.price > 0 ? `INR ${listing.price}` : "Host confirmed"}</span>
-                </div>
-                <div className="mt-2 flex justify-between text-sm">
-                  <span className="text-textgrey">Camper service fee</span>
-                  <span className="font-bold text-forest">{serviceFee > 0 ? `INR ${serviceFee}` : "Later"}</span>
-                </div>
-                <div className="mt-2 flex justify-between border-t border-forest/10 pt-3 text-base font-extrabold">
-                  <span className="text-forest">Estimated total</span>
-                  <span className="text-orange">{total > 0 ? `INR ${total}` : "Not live"}</span>
-                </div>
-              </div>
+              <div className="mt-5 rounded-lg bg-offwhite p-4"><div className="flex justify-between text-sm"><span className="text-textgrey">Starting price</span><span className="font-bold text-forest">{listing.price > 0 ? `₹${listing.price} per night` : "Ask host for pricing"}</span></div><p className="mt-2 text-xs leading-5 text-textgrey">Availability and final price are confirmed by the host, not by this request.</p></div>
 
               <div className="mt-5 space-y-3 text-sm text-textgrey">
                 <p className="flex items-start gap-2">
@@ -587,7 +645,7 @@ export default function ListingDetail() {
                 </p>
                 <p className="flex items-start gap-2">
                   <Users size={17} className="mt-0.5 shrink-0 text-orange" />
-                  Host payout and service fee apply only after a confirmed pilot model exists.
+                  Campin saves the request before any WhatsApp handoff. Sending the message remains your choice.
                 </p>
               </div>
             </form>

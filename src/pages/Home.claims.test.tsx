@@ -7,80 +7,46 @@ import Home from "./Home";
 afterEach(cleanup);
 
 it("does not promise instant booking or unsupported universal verification", () => {
-  render(
-    <MemoryRouter>
-      <Home />
-    </MemoryRouter>,
-  );
+  render(<MemoryRouter><Home /></MemoryRouter>);
 
   expect(screen.queryByText(/book instantly/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/every campsite is verified/i)).not.toBeInTheDocument();
 });
 
-it("keeps active homepage imagery local and labels editorial featured cards", () => {
-  render(
-    <MemoryRouter>
-      <Home />
-    </MemoryRouter>,
-  );
+it("starts the homepage with trip discovery", () => {
+  render(<MemoryRouter><Home /></MemoryRouter>);
 
-  expect(document.querySelectorAll('img[src^="http"]')).toHaveLength(0);
-  expect(screen.getAllByText("Regional editorial image").length).toBeGreaterThanOrEqual(3);
-  expect(document.querySelectorAll('img[srcset*="900w"][srcset*="1600w"][sizes="(min-width: 640px) 18vw, 84vw"]').length).toBeGreaterThanOrEqual(3);
+  expect(screen.getByRole("heading", { name: "Find your next campsite in India." })).toBeInTheDocument();
+  expect(screen.getByPlaceholderText("Where do you want to go?")).toBeInTheDocument();
+  expect(screen.getByLabelText(/requested arrival/i)).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Search" })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Own-tent camping" })).toHaveAttribute("href", "/explore?category=bring-your-own-tent");
 });
 
-it("shows one concise trust explanation and both marketplace actions", () => {
-  render(
-    <MemoryRouter>
-      <Home />
-    </MemoryRouter>,
-  );
+it("does not invent a catalogue when no approved inventory is available", () => {
+  render(<MemoryRouter><Home /></MemoryRouter>);
 
-  expect(screen.getAllByRole("heading", { name: /how campin builds trust/i })).toHaveLength(1);
-  expect(screen.getAllByRole("link", { name: "Explore camps" })[0]).toHaveAttribute("href", "/explore");
-  expect(screen.getAllByRole("link", { name: "List your land" })[0]).toHaveAttribute("href", "/host-your-land");
+  expect(screen.getByText(/campsites are being verified/i)).toBeInTheDocument();
+  expect(screen.getAllByRole("link", { name: /suggest a campsite/i })[0]).toHaveAttribute("href", "/suggest-campsite");
 });
 
-it("uses the public listing stages and keeps host confirmation as separate evidence", () => {
-  render(
-    <MemoryRouter>
-      <Home />
-    </MemoryRouter>,
-  );
+it("explains the enquiry model and keeps company storytelling off the homepage", () => {
+  render(<MemoryRouter><Home /></MemoryRouter>);
 
-  const publicStages = screen.getByRole("list", { name: "Public listing stages" });
-  expect(within(publicStages).getAllByRole("listitem").map((item) => item.textContent)).toEqual([
-    "Community suggested",
-    "Awaiting host confirmation",
-    "Source reviewed",
-    "Date confirmed",
-    "Calendar synced",
-  ]);
-  expect(screen.getByText(/host-confirmed details are shown separately where they apply/i)).toBeInTheDocument();
-});
-
-it("removes the repeated homepage trust and founder narratives", () => {
-  render(
-    <MemoryRouter>
-      <Home />
-    </MemoryRouter>,
-  );
-
+  expect(screen.getByRole("heading", { name: "Find" })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "Check availability" })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "Connect with the host" })).toBeInTheDocument();
   expect(screen.queryByRole("heading", { name: /why campin exists/i })).not.toBeInTheDocument();
-  expect(screen.queryByRole("heading", { name: /the four campin pillars/i })).not.toBeInTheDocument();
-  expect(screen.queryByRole("heading", { name: /what gets checked before a place goes live/i })).not.toBeInTheDocument();
-  expect(screen.queryByRole("heading", { name: /how we verify campsites/i })).not.toBeInTheDocument();
-  expect(screen.queryByRole("heading", { name: /our story:/i })).not.toBeInTheDocument();
 });
 
-it("keeps the public footer and marketplace actions available from the homepage shell", () => {
+it("keeps the public marketplace navigation and footer actions available", () => {
   window.history.replaceState({}, "", "/");
   window.scrollTo = vi.fn();
-
   render(<App />);
 
   const navigation = screen.getByRole("navigation");
-  expect(within(navigation).getAllByRole("link", { name: "Explore camps" })).not.toHaveLength(0);
-  expect(within(navigation).getAllByRole("link", { name: "List your land" })).not.toHaveLength(0);
+  expect(within(navigation).getAllByRole("link", { name: "Campsites" })).not.toHaveLength(0);
+  expect(within(navigation).getAllByRole("link", { name: "List your campsite" })).not.toHaveLength(0);
+  expect(within(navigation).getAllByRole("link", { name: "Sign in" })).not.toHaveLength(0);
   expect(screen.getByRole("contentinfo")).toBeInTheDocument();
 });

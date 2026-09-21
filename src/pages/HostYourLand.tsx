@@ -34,11 +34,10 @@ export default function HostYourLand() {
           <div>
             <p className="font-bold text-orange">CampIn host community</p>
             <h1 className="mt-2 text-4xl font-extrabold leading-tight text-forest sm:text-5xl">
-              Help CampIn build India's verified camping supply.
+              List your campsite and receive camper enquiries.
             </h1>
             <p className="mt-4 text-lg leading-8 text-textgrey">
-              CampIn is looking for safe private land, farms, estates, homestays, and road-side businesses that can
-              support request-first camping with clear rules, facilities, and access notes.
+              Add a real campsite, farm stay, glamping site or road-stop with clear facilities, access details and a host contact.
             </p>
 
             <div className="mt-8 grid gap-4">

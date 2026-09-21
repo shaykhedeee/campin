@@ -23,6 +23,25 @@ describe("buildSupportAlert", () => {
     expect(request.subject).toContain("host interest");
     expect(request.text).toContain("HOST-123");
     expect(request.text).not.toContain("undefined");
+    expect(request.html).toContain("HOST-123");
     expect(JSON.stringify(request)).not.toMatch(/api[_-]?key/i);
+  });
+
+  it("includes every submitted payload field and escapes HTML", () => {
+    const request = buildSupportAlert(
+      {
+        id: "WAIT-123",
+        type: "camper_waitlist",
+        sourcePage: "/waitlist",
+        name: "Mira <test>",
+        createdAt: "2026-08-30T10:00:00.000Z",
+        payload: { destinationInterests: ["Coorg", "Goa"], notes: "<script>alert(1)</script>" },
+      },
+      { from: "CampIn Leads <leads@campin.co.in>", to: "support@campin.co.in" },
+    );
+
+    expect(request.text).toContain("Destination Interests: Coorg, Goa");
+    expect(request.html).toContain("&lt;script&gt;");
+    expect(request.html).not.toContain("<script>");
   });
 });

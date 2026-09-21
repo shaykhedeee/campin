@@ -38,7 +38,10 @@ export default function Footer() {
           <div>
             <h2 className="text-sm font-bold text-orange">Explore</h2>
             <div className="mt-4 space-y-3 text-sm">
-              <Link to="/coming-soon" className="block text-white/60 hover:text-white">
+              <Link to="/explore" className="block text-white/60 hover:text-white">
+                Campsites
+              </Link>
+              <Link to="/waitlist" className="block text-white/60 hover:text-white">
                 Join waitlist
               </Link>
               <Link to="/camping-guides" className="block text-white/60 hover:text-white">
@@ -50,6 +53,7 @@ export default function Footer() {
               <Link to="/community" className="block text-white/60 hover:text-white">
                 Community
               </Link>
+              <Link to="/suggest-campsite" className="block text-white/60 hover:text-white">Suggest a campsite</Link>
             </div>
           </div>
 
@@ -57,7 +61,7 @@ export default function Footer() {
             <h2 className="text-sm font-bold text-orange">Host</h2>
             <div className="mt-4 space-y-3 text-sm">
               <Link to="/host-your-land" className="block text-white/60 hover:text-white">
-                List your land
+                List your campsite
               </Link>
               <span className="block text-white/50">Host community</span>
               <span className="block text-white/50">Clear stay details</span>
@@ -76,7 +80,7 @@ export default function Footer() {
                 <MapPin size={16} />
                 Exact pins required
               </span>
-              <Link to="/signup" className="block text-white/60 hover:text-white">
+              <Link to="/waitlist" className="block text-white/60 hover:text-white">
                 Join community
               </Link>
               <Link to="/community" className="block text-white/60 hover:text-white">

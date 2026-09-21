@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   Bath,
-  BookOpen,
   CalendarClock,
   Camera,
   Car,
@@ -22,18 +21,14 @@ import {
 import {
   categories,
   getListings,
-  researchGuides,
   type Listing,
   type ListingType,
   type VerificationStage,
   isListingPubliclyPublishable,
 } from "../data/listings";
-import { submitMvpLead } from "../lib/mvpLeadStore";
 import { parseExploreCategory, type ExploreCategory } from "../lib/exploreFilters";
 import SeoFaq from "../components/SeoFaq";
 import { mediaSrcSet } from "../data/mediaRegistry";
-import LeadSubmissionStatus from "../components/leads/LeadSubmissionStatus";
-import { useLeadSubmission } from "../components/leads/useLeadSubmission";
 
 const exploreFaqs = [
   { question: "What can I find on CampIn?", answer: "Explore camping and outdoor stays across India, including tent pitches, BYOT sites, glamping, farm stays, motorhome-friendly places, and road-stop leads when details are confirmed." },
@@ -185,7 +180,7 @@ export function ListingCard({ listing }: { listing: Listing }) {
 export default function Explore() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(() => new URLSearchParams(location.search).get("query") || "");
   const [activeType, setActiveType] = useState<ActiveType>(() => getTypeFromSearch(location.search));
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [vehicleFilter, setVehicleFilter] = useState<VehicleFilter>(() => {
@@ -197,13 +192,10 @@ export default function Explore() {
     return "all";
   });
   const [stageFilter, setStageFilter] = useState<StageFilter>("all");
-  const [stateFilter, setStateFilter] = useState("all");
+  const [stateFilter, setStateFilter] = useState(() => new URLSearchParams(location.search).get("state") || "all");
   const [regionFilter, setRegionFilter] = useState("all");
   const [locationFilter, setLocationFilter] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
-  const [alertEmail, setAlertEmail] = useState("");
-  const [alertConsent, setAlertConsent] = useState(false);
-  const alertSubmission = useLeadSubmission();
   const [activeListings, setActiveListings] = useState(() => getListings().filter(isListingPubliclyPublishable));
   const activeCategory = parseExploreCategory(location.search);
   const categoryVehicleFilter: VehicleFilter | null =
@@ -226,6 +218,8 @@ export default function Explore() {
     } else if (!vehicle) {
       setVehicleFilter("all");
     }
+    setSearchQuery(params.get("query") || "");
+    setStateFilter(params.get("state") || "all");
   }, [location.search]);
 
   const stateOptions = useMemo(() => uniqueSorted(activeListings.map((listing) => listing.state)), [activeListings]);
@@ -298,8 +292,6 @@ export default function Explore() {
     setLocationFilter("all");
   };
 
-  const reviewedCount = activeListings.filter((listing) => listing.verificationStage === "reviewed").length;
-
   const clearActiveCategory = () => {
     const params = new URLSearchParams(location.search);
     params.delete("category");
@@ -311,17 +303,15 @@ export default function Explore() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-6 rounded-[2rem] bg-forest p-6 text-white shadow-xl sm:p-8 lg:grid-cols-[1.2fr_0.8fr] lg:p-10">
           <div>
-            <p className="inline-flex w-fit items-center gap-2 rounded-full border border-orange/30 bg-orange/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-orange">
-              ✓ Verified Directory
-            </p>
-            <h1 className="mt-4 text-4xl font-extrabold leading-tight sm:text-5xl">Find camping places you can ask about with confidence</h1>
+            <p className="inline-flex w-fit items-center gap-2 rounded-full border border-orange/30 bg-orange/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-orange">Campsites</p>
+            <h1 className="mt-4 text-4xl font-extrabold leading-tight sm:text-5xl">Find a campsite in India.</h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/75">
-              Browse CampIn research and reviewed leads across India. Each place shows what we know, what still needs a host confirmation, and the questions to ask before you travel.
+              Filter real published campsites by destination, stay type, amenities, and vehicle fit. Trip dates are a request; the host confirms availability.
             </p>
           </div>
           <div className="rounded-2xl bg-white p-6 text-textdark flex flex-col justify-center">
             <label className="text-xs font-black uppercase tracking-wider text-orange" htmlFor="explore-search">
-              Quick Discovery
+              Search campsites
             </label>
             <div className="relative mt-2">
               <Search size={19} className="absolute left-4 top-1/2 -translate-y-1/2 text-textgrey" />
@@ -330,20 +320,11 @@ export default function Explore() {
                 type="text"
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="Search Ramanagara BYOT, Kerala campervan, forest..."
+                placeholder="Search Bengaluru, Coorg, campervan, farm stay..."
                 className="h-12 w-full rounded-xl border border-forest/10 bg-offwhite pl-11 pr-4 text-sm outline-none transition focus:border-orange focus:bg-white"
               />
             </div>
-            <div className="mt-4 grid grid-cols-2 gap-3 text-center">
-              <div className="rounded-xl bg-offwhite p-3 border border-forest/5">
-                <p className="text-2xl font-black text-forest">{reviewedCount}</p>
-                <p className="text-[10px] uppercase font-bold text-textgrey tracking-wider">Reviewed Stays</p>
-              </div>
-              <div className="rounded-xl bg-offwhite p-3 border border-forest/5">
-                <p className="text-2xl font-black text-forest">Clear</p>
-                <p className="text-[10px] uppercase font-bold text-textgrey tracking-wider">Evidence labels</p>
-              </div>
-            </div>
+            <p className="mt-4 text-sm leading-6 text-textgrey">Can’t find a place? <Link className="font-bold text-orange underline" to="/suggest-campsite">Suggest a campsite</Link>.</p>
           </div>
         </div>
       </section>
@@ -352,7 +333,7 @@ export default function Explore() {
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 overflow-x-auto no-scrollbar">
             {[
-              { value: "all", label: "🏕️ All Verified Sites" },
+              { value: "all", label: "🏕️ All campsites" },
               { value: "byot", label: "⛺ Own-Tent (BYOT)" },
               { value: "campervan", label: "🚐 Campervan & RV Bays" },
               { value: "road-stop", label: "🅿️ Highway Road Stops" },
@@ -554,123 +535,16 @@ export default function Explore() {
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-lg bg-offwhite text-orange">
               <Camera size={24} />
             </div>
-            <h2 className="mt-5 text-2xl font-extrabold text-forest">No matching lead yet</h2>
+            <h2 className="mt-5 text-2xl font-extrabold text-forest">No campsites match these filters</h2>
             <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-textgrey">
-              This search becomes a community request. CampIn can use it to prioritize host review, route notes, or a future guide.
+              Try clearing a filter, choose a nearby destination, or tell us about a campsite we should review.
             </p>
-            <button type="button" onClick={resetFilters} className="mt-5 rounded-lg bg-forest px-5 py-3 font-bold text-white">
-              Reset search
-            </button>
+            <div className="mt-5 flex flex-wrap justify-center gap-3">
+              <button type="button" onClick={resetFilters} className="rounded-lg bg-forest px-5 py-3 font-bold text-white">Reset search</button>
+              <Link to="/suggest-campsite" className="rounded-lg border border-forest/20 bg-white px-5 py-3 font-bold text-forest">Suggest a campsite</Link>
+            </div>
           </div>
         )}
-      </section>
-
-      <section className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">
-        <div className="mb-5 flex items-center gap-3">
-          <BookOpen className="text-orange" size={22} />
-          <h2 className="text-2xl font-extrabold text-forest">Regions still being reviewed</h2>
-        </div>
-        <div className="grid gap-4 lg:grid-cols-3">
-          {researchGuides.map((guide) => (
-            <Link key={guide.slug} to={`/guides/${guide.slug}`} className="rounded-lg border border-forest/10 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
-              <p className="text-xs font-bold uppercase tracking-wide text-orange">{guide.status.replace("_", " ")}</p>
-              <h3 className="mt-2 text-xl font-extrabold text-forest">{guide.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-textgrey">{guide.summary}</p>
-              <p className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-orange">
-                Open guide
-                <ArrowRight size={16} />
-              </p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Terrain & Corridor Alerts Card */}
-      <section className="mx-auto max-w-7xl px-4 pt-16 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#0a1e14] to-[#040f0a] border border-[#2f6548]/20 p-8 sm:p-12 text-white shadow-2xl">
-          <div className="absolute top-0 right-0 h-64 w-64 rounded-full bg-orange/5 blur-3xl pointer-events-none" />
-          <div className="relative z-10 grid gap-8 lg:grid-cols-[1.3fr_0.7fr] items-center">
-            <div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-orange/30 bg-orange/10 px-4 py-1.5 text-xs font-black uppercase tracking-wider text-orange">
-                ⚠️ Live Safety Signal
-              </span>
-              <h2 className="mt-4 text-3xl font-black sm:text-4xl tracking-tight leading-tight">
-                Get Real-Time Weather & Terrain Alerts
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-white/70">
-                Monsoons, mudslides, and route closures happen fast in overlanding corridors. Sign up for our live 
-                backyard safety broadcast. We coordinate directly with local authorities in Western Ghats, Coorg, 
-                and Himachal to send alerts directly to your inbox.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2.5 text-xs text-white/60 font-bold">
-                <span className="flex items-center gap-2">✓ Western Ghats corridors</span>
-                <span className="flex items-center gap-2">✓ Himachal Overlanding passes</span>
-                <span className="flex items-center gap-2">✓ BYOT permit notifications</span>
-              </div>
-            </div>
-            
-            <div className="rounded-2xl bg-white/5 border border-white/10 p-6 sm:p-8 backdrop-blur-md">
-              <p className="text-xs font-black uppercase tracking-wider text-orange">Subscribe to Corridor Alerts</p>
-              <form 
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  if (!alertEmail.trim()) return;
-                  const result = await alertSubmission.run(() => submitMvpLead({
-                      type: "newsletter",
-                      sourcePage: "/explore",
-                      email: alertEmail,
-                      consent: alertConsent,
-                      status: "subscribed_corridor_alerts",
-                      score: 4,
-                      payload: {
-                        interest: "terrain_weather_safety_alerts",
-                        segment: vehicleFilter === "all" ? "general" : vehicleFilter
-                      }
-                    }));
-                  if (result?.remote === "synced") {
-                    setAlertEmail("");
-                    setAlertConsent(false);
-                  }
-                }}
-                className="mt-4 space-y-4"
-              >
-                <label className="block">
-                  <span className="sr-only">Email Address</span>
-                  <input
-                    required
-                    type="email"
-                    placeholder="Enter your camping email"
-                    value={alertEmail}
-                    onChange={(e) => setAlertEmail(e.target.value)}
-                    className="h-12 w-full rounded-xl border border-white/10 bg-white/5 px-4 text-sm font-semibold text-white outline-none placeholder:text-white/40 focus:border-orange focus:bg-white/10"
-                  />
-                </label>
-                <button
-                  type="submit"
-                  disabled={alertSubmission.isSaving}
-                  className="h-12 w-full rounded-xl bg-orange hover:bg-orange-dark text-white font-extrabold text-sm transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange/20"
-                >
-                  {alertSubmission.isSaving ? "Subscribing..." : "Enable Safety Alerts"}
-                  <ArrowRight size={16} />
-                </button>
-                <label className="flex items-start gap-2 text-[11px] font-semibold leading-4 text-white/55">
-                  <input
-                    required
-                    type="checkbox"
-                    checked={alertConsent}
-                    onChange={(event) => setAlertConsent(event.target.checked)}
-                    className="mt-0.5 h-4 w-4 shrink-0 accent-orange"
-                  />
-                  I agree CampIn may email me route and safety updates. I can unsubscribe anytime.
-                </label>
-              </form>
-              <LeadSubmissionStatus state={alertSubmission.state} message={alertSubmission.message} className="text-white/70" />
-              <p className="mt-3 text-[10px] text-white/40 leading-relaxed font-semibold">
-                No spam. Unsubscribe anytime. If secure sync is unavailable, this form will clearly show that the request is queued on this device.
-              </p>
-            </div>
-          </div>
-        </div>
       </section>
       <SeoFaq items={exploreFaqs} />
     </div>
