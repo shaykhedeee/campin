@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildSupportAlert } from "./notify-lead";
+import { buildSupportAlert } from "../functions/notify-lead";
 
 describe("buildSupportAlert", () => {
   it("constructs a concise notification with server-owned routing", () => {

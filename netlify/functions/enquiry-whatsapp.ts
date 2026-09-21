@@ -1,4 +1,4 @@
-import { authenticatedUserId, getSupabaseConfig, json, oneLine, supabaseRequest } from "./marketplace";
+import { authenticatedUserId, getSupabaseConfig, json, oneLine, supabaseRequest } from "../lib/marketplace";
 
 type StoredEnquiry = {
   id: string;

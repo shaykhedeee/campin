@@ -1,8 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 
-// Netlify injects these public browser settings at build time. Do not add
-// fallback credentials here: Netlify correctly blocks source files that
-// embed environment values, even when they are publishable client values.
+// Netlify injects public browser settings at build time. Never use a
+// service-role key here; browser access is governed by database RLS policies.
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 

@@ -1,4 +1,4 @@
-import { getSupabaseConfig, json, supabaseRequest } from "./marketplace";
+import { getSupabaseConfig, json, supabaseRequest } from "../lib/marketplace";
 
 /** Public, server-owned campsite search. Only published inventory is queried. */
 export default async function search(request: Request): Promise<Response> {

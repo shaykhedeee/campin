@@ -1,2 +1,5 @@
 /admin.html /admin.html 200
+/api/search /.netlify/functions/search 200
+/api/enquiries /.netlify/functions/create-enquiry 200
+/api/enquiries/:id/whatsapp /.netlify/functions/enquiry-whatsapp?id=:id 200
 /* /index.html 200
