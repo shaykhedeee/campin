@@ -78,18 +78,14 @@ function SuccessState({ lead, title, message, onReset }: SuccessStateProps) {
         <div className="min-w-0">
           <h3 className="text-xl font-extrabold text-forest">{title}</h3>
           <p className="mt-2 text-sm leading-6 text-textgrey">{message}</p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <div className="rounded-lg bg-offwhite p-3">
               <p className="text-xs font-bold uppercase tracking-wide text-textgrey">Lead ID</p>
               <p className="mt-1 font-extrabold text-forest">{lead.id}</p>
             </div>
             <div className="rounded-lg bg-offwhite p-3">
-              <p className="text-xs font-bold uppercase tracking-wide text-textgrey">Score</p>
-              <p className="mt-1 font-extrabold text-forest">{lead.score}/10</p>
-            </div>
-            <div className="rounded-lg bg-offwhite p-3">
-              <p className="text-xs font-bold uppercase tracking-wide text-textgrey">Stage</p>
-              <p className="mt-1 font-extrabold text-forest">{lead.status}</p>
+              <p className="text-xs font-bold uppercase tracking-wide text-textgrey">What happens next</p>
+              <p className="mt-1 font-extrabold text-forest">Campin will review your submission.</p>
             </div>
           </div>
           <button

@@ -4,10 +4,10 @@ import { trackPageView } from './lib/analytics';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import Explore from './pages/Explore';
+import MarketplaceExplore from './pages/MarketplaceExplore';
 import HostYourLand from './pages/HostYourLand';
 import Support from './pages/Support';
-import ListingDetail from './pages/ListingDetail';
+import MarketplaceListing from './pages/MarketplaceListing';
 import Community from './pages/Community';
 import BlogIndex from './pages/BlogIndex';
 import BlogPost from './pages/BlogPost';
@@ -47,8 +47,8 @@ function AppContent() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/listing/:id" element={<ListingDetail />} />
+          <Route path="/explore" element={<MarketplaceExplore />} />
+          <Route path="/listing/:id" element={<MarketplaceListing />} />
           <Route path="/coming-soon" element={<Waitlist />} />
           <Route path="/community" element={<Community />} />
           <Route path="/blog" element={<BlogIndex />} />
