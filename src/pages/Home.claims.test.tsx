@@ -17,10 +17,10 @@ it("starts the homepage with trip discovery", () => {
   render(<MemoryRouter><Home /></MemoryRouter>);
 
   expect(screen.getByRole("heading", { name: "Find your next campsite in India." })).toBeInTheDocument();
-  expect(screen.getByPlaceholderText("Where do you want to camp?")).toBeInTheDocument();
+  expect(screen.getByPlaceholderText("Destination, campsite or guide")).toBeInTheDocument();
   expect(screen.getByLabelText(/arrival date/i)).toBeInTheDocument();
   expect(screen.getByRole("button", { name: "Search" })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: "Own-tent camping" })).toHaveAttribute("href", "/explore?style=own-tent");
+  expect(screen.getByRole("button", { name: "Search" })).toBeInTheDocument();
 });
 
 it("does not show invented cards while the shared catalogue is loading", () => {

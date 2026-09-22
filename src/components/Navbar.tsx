@@ -25,7 +25,7 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [{ to: "/explore", label: "Campsites" }, { to: "/explore", label: "Destinations" }, { to: "/about", label: "About us" }];
-  const categories = [["/explore?category=bring-your-own-tent", "Own-tent camping"], ["/explore?type=overland", "Hosted tents"], ["/explore?category=pre-pitched-glamping", "Glamping"], ["/explore?vehicle=campervan", "Campervan & RV sites"], ["/explore?category=farms-estates", "Farm stays"], ["/explore?vehicle=road-stop", "Road stops"]];
+  const categories = [["/explore?style=hosted-tent", "Hosted tents"], ["/explore?style=nature-stay", "Nature stays"], ["/explore?style=campervan", "Campervan & RV sites"], ["/explore?style=road-stop", "Road stops"]];
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -90,7 +90,11 @@ export default function Navbar() {
       {isOpen && (
         <div className="border-t border-forest/10 bg-offwhite px-4 py-4 shadow-xl md:hidden">
           <div className="space-y-2">
-            {navLinks.map((link) => (
+            <div className="rounded-lg bg-white p-1">
+              <Link to="/explore" onClick={() => setIsOpen(false)} className="block rounded-lg px-4 py-3 text-base font-semibold text-forest">Campsites</Link>
+              {categories.map(([to,label])=><Link key={to} to={to} onClick={()=>setIsOpen(false)} className="block rounded-lg px-6 py-2 text-sm font-semibold text-textgrey hover:bg-offwhite">{label}</Link>)}
+            </div>
+            {navLinks.slice(1).map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
