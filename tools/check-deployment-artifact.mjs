@@ -8,7 +8,7 @@ const readProjectFile = (...parts) => readFile(path.join(projectRoot, ...parts),
 
 // Every top-level script in this folder becomes a public serverless function.
 const functionFiles = await readdir(path.join(projectRoot, "netlify", "functions"));
-const expectedFunctions = ["create-enquiry", "enquiry-whatsapp", "notify-lead", "search"];
+const expectedFunctions = ["account", "create-enquiry", "enquiry-whatsapp", "notify-lead", "search"];
 const functionNames = functionFiles.filter((file) => /\.[cm]?[jt]s$/.test(file)).map((file) => file.replace(/\.[^.]+$/, ""));
 assert.deepEqual(functionNames.sort(), expectedFunctions.sort(), "Only intended handlers may be deployed; keep tests and helpers outside netlify/functions");
 for (const name of functionNames) assert.match(name, /^[a-zA-Z0-9_-]+$/, "Invalid Netlify function name");
@@ -32,7 +32,7 @@ const adminRule = redirectLines.indexOf("/admin.html /admin.html 200");
 const publicFallback = redirectLines.indexOf("/* /index.html 200");
 assert.ok(adminRule >= 0, "Netlify redirects must preserve /admin.html");
 assert.ok(publicFallback > adminRule, "Netlify admin routing must precede the public SPA fallback");
-for (const route of ["/api/search", "/api/enquiries", "/api/enquiries/:id/whatsapp"]) {
+for (const route of ["/api/account", "/api/search", "/api/enquiries", "/api/enquiries/:id/whatsapp"]) {
   const index = redirectLines.findIndex((line) => line.startsWith(`${route} `));
   assert.ok(index >= 0 && index < publicFallback, `${route} must precede the SPA fallback`);
 }

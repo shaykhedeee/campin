@@ -15,6 +15,9 @@ type StoredEnquiry = {
 /** Returns a reviewed click-to-chat handoff for the authenticated enquiry owner. */
 export default async function enquiryWhatsapp(request: Request): Promise<Response> {
   if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+  let action: unknown;
+  try { action = (await request.json()).action; } catch { return json({error:"invalid_json"},400); }
+  if (action !== undefined && action !== "opened") return json({error:"invalid_action"},400);
   const config = getSupabaseConfig();
   if (!config) return json({ error: "service_not_configured" }, 503);
   const camperId = await authenticatedUserId(config, request);
@@ -44,7 +47,8 @@ export default async function enquiryWhatsapp(request: Request): Promise<Respons
     enquiry.listings?.slug ? `https://campin.co.in/listing/${enquiry.listings.slug}` : "",
   ].filter(Boolean).join("\n");
 
-  await supabaseRequest(config, `/rest/v1/inquiries?id=eq.${enquiry.id}`, { method: "PATCH", body: JSON.stringify({ whatsapp_opened_at: new Date().toISOString(), message_text: message }) });
+  const updated = await supabaseRequest(config, `/rest/v1/inquiries?id=eq.${enquiry.id}&camper_profile_id=eq.${camperId}`, { method: "PATCH", body: JSON.stringify(action === "opened" ? {whatsapp_opened_at:new Date().toISOString()} : {message_text:message}) });
+  if(!updated.ok)return json({error:"handoff_not_saved"},502);
   return json({ reference: enquiry.tracking_id, message, whatsappUrl: `https://wa.me/${phone}?text=${encodeURIComponent(message)}` });
 }
 

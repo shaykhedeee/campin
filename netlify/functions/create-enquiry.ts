@@ -1,3 +1,4 @@
+import { isCalendarDate, todayIso } from "../../src/lib/tripSearch";
 type EnquiryInput = {
   listingId?: string;
   startDate?: string;
@@ -39,6 +40,7 @@ export default async function createEnquiry(request: Request): Promise<Response>
   const listing = await getPublishedListing(config, input.listingId!);
   if (!listing) return json({ error: "listing_unavailable" }, 404);
 
+  if (listing.maxGuests && input.guests! > listing.maxGuests) return json({error:"capacity_exceeded"},400);
   const trackingId = `CMP-${Date.now().toString(36).toUpperCase()}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
   const inserted = await supabaseRequest(config, "/rest/v1/inquiries", {
     method: "POST",
@@ -49,7 +51,7 @@ export default async function createEnquiry(request: Request): Promise<Response>
       start_date: input.startDate,
       end_date: input.endDate,
       guests: input.guests,
-      own_tent: input.campingStyle === "own_tent",
+      own_tent: ["own_tent","own-tent"].includes(input.campingStyle||""),
       vehicle_type: singleLine(input.vehicleDetails),
       message: singleLine(input.questions),
       tracking_id: trackingId,
@@ -57,8 +59,9 @@ export default async function createEnquiry(request: Request): Promise<Response>
     }),
   });
   if (inserted.status === 409) {
-    const existing = await supabaseRequest(config, `/rest/v1/inquiries?camper_profile_id=eq.${camperId}&idempotency_key=eq.${encodeURIComponent(idempotencyKey)}&select=id,tracking_id&limit=1`);
-    const [enquiry] = existing.ok ? (await existing.json()) as Array<{ id: string; tracking_id: string }> : [];
+    const existing = await supabaseRequest(config, `/rest/v1/inquiries?camper_profile_id=eq.${camperId}&idempotency_key=eq.${encodeURIComponent(idempotencyKey)}&select=id,tracking_id,listing_id&limit=1`);
+    const [enquiry] = existing.ok ? (await existing.json()) as Array<{ id: string; tracking_id: string; listing_id:string }> : [];
+    if (enquiry && enquiry.listing_id !== listing.id) return json({error:"idempotency_conflict"},409);
     if (enquiry) return json({ id: enquiry.id, reference: enquiry.tracking_id, handoffReady: listing.hasContact }, 200);
   }
   if (!inserted.ok) return json({ error: "enquiry_not_saved" }, 502);
@@ -82,11 +85,12 @@ async function getAuthenticatedUserId(config: SupabaseConfig, token: string) {
 }
 
 async function getPublishedListing(config: SupabaseConfig, listingId: string) {
-  const response = await supabaseRequest(config, `/rest/v1/listings?id=eq.${encodeURIComponent(listingId)}&is_published=eq.true&select=id,listing_contacts(whatsapp_e164)`);
+  const response = await supabaseRequest(config, `/rest/v1/listings?id=eq.${encodeURIComponent(listingId)}&is_published=eq.true&select=id,max_guests,listing_contacts(whatsapp_e164)`);
   if (!response.ok) return null;
-  const [listing] = (await response.json()) as Array<{ id: string; listing_contacts?: Array<{ whatsapp_e164?: string }> }>;
+  const [listing] = (await response.json()) as Array<{ id: string; max_guests: number | null; listing_contacts?: {whatsapp_e164?:string} | Array<{ whatsapp_e164?: string }> }>;
   if (!listing) return null;
-  return { id: listing.id, hasContact: Boolean(listing.listing_contacts?.[0]?.whatsapp_e164) };
+  const contact = Array.isArray(listing.listing_contacts) ? listing.listing_contacts[0] : listing.listing_contacts;
+  return { id: listing.id, maxGuests:listing.max_guests, hasContact: Boolean(contact?.whatsapp_e164) };
 }
 
 function supabaseRequest(config: SupabaseConfig, path: string, init: RequestInit = {}) {
@@ -99,11 +103,11 @@ function supabaseRequest(config: SupabaseConfig, path: string, init: RequestInit
 
 function validate(input: EnquiryInput) {
   if (!input || !isUuid(input.listingId)) return "invalid_listing";
-  if (!isIsoDate(input.startDate) || !isIsoDate(input.endDate) || input.startDate! >= input.endDate!) return "invalid_dates";
+  if (!isIsoDate(input.startDate) || !isIsoDate(input.endDate) || input.startDate! >= input.endDate! || input.startDate! < todayIso()) return "invalid_dates";
   if (!Number.isInteger(input.guests) || input.guests! < 1 || input.guests! > 50) return "invalid_guests";
-  if (input.campingStyle && input.campingStyle.length > 80) return "invalid_camping_style";
-  if (input.vehicleDetails && input.vehicleDetails.length > 500) return "invalid_vehicle_details";
-  if (input.questions && input.questions.length > 2000) return "invalid_questions";
+  if (input.campingStyle != null && (typeof input.campingStyle !== "string" || input.campingStyle.length > 80)) return "invalid_camping_style";
+  if (input.vehicleDetails != null && (typeof input.vehicleDetails !== "string" || input.vehicleDetails.length > 500)) return "invalid_vehicle_details";
+  if (input.questions != null && (typeof input.questions !== "string" || input.questions.length > 2000)) return "invalid_questions";
   return null;
 }
 
@@ -112,7 +116,7 @@ function isUuid(value: unknown): value is string {
 }
 
 function isIsoDate(value: unknown): value is string {
-  return typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(Date.parse(`${value}T00:00:00Z`));
+  return isCalendarDate(value);
 }
 
 function singleLine(value: string | undefined) {
