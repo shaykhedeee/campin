@@ -3,7 +3,7 @@ import { normalizeLead, type MvpLeadInput, type MvpLeadType } from "./leadSchema
 
 export type { MvpLeadInput, MvpLeadType } from "./leadSchema";
 
-export type LeadTransportStatus = "sent" | "skipped" | "failed";
+export type LeadTransportStatus = "sent" | "queued" | "skipped" | "failed";
 
 export interface MvpLeadRecord extends MvpLeadInput {
   id: string;
@@ -74,11 +74,18 @@ export async function submitMvpLead(
     }
   }
 
-  if (remote === "queued") queueLeadForRetry(lead, storage);
-
-  const notification = await submitSupportNotification(lead, fetcher);
+  const support = await submitSupportNotification(lead, fetcher);
+  const notification = support.status;
+  if (support.persisted) {
+    lead = { ...lead, syncStatus: "supabase_synced" };
+    remote = "synced";
+    retryReason = undefined;
+    removeLeadFromRetryQueue(lead.id, storage);
+  } else if (remote === "queued") {
+    queueLeadForRetry(lead, storage);
+  }
   const netlifyForm =
-    notification === "sent" || !isNetlifyFallbackEnabled(dependencies.netlifyFormFallback)
+    notification === "sent" || notification === "queued" || !isNetlifyFallbackEnabled(dependencies.netlifyFormFallback)
       ? "skipped"
       : await submitNetlifyForm(lead, fetcher);
 
@@ -136,8 +143,8 @@ function toSupabaseRow(lead: MvpLeadRecord) {
   };
 }
 
-async function submitSupportNotification(lead: MvpLeadRecord, fetcher?: typeof fetch): Promise<LeadTransportStatus> {
-  if (!fetcher) return "skipped";
+async function submitSupportNotification(lead: MvpLeadRecord, fetcher?: typeof fetch): Promise<{ status: LeadTransportStatus; persisted: boolean }> {
+  if (!fetcher) return { status: "skipped", persisted: false };
   try {
     const response = await fetcher("/.netlify/functions/notify-lead", {
       method: "POST",
@@ -154,11 +161,12 @@ async function submitSupportNotification(lead: MvpLeadRecord, fetcher?: typeof f
         payload: lead.payload,
       }),
     });
-    const body = (await response.json().catch(() => null)) as { status?: LeadTransportStatus } | null;
-    if (body?.status === "sent" || body?.status === "skipped" || body?.status === "failed") return body.status;
-    return response.ok ? "sent" : "failed";
+    const body = (await response.json().catch(() => null)) as { status?: LeadTransportStatus; notification?: string; persisted?: boolean } | null;
+    if (body?.notification === "queued" && body.persisted === true) return { status: "queued", persisted: true };
+    if (body?.status === "sent" || body?.status === "skipped" || body?.status === "failed") return { status: body.status, persisted: response.ok };
+    return { status: "failed", persisted: false };
   } catch {
-    return "failed";
+    return { status: "failed", persisted: false };
   }
 }
 
@@ -185,6 +193,12 @@ async function submitNetlifyForm(lead: MvpLeadRecord, fetcher?: typeof fetch): P
   } catch {
     return "failed";
   }
+}
+
+function removeLeadFromRetryQueue(id: string, storage: Pick<Storage, "getItem" | "setItem"> | null) {
+  if (!storage) return;
+  storage.setItem(retryStorageKey, JSON.stringify(readMvpLeads(storage).filter((item) => item.id !== id)));
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("campin-mvp-leads-updated"));
 }
 
 function queueLeadForRetry(lead: MvpLeadRecord, storage: Pick<Storage, "getItem" | "setItem"> | null) {

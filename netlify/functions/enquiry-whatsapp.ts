@@ -8,6 +8,8 @@ type StoredEnquiry = {
   guests: number;
   vehicle_type?: string | null;
   own_tent: boolean;
+  contact_name?: string | null;
+  camping_style?: string | null;
   message?: string | null;
   listings?: { title?: string; slug?: string } | null;
 };
@@ -25,7 +27,7 @@ export default async function enquiryWhatsapp(request: Request): Promise<Respons
 
   const enquiryId = new URL(request.url).searchParams.get("id");
   if (!isUuid(enquiryId)) return json({ error: "invalid_enquiry" }, 400);
-  const response = await supabaseRequest(config, `/rest/v1/inquiries?id=eq.${enquiryId}&camper_profile_id=eq.${camperId}&select=id,listing_id,tracking_id,start_date,end_date,guests,vehicle_type,own_tent,message,listings(title,slug)`);
+  const response = await supabaseRequest(config, `/rest/v1/inquiries?id=eq.${enquiryId}&camper_profile_id=eq.${camperId}&select=id,listing_id,tracking_id,start_date,end_date,guests,vehicle_type,own_tent,contact_name,camping_style,message,listings(title,slug)`);
   if (!response.ok) return json({ error: "enquiry_unavailable" }, 502);
   const [enquiry] = (await response.json()) as Array<StoredEnquiry & { listing_id: string }>;
   if (!enquiry) return json({ error: "enquiry_not_found" }, 404);
@@ -38,8 +40,8 @@ export default async function enquiryWhatsapp(request: Request): Promise<Respons
 
   const message = [
     `Hi, I found ${oneLine(enquiry.listings?.title) || "this campsite"} on Campin.`,
-    `I'm enquiring for ${formatDate(enquiry.start_date)}–${formatDate(enquiry.end_date)}, for ${enquiry.guests}.`,
-    `Camping style: ${enquiry.own_tent ? "Own tent" : "Hosted stay"}.`,
+    `I'm ${oneLine(enquiry.contact_name) || "a camper"}, enquiring for ${formatDate(enquiry.start_date)}–${formatDate(enquiry.end_date)}, for ${enquiry.guests}.`,
+    `Camping style: ${oneLine(enquiry.camping_style) || (enquiry.own_tent ? "Own tent" : "Hosted stay")}.`,
     enquiry.vehicle_type ? `Vehicle: ${oneLine(enquiry.vehicle_type)}.` : "",
     enquiry.message ? `Questions: ${oneLine(enquiry.message)}.` : "",
     "Please confirm availability, total price, and arrival instructions.",

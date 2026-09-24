@@ -12,8 +12,7 @@ export default function Footer() {
               <BrandMark inverted />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-6 text-white/70">
-              India's camping discovery and community platform. Find outdoor stays, tent pitches, road stops,
-              practical guides, and host-led experiences with clearer trip details.
+              Find outdoor stays, review the details, and send a campsite enquiry directly to its operator.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
@@ -45,13 +44,7 @@ export default function Footer() {
                 Join waitlist
               </Link>
               <Link to="/camping-guides" className="block text-white/60 hover:text-white">
-                Camping guides
-              </Link>
-              <Link to="/blog" className="block text-white/60 hover:text-white">
-                CampIn Journal
-              </Link>
-              <Link to="/community" className="block text-white/60 hover:text-white">
-                Community
+                Camping resources
               </Link>
               <Link to="/suggest-campsite" className="block text-white/60 hover:text-white">Suggest a campsite</Link>
             </div>
@@ -63,9 +56,8 @@ export default function Footer() {
               <Link to="/host-your-land" className="block text-white/60 hover:text-white">
                 List your campsite
               </Link>
-              <span className="block text-white/50">Host community</span>
+              <span className="block text-white/50">Direct camper enquiries</span>
               <span className="block text-white/50">Clear stay details</span>
-              <span className="block text-white/50">Reviewed stay details</span>
             </div>
           </div>
 
@@ -80,12 +72,7 @@ export default function Footer() {
                 <MapPin size={16} />
                 Exact pins required
               </span>
-              <Link to="/waitlist" className="block text-white/60 hover:text-white">
-                Join community
-              </Link>
-              <Link to="/community" className="block text-white/60 hover:text-white">
-                WhatsApp community
-              </Link>
+              <Link to="/waitlist" className="block text-white/60 hover:text-white">Join camper updates</Link>
               <Link to="/responsible-camping-pledge" className="block text-white/60 hover:text-white">
                 Responsible pledge
               </Link>

@@ -1,13 +1,9 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Lock, Compass, Sparkles, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Compass, Sparkles, CheckCircle2 } from "lucide-react";
 import { campingGuides } from "../data/campingGuides";
 import CampInIcon, { type CampInIconName } from "../components/icons/CampInIcon";
 
-const statusLabels = {
-  public_preview: "Public preview",
-  lead_magnet: "Email + phone unlock",
-  team_review: "Email + phone unlock",
-};
+const statusLabels = { public_preview: "Free to read", lead_magnet: "Free to read", team_review: "Free to read" };
 
 const guideIcons: Record<string, CampInIconName> = {
   "camping-near-bangalore-complete-guide": "route",
@@ -46,12 +42,12 @@ export default function Guides() {
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/70">
               Stop planning from random listicles. Every guide explains permission questions, washroom and water checks,
-              route context, packing decisions, and known unknowns. Read the full guide online, then unlock the downloadable checklist.
+              Practical, free guides for planning permissioned outdoor stays in India. Check the known facts, useful questions, and what still needs confirmation.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-extrabold text-white/80">{campingGuides.length} Active Guides</span>
               <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-extrabold text-white/80">{totalMinutes} Mins Reading</span>
-              <span className="rounded-full border border-orange/20 bg-orange/5 px-4 py-2 text-xs font-extrabold text-orange">Checklist Unlocks</span>
+              <span className="rounded-full border border-orange/20 bg-orange/5 px-4 py-2 text-xs font-extrabold text-orange">Read online or download</span>
             </div>
           </div>
 
@@ -82,16 +78,14 @@ export default function Guides() {
         <div className="mt-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
             <div>
-              <h2 className="text-3xl font-black tracking-tight">Rankable Camping Guides</h2>
-              <p className="mt-2 text-white/60">Read the long-form guide publicly, then unlock the portable checklist.</p>
+              <h2 className="text-3xl font-black tracking-tight">Camping guides for real trips</h2>
+              <p className="mt-2 text-white/60">Every guide is readable before you share contact details.</p>
             </div>
             <div className="h-[2px] flex-grow bg-gradient-to-r from-orange/20 to-transparent hidden md:block" />
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {campingGuides.map((guide) => {
-              const isFreePreview = guide.slug === "first-time-family-camping-india";
-
               return (
                 <Link
                   key={guide.slug}
@@ -102,12 +96,8 @@ export default function Guides() {
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange/10 border border-orange/20 text-orange group-hover:scale-110 transition-transform">
                       <CampInIcon name={guideIcons[guide.slug] || "tent"} className="h-6 w-6" />
                     </div>
-                    <span className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider ${
-                      isFreePreview 
-                        ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" 
-                        : "bg-orange/20 text-orange border border-orange/30"
-                    }`}>
-                      {isFreePreview ? "Free preview" : statusLabels[guide.status]}
+                    <span className="rounded-full border border-emerald-500/30 bg-emerald-500/20 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-emerald-400">
+                      {statusLabels[guide.status]}
                     </span>
                   </div>
 
@@ -132,19 +122,7 @@ export default function Guides() {
                   </div>
 
                   <div className="mt-6 border-t border-white/10 pt-5 flex items-center justify-between text-sm font-extrabold text-orange">
-                    <span className="flex items-center gap-2">
-                      {isFreePreview ? (
-                        <>
-                          <CheckCircle2 size={16} />
-                          Read online immediately
-                        </>
-                      ) : (
-                        <>
-                          <Lock size={15} />
-                          Unlock full guide + download
-                        </>
-                      )}
-                    </span>
+                    <span className="flex items-center gap-2"><CheckCircle2 size={16} />Read online or download</span>
                     <ArrowRight size={16} className="transition group-hover:translate-x-1.5" />
                   </div>
                 </Link>
@@ -158,19 +136,14 @@ export default function Guides() {
           <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-orange/5 blur-2xl pointer-events-none" />
           
           <div className="max-w-3xl">
-            <p className="text-xs font-black uppercase tracking-wider text-orange">Community Standard</p>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-black tracking-tight">Need a customized route planning guide?</h2>
+            <p className="text-xs font-black uppercase tracking-wider text-orange">Help improve the directory</p>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-black tracking-tight">Know a place that should be listed?</h2>
             <p className="mt-4 text-base leading-relaxed text-white/70">
-              We continually survey India's corridors. If you are scouting new caravan routes, high-altitude Western Ghat terrains, 
-              or BYOT spots, share your destination with our team. We perform checkups so you travel safely.
+              Suggest a campsite or road stop. Campin reviews the source and permission details before a place is considered for publication.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <a href="mailto:support@campin.co.in" className="inline-flex items-center justify-center gap-2 rounded-xl bg-orange hover:bg-orange-dark px-6 py-3.5 text-sm font-black transition-all hover:-translate-y-0.5">
-                Contact Route Experts
-                <ArrowRight size={16} />
-              </a>
-              <Link to="/coming-soon" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 px-6 py-3.5 text-sm font-black transition-all">
-                Join Founding Waitlist
+              <Link to="/suggest-campsite" className="inline-flex items-center justify-center gap-2 rounded-xl bg-orange px-6 py-3.5 text-sm font-black transition-all hover:-translate-y-0.5">
+                Suggest a campsite <ArrowRight size={16} />
               </Link>
             </div>
           </div>

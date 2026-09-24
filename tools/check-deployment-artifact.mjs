@@ -8,21 +8,26 @@ const readProjectFile = (...parts) => readFile(path.join(projectRoot, ...parts),
 
 // Every top-level script in this folder becomes a public serverless function.
 const functionFiles = await readdir(path.join(projectRoot, "netlify", "functions"));
-const expectedFunctions = ["account", "create-enquiry", "enquiry-whatsapp", "notify-lead", "search"];
+const expectedFunctions = ["account", "create-enquiry", "email-outbox", "email-webhook", "enquiry-whatsapp", "notify-lead", "owner", "search"];
 const functionNames = functionFiles.filter((file) => /\.[cm]?[jt]s$/.test(file)).map((file) => file.replace(/\.[^.]+$/, ""));
 assert.deepEqual(functionNames.sort(), expectedFunctions.sort(), "Only intended handlers may be deployed; keep tests and helpers outside netlify/functions");
 for (const name of functionNames) assert.match(name, /^[a-zA-Z0-9_-]+$/, "Invalid Netlify function name");
 
-const [publicEntry, adminEntry, netlifyRedirects, vercelConfigText] = await Promise.all([
+const [publicEntry, adminEntry, netlifyRedirects, vercelConfigText, assetFiles] = await Promise.all([
   readProjectFile("dist", "index.html"),
   readProjectFile("dist", "admin.html"),
   readProjectFile("dist", "_redirects"),
   readProjectFile("vercel.json"),
+  readdir(path.join(projectRoot, "dist", "assets")),
 ]);
 
 assert.match(publicEntry, /id=["']root["']/, "dist/index.html must remain the public app entry");
 assert.match(adminEntry, /id=["']admin-root["']/, "dist/admin.html must contain the admin app mount");
 assert.doesNotMatch(adminEntry, /src=["']\/src\/admin\.tsx["']/, "admin entry must contain production code");
+assert.match(publicEntry, /src=["']\/assets\/[^"']+\.js["']/, "public entry must load cacheable built JavaScript assets");
+assert.match(adminEntry, /src=["']\/assets\/[^"']+\.js["']/, "admin entry must load cacheable built JavaScript assets");
+assert.ok(assetFiles.some((file) => /[.-][a-z0-9]{6,}\.js$/i.test(file)), "production JavaScript assets must have content hashes for caching");
+assert.ok(assetFiles.some((file) => /[.-][a-z0-9]{6,}\.css$/i.test(file)), "production CSS assets must have content hashes for caching");
 
 const redirectLines = netlifyRedirects
   .split(/\r?\n/)
@@ -32,7 +37,7 @@ const adminRule = redirectLines.indexOf("/admin.html /admin.html 200");
 const publicFallback = redirectLines.indexOf("/* /index.html 200");
 assert.ok(adminRule >= 0, "Netlify redirects must preserve /admin.html");
 assert.ok(publicFallback > adminRule, "Netlify admin routing must precede the public SPA fallback");
-for (const route of ["/api/account", "/api/search", "/api/enquiries", "/api/enquiries/:id/whatsapp"]) {
+for (const route of ["/api/owner", "/api/email-webhook", "/api/leads", "/api/account", "/api/search", "/api/enquiries", "/api/enquiries/:id/whatsapp"]) {
   const index = redirectLines.findIndex((line) => line.startsWith(`${route} `));
   assert.ok(index >= 0 && index < publicFallback, `${route} must precede the SPA fallback`);
 }

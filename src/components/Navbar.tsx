@@ -25,7 +25,7 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [{ to: "/explore", label: "Campsites" }, { to: "/explore", label: "Destinations" }, { to: "/about", label: "About us" }];
-  const categories = [["/explore?style=hosted-tent", "Hosted tents"], ["/explore?style=nature-stay", "Nature stays"], ["/explore?style=campervan", "Campervan & RV sites"], ["/explore?style=road-stop", "Road stops"]];
+  const categories = [["/explore?style=own-tent", "Own-tent camping"], ["/explore?style=hosted-tent", "Hosted tents"], ["/explore?style=glamping", "Glamping"], ["/explore?style=campervan", "Campervan & RV sites"], ["/explore?style=farm", "Farm stays"], ["/explore?style=road-stop", "Road stops"], ["/explore?style=nature-stay", "Nature stays"]];
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -50,8 +50,8 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden items-center gap-9 md:flex">
-          <div className="relative" onMouseEnter={()=>setShowCampsites(true)} onMouseLeave={()=>setShowCampsites(false)}>
-            <Link to="/explore" onFocus={()=>setShowCampsites(true)} className={`inline-flex items-center gap-1 rounded-lg px-1 py-2 text-base font-extrabold tracking-[-0.035em] ${isHome ? "text-white" : "text-textgrey hover:text-forest"}`}>Campsites <ChevronDown size={16}/></Link>
+          <div className="relative" onMouseEnter={()=>setShowCampsites(true)} onKeyDown={e=>{if(e.key==="Escape")setShowCampsites(false);}} onMouseLeave={()=>setShowCampsites(false)}>
+            <Link to="/explore" aria-haspopup="true" aria-expanded={showCampsites} onClick={e=>{if(!showCampsites){e.preventDefault();setShowCampsites(true);}}} onFocus={()=>setShowCampsites(true)} className={`inline-flex items-center gap-1 rounded-lg px-1 py-2 text-base font-extrabold tracking-[-0.035em] ${isHome ? "text-white" : "text-textgrey hover:text-forest"}`}>Campsites <ChevronDown size={16}/></Link>
             {showCampsites && <div className="absolute left-0 top-full w-56 rounded-xl border border-forest/10 bg-white p-2 shadow-xl">{categories.map(([to,label])=><Link key={to} to={to} onClick={()=>setShowCampsites(false)} className="block rounded-lg px-3 py-2 text-sm font-bold text-forest hover:bg-offwhite">{label}</Link>)}</div>}
           </div>
           {navLinks.slice(1).map((link) => (

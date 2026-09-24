@@ -15,6 +15,24 @@
   to = "/.netlify/functions/account"
   status = 200
 
+[functions."email-outbox"]
+  schedule = "*/5 * * * *"
+
+[[redirects]]
+  from = "/api/owner"
+  to = "/.netlify/functions/owner"
+  status = 200
+
+[[redirects]]
+  from = "/api/email-webhook"
+  to = "/.netlify/functions/email-webhook"
+  status = 200
+
+[[redirects]]
+  from = "/api/leads"
+  to = "/.netlify/functions/notify-lead"
+  status = 200
+
 [[redirects]]
   from = "/api/search"
   to = "/.netlify/functions/search"

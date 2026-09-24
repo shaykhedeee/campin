@@ -1,15 +1,14 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import { useCatalogue, filterCampsites, campingStyles } from '../lib/catalogue';
 import CampsiteCard from '../components/CampsiteCard';
-import { blogPosts } from '../data/blogPosts';
-import { campingGuides } from '../data/campingGuides';
+import { searchPublicResources } from '../lib/publicSearch';
 import TripSearch from '../components/TripSearch';
 export default function MarketplaceExplore(){
  const {campsites,loading,error}=useCatalogue(); const [params,setParams]=useSearchParams();
  const set=(key:string,value:string)=>{const next=new URLSearchParams(params);value?next.set(key,value):next.delete(key);setParams(next);};
- const results=filterCampsites(campsites,params); const query=(params.get('query')||'').toLowerCase();
- const activeStyles=campingStyles.filter(([style])=>campsites.some(c=>c.styles.includes(style)));
- const resources=[...campingGuides.map(g=>({title:g.title,url:`/camping-guides/${g.slug}`})),...blogPosts.map(g=>({title:g.title,url:`/blog/${g.slug}`})),{title:'About Campin',url:'/about'},{title:'List your campsite',url:'/host-your-land'},{title:'Contact and help',url:'/support'}].filter(r=>query&&r.title.toLowerCase().includes(query)).slice(0,8);
+ const results=filterCampsites(campsites,params); const query=params.get('query')||'';
+ const activeStyles=campingStyles;
+ const resources=searchPublicResources(query);
  return <main className="min-h-screen bg-offwhite px-4 pb-20 pt-28 text-forest"><div className="mx-auto max-w-7xl">
  <TripSearch key={`${params.get('query')}-${params.get('arrive')}-${params.get('depart')}-${params.get('guests')}`} compact initial={{query:params.get('query')||'',arrive:params.get('arrive')||'',depart:params.get('depart')||'',guests:Number(params.get('guests'))||2}} onSearch={next=>{const merged=new URLSearchParams(params);for(const key of ['query','arrive','depart','guests']){const value=next.get(key);value?merged.set(key,value):merged.delete(key);}setParams(merged)}}/>
  <p className="mt-2 text-xs text-textgrey">Dates are requests. Availability and total pricing require operator confirmation.</p>
@@ -19,7 +18,7 @@ export default function MarketplaceExplore(){
  {loading&&<p role="status">Loading campsites…</p>}{error&&<p role="alert">{error} <button onClick={()=>window.location.reload()} className="underline">Retry</button></p>}
  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{results.map(site=><CampsiteCard key={site.id} site={site}/>)}</div>
  {!loading&&!error&&!results.length&&<div className="rounded-2xl bg-white p-8"><h2 className="text-xl font-bold">No places match these filters yet</h2><p className="my-3">Try another state or camping style.</p><button className="mr-5 font-bold underline" onClick={()=>setParams({})}>Reset filters</button><Link to="/suggest-campsite" className="font-bold text-orange underline">Suggest a campsite</Link></div>}
- {resources.length>0&&<section className="mt-12"><h2 className="text-2xl font-bold">Resources & help</h2><div className="mt-4 grid gap-3 sm:grid-cols-2">{resources.map(r=><Link key={r.url} to={r.url} className="rounded-xl bg-white p-4 underline">{r.title}</Link>)}</div></section>}
+ {resources.length>0&&<section className="mt-12"><h2 className="text-2xl font-bold">Guides, articles & help</h2><div className="mt-4 grid gap-3 sm:grid-cols-2">{resources.map(r=><Link key={r.href} to={r.href} className="rounded-xl bg-white p-4 hover:shadow-sm"><span className="text-xs font-bold uppercase tracking-wide text-orange">{r.kind}</span><span className="mt-2 block font-bold underline">{r.title}</span><span className="mt-1 block text-sm text-textgrey">{r.description}</span></Link>)}</div></section>}
  <Link to="/suggest-campsite" className="mt-10 inline-block font-bold text-orange underline">Know a great place? Suggest a campsite</Link>
  </div></main>;
 }

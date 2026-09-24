@@ -46,6 +46,19 @@ describe("submitMvpLead", () => {
     expect(readMvpLeads()).toEqual([expect.objectContaining({ id: "NEWS-RETRY", syncStatus: "retry_queued" })]);
   });
 
+  it("treats a server-persisted lead with queued email as saved, not a local retry", async () => {
+    const insert = vi.fn().mockResolvedValue({ error: new Error("duplicate or offline") });
+    const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify({ persisted: true, notification: "queued" }), { status: 202 }));
+    const result = await submitMvpLead(input, {
+      supabase: { from: () => ({ insert }) }, fetcher, netlifyFormFallback: false,
+      createId: () => "NEWS-QUEUED", now: () => new Date("2026-08-30T10:00:00.000Z"),
+    });
+    expect(result.remote).toBe("synced");
+    expect(result.notification).toBe("queued");
+    expect(result.lead.syncStatus).toBe("supabase_synced");
+    expect(readMvpLeads()).toEqual([]);
+  });
+
   it("reports the optional Netlify form fallback independently", async () => {
     const fetcher = vi
       .fn()

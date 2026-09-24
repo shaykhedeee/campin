@@ -1,9 +1,10 @@
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { HashRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { LayoutDashboard, ClipboardCheck, Lightbulb, ArrowLeft, Lock, LogOut } from "lucide-react";
-import OpsCenter from "./pages/OpsCenter";
-import ValidationMachine from "./pages/ValidationMachine";
-import StrategyLab from "./pages/StrategyLab";
+const OpsCenter = lazy(() => import("./pages/OpsCenter"));
+const ValidationMachine = lazy(() => import("./pages/ValidationMachine"));
+const StrategyLab = lazy(() => import("./pages/StrategyLab"));
+const OwnerWorkspace = lazy(() => import("./pages/OwnerWorkspace"));
 import { adminEmail, isCampInOwnerEmail, supabase } from "./lib/adminAuth";
 
 type AuthStatus = "checking" | "signed-out" | "owner";
@@ -159,6 +160,7 @@ function AdminNavbar({ onSignOut }: { onSignOut: () => Promise<void> }) {
     { path: "/", label: "Ops Center", icon: LayoutDashboard },
     { path: "/validation", label: "Validation Machine", icon: ClipboardCheck },
     { path: "/strategy", label: "Strategy Lab", icon: Lightbulb },
+    { path: "/workspace", label: "Database Workspace", icon: LayoutDashboard },
   ];
 
   return (
@@ -230,11 +232,12 @@ export default function AdminApp() {
           <div className="min-h-screen bg-stone-950 text-stone-100 flex flex-col font-sans">
             <AdminNavbar onSignOut={signOut} />
             <main className="min-w-0 flex-1 overflow-x-hidden">
-              <Routes>
+              <Suspense fallback={<div className="p-8 text-stone-300" role="status">Loading owner tools…</div>}><Routes>
                 <Route path="/" element={<OpsCenter />} />
                 <Route path="/validation" element={<ValidationMachine />} />
                 <Route path="/strategy" element={<StrategyLab />} />
-              </Routes>
+                <Route path="/workspace" element={<OwnerWorkspace />} />
+              </Routes></Suspense>
             </main>
           </div>
         )}

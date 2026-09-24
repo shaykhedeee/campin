@@ -1,47 +1,42 @@
-import { describe, expect, it } from "vitest";
-import { buildSupportAlert } from "../functions/notify-lead";
+import { beforeEach, expect, it, vi } from "vitest";
+import notifyLead from "../functions/notify-lead";
 
-describe("buildSupportAlert", () => {
-  it("constructs a concise notification with server-owned routing", () => {
-    const request = buildSupportAlert(
-      {
-        id: "HOST-123",
-        type: "host_interest",
-        sourcePage: "/host-your-land",
-        name: "Mira",
-        email: "mira@example.com",
-        city: "Pune",
-        createdAt: "2026-08-30T10:00:00.000Z",
-      },
-      {
-        from: "CampIn Leads <leads@campin.co.in>",
-        to: "support@campin.co.in",
-      },
-    );
+const suggestion = {
+  id: "ROADSTOP-ABC123",
+  type: "road_stop",
+  sourcePage: "/suggest-campsite",
+  name: "Asha Camper",
+  email: "asha@example.com",
+  city: "Coorg",
+  consent: true,
+  payload: { submissionKind: "campsite_suggestion", place: "River Meadow Camp", mapLink: "https://maps.google.com/?q=camp", relationship: "I stayed there last year", notes: "Call before arriving" },
+};
 
-    expect(request.to).toEqual(["support@campin.co.in"]);
-    expect(request.subject).toContain("host interest");
-    expect(request.text).toContain("HOST-123");
-    expect(request.text).not.toContain("undefined");
-    expect(request.html).toContain("HOST-123");
-    expect(JSON.stringify(request)).not.toMatch(/api[_-]?key/i);
-  });
+beforeEach(() => {
+  vi.stubEnv("SUPABASE_URL", "https://test.supabase.co");
+  vi.stubEnv("SUPABASE_SERVICE_ROLE_KEY", "server-secret");
+  vi.stubEnv("LEAD_ALERT_TO", "owner@example.com");
+  vi.stubGlobal("fetch", vi.fn(async () => Response.json({ id: "ROADSTOP-ABC123", queued: true })));
+});
 
-  it("includes every submitted payload field and escapes HTML", () => {
-    const request = buildSupportAlert(
-      {
-        id: "WAIT-123",
-        type: "camper_waitlist",
-        sourcePage: "/waitlist",
-        name: "Mira <test>",
-        createdAt: "2026-08-30T10:00:00.000Z",
-        payload: { destinationInterests: ["Coorg", "Goa"], notes: "<script>alert(1)</script>" },
-      },
-      { from: "CampIn Leads <leads@campin.co.in>", to: "support@campin.co.in" },
-    );
+it("rejects incomplete campsite suggestions before persistence", async () => {
+  const body = { ...suggestion, payload: { ...suggestion.payload, place: " " } };
+  const response = await notifyLead(new Request("https://campin.co.in/api/leads", { method: "POST", body: JSON.stringify(body) }));
+  expect(response.status).toBe(400);
+  expect(fetch).not.toHaveBeenCalled();
+});
 
-    expect(request.text).toContain("Destination Interests: Coorg, Goa");
-    expect(request.html).toContain("&lt;script&gt;");
-    expect(request.html).not.toContain("<script>");
-  });
+it("queues a valid suggestion for persistence and owner email", async () => {
+  const response = await notifyLead(new Request("https://campin.co.in/api/leads", { method: "POST", body: JSON.stringify(suggestion) }));
+  expect(response.status).toBe(202);
+  expect(await response.json()).toMatchObject({ persisted: true, notification: "queued", id: suggestion.id });
+  const call = vi.mocked(fetch).mock.calls[0];
+  expect(String(call[0])).toContain("campin_queue_lead_emails");
+  expect(JSON.parse(String(call[1]?.body)).p_lead.payload.place).toBe("River Meadow Camp");
+});
+
+it("rejects insecure map links", async () => {
+  const body = { ...suggestion, payload: { ...suggestion.payload, mapLink: "http://example.com" } };
+  const response = await notifyLead(new Request("https://campin.co.in/api/leads", { method: "POST", body: JSON.stringify(body) }));
+  expect(response.status).toBe(400);
 });

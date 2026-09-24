@@ -1,5 +1,8 @@
 /admin.html /admin.html 200
 /api/account /.netlify/functions/account 200
+/api/owner /.netlify/functions/owner 200
+/api/email-webhook /.netlify/functions/email-webhook 200
+/api/leads /.netlify/functions/notify-lead 200
 /api/search /.netlify/functions/search 200
 /api/enquiries /.netlify/functions/create-enquiry 200
 /api/enquiries/:id/whatsapp /.netlify/functions/enquiry-whatsapp?id=:id 200

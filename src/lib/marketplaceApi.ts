@@ -1,6 +1,6 @@
 import { supabase } from "./adminAuth";
 
-type EnquiryInput = { listingId: string; startDate: string; endDate: string; guests: number; campingStyle: string; vehicleDetails?: string; questions?: string };
+type EnquiryInput = { listingId: string; startDate: string; endDate: string; guests: number; campingStyle: string; vehicleDetails?: string; questions?: string; name:string; phone:string; consent:true };
 type EnquiryResponse = { id: string; reference: string; handoffReady: boolean };
 type WhatsappResponse = { reference: string; message: string; whatsappUrl: string };
 

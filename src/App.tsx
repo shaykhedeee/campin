@@ -1,33 +1,32 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
 import { trackPageView } from './lib/analytics';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import MarketplaceExplore from './pages/MarketplaceExplore';
-import HostYourLand from './pages/HostYourLand';
-import Support from './pages/Support';
-import MarketplaceListing from './pages/MarketplaceListing';
-import Community from './pages/Community';
-import BlogIndex from './pages/BlogIndex';
-import BlogPost from './pages/BlogPost';
-import GuideDetail from "./pages/GuideDetail";
-import Guides from "./pages/Guides";
-import CampingGuideDetail from "./pages/CampingGuideDetail";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import CancellationRefund from "./pages/CancellationRefund";
-import Grievance from "./pages/Grievance";
-import ResponsibleCampingPledge from "./pages/ResponsibleCampingPledge";
-import SeoLanding from "./pages/SeoLanding";
-import Auth from "./pages/Auth";
-import AuthCallback from "./pages/AuthCallback";
-import ResetPassword from "./pages/ResetPassword";
-import Account from "./pages/Account";
-import Waitlist from "./pages/Waitlist";
-import SuggestCampsite from "./pages/SuggestCampsite";
-import Confirmation from "./pages/Confirmation";
-import About from "./pages/About";
+const Home = lazy(() => import('./pages/Home'));
+const MarketplaceExplore = lazy(() => import('./pages/MarketplaceExplore'));
+const HostYourLand = lazy(() => import('./pages/HostYourLand'));
+const Support = lazy(() => import('./pages/Support'));
+const MarketplaceListing = lazy(() => import('./pages/MarketplaceListing'));
+const BlogIndex = lazy(() => import('./pages/BlogIndex'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+const GuideDetail = lazy(() => import('./pages/GuideDetail'));
+const Guides = lazy(() => import('./pages/Guides'));
+const CampingGuideDetail = lazy(() => import('./pages/CampingGuideDetail'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Terms = lazy(() => import('./pages/Terms'));
+const CancellationRefund = lazy(() => import('./pages/CancellationRefund'));
+const Grievance = lazy(() => import('./pages/Grievance'));
+const ResponsibleCampingPledge = lazy(() => import('./pages/ResponsibleCampingPledge'));
+const SeoLanding = lazy(() => import('./pages/SeoLanding'));
+const Auth = lazy(() => import('./pages/Auth'));
+const AuthCallback = lazy(() => import('./pages/AuthCallback'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+const Account = lazy(() => import('./pages/Account'));
+const Waitlist = lazy(() => import('./pages/Waitlist'));
+const SuggestCampsite = lazy(() => import('./pages/SuggestCampsite'));
+const Confirmation = lazy(() => import('./pages/Confirmation'));
+const About = lazy(() => import('./pages/About'));
 import { AuthProvider } from "./lib/auth";
 
 function ScrollToTop() {
@@ -45,12 +44,13 @@ function AppContent() {
       <ScrollToTop />
       <Navbar />
       <main>
+        <Suspense fallback={<div className="mx-auto min-h-[45vh] max-w-7xl px-4 py-16 text-forest" role="status">Loading Campin…</div>}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<MarketplaceExplore />} />
           <Route path="/listing/:id" element={<MarketplaceListing />} />
           <Route path="/coming-soon" element={<Waitlist />} />
-          <Route path="/community" element={<Community />} />
+          <Route path="/community" element={<Navigate to="/waitlist" replace />} />
           <Route path="/blog" element={<BlogIndex />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/camping-guides" element={<Guides />} />
@@ -77,6 +77,7 @@ function AppContent() {
           <Route path="/camping-in-wayanad" element={<SeoLanding />} />
           <Route path="/glamping-india" element={<SeoLanding />} />
         </Routes>
+        </Suspense>
       </main>
       <Footer />
     </>

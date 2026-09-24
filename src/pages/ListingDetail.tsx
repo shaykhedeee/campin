@@ -176,7 +176,7 @@ export default function ListingDetail() {
       navigate(`/auth?next=${encodeURIComponent(next)}`);
       return;
     }
-    if (!guestProfile || !formData.email || !formData.phone) {
+    if (!guestProfile || !formData.email || !formData.phone || !formData.name || !formData.consent) {
       setHandshakeForm({
         name: formData.name,
         email: formData.email,
@@ -210,6 +210,9 @@ export default function ListingDetail() {
           campingStyle: formData.ownTent === "yes" ? "own_tent" : listing.type,
           vehicleDetails: formData.vehicleType,
           questions: formData.essentials,
+          name: formData.name,
+          phone: formData.phone,
+          consent: true,
         });
         secureId = secureEnquiry.id;
         secureReference = secureEnquiry.reference;
